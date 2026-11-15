@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#fbf4e3">
+<meta name="color-scheme" content="only light">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -26,7 +27,7 @@
   --font-body:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
   --r:18px; --shadow:0 2px 0 rgba(110,75,46,.18),0 6px 18px rgba(110,75,46,.12);
   --fs:clamp(15px,0.55vw + 11px,23px);
-  color-scheme:light;
+  color-scheme:only light;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
@@ -302,7 +303,7 @@ body:not(.is-wall) main#view{padding-bottom:6.5em}
 body.is-wall{--fs:clamp(14px,1.45vmin + 4px,34px);overflow:hidden}
 body.is-wall #app{height:100%}
 body.is-wall main#view{padding:0;max-width:none;height:100%}
-.wall{height:100vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(16em,24%);grid-template-rows:auto minmax(0,1fr);gap:clamp(8px,1.2vmin,22px);padding:clamp(8px,1.4vmin,26px)}
+.wall{height:100vh;height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(16em,24%);grid-template-rows:auto minmax(0,1fr);gap:clamp(8px,1.2vmin,22px);padding:max(10px,3vh) max(12px,3vw)}
 .wall-top{grid-column:1/-1;display:flex;align-items:center;gap:1em}
 .wclock{font-family:var(--font-display);font-weight:600;font-size:3.2em;line-height:1;user-select:none;-webkit-user-select:none;touch-action:none}
 .wgreet{display:flex;flex-direction:column;flex:1}
@@ -359,6 +360,10 @@ body:not(.is-wall) #toast{bottom:calc(5.6em + env(safe-area-inset-bottom))}
 .pairscreen h1{font-size:clamp(1.6em,3vw,2.6em)}
 .paircode{font-family:var(--font-display);font-weight:600;font-size:clamp(3.2em,9vw,7em);letter-spacing:.08em;line-height:1;background:var(--paper);border:5px dashed var(--sun-d);border-radius:28px;padding:.25em .6em;color:var(--ink);text-align:center}
 @media (min-aspect-ratio:4/3) and (min-width:900px){.pairscreen{display:grid;grid-template-columns:1fr 1fr;align-content:center;justify-items:center;column-gap:3em;text-align:left}.pairscreen .farmwrap{grid-row:span 5;width:100%}.pairscreen>*:not(.farmwrap){justify-self:start}}
+
+/* tv: altijd licht, en eenmalige tik voor volledig beeld en geluid */
+html,body{background:#fbf4e3!important;color:#3b2f24}
+.walltip{position:fixed;left:50%;bottom:4vh;transform:translateX(-50%);z-index:90;background:#3b2f24;color:#fff;font-weight:800;padding:.6em 1.2em;border-radius:999px;font-size:1.1em;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 
 </style>
 </head>
@@ -1470,6 +1475,7 @@ function viewStart() {
   return `<div style="max-width:46em;margin:0 auto" class="stack"><div class="farmwrap">${farm}</div><div class="card stack"><h1>De Familieboerderij</h1><p style="margin:0">Wat is dit apparaat?</p>
     <div class="bigtiles"><button class="bigtile" data-act="startpair" data-wall="1"><span style="font-size:2.4em">📺</span>Ons wandscherm of de tv</button><button class="bigtile" data-act="startpair"><span style="font-size:2.4em">📱</span>Telefoon of tablet van een ouder</button></div>
     <div class="row" style="margin-top:.4em"><button class="btn sun" data-act="startnew">Nieuwe boerderij beginnen</button><button class="btn ghost" data-act="startrecover">Herstelcode</button><button class="btn ghost" data-act="startdemo">Demo bekijken</button></div>
+    ${window.matchMedia('(display-mode: standalone)').matches || navigator.standalone ? `<div class="card" style="box-shadow:none;border-color:var(--sun-d);background:#fff8e2"><b>App op je beginscherm gezet?</b> Die moet je één keer koppelen. Tik op <b>Telefoon of tablet van een ouder</b> en typ de code in waar de boerderij al open staat (bijvoorbeeld in Safari), bij Meer, Instellingen, Apparaten.</div>` : ''}
     <p class="small muted" style="margin:0">Begin de boerderij één keer op je eigen telefoon. Daarna koppel je de telefoon van je partner en het wandscherm met een code van 6 cijfers.</p></div></div>`;
 }
 async function startPair(wall) {
@@ -1716,7 +1722,7 @@ function render() {
   if (S.mode === 'loading') { top.innerHTML = ''; nav.innerHTML = ''; ban.innerHTML = S.stale ? banners() : ''; view.innerHTML = `<div class="empty" style="padding-top:12vh">${CHICK}<h2>De boerderij wordt wakker...</h2></div>`; return; }
   if (S.mode === 'start') { top.innerHTML = ''; ban.innerHTML = ''; nav.innerHTML = ''; view.innerHTML = S.setupStep && S.startStep === 'new' ? viewSetup() : viewStart(); return; }
   if (S.mode === 'setup') { top.innerHTML = ''; ban.innerHTML = ''; nav.innerHTML = ''; view.innerHTML = S.wall ? `<div class="empty" style="padding-top:12vh">${CHICK}<h2>Wacht op de boerderij...</h2><p>Stel de boerderij eerst in op de telefoon van een ouder.</p></div>` : viewSetup(); return; }
-  if (S.wall) { top.innerHTML = ''; nav.innerHTML = ''; ban.innerHTML = navigator.onLine ? '' : `<div class="banner off">Geen internet. Nieuwe beloningen komen binnen zodra de verbinding terug is.</div>`; if (!S.partyOn) view.innerHTML = viewWall(); checkNewLedger(); return; }
+  if (S.wall) { top.innerHTML = ''; nav.innerHTML = ''; ban.innerHTML = navigator.onLine ? '' : `<div class="banner off">Geen internet. Nieuwe beloningen komen binnen zodra de verbinding terug is.</div>`; if (!S.partyOn) view.innerHTML = viewWall() + (S.wallAwake ? '' : '<div class="walltip">Tik één keer op het scherm voor volledig beeld en geluid</div>'); checkNewLedger(); return; }
   const a = document.activeElement; const fid = a && a.id && view.contains(a) ? a.id : null; const val = fid && 'value' in a ? a.value : null;
   top.innerHTML = topbar(); ban.innerHTML = banners();
   nav.innerHTML = NAV.map(([k, l, i]) => `<button class="${S.view === k || (k === 'meer' && ['galerij', 'dieren', 'moestuin', 'prikbord', 'instellingen'].includes(S.view)) ? 'on' : ''}" data-go="#${k}">${i === 'sun' ? sunNav : ic(i)}<span>${l}</span></button>`).join('');
@@ -1737,7 +1743,7 @@ function leaveWall() { if (S.role === 'scherm') { toast('Dit is het wandscherm. 
 /* ===== Klikken, formulieren, toetsenbord ===== */
 document.addEventListener('click', e => {
   if (e.target.id === 'modal') { if (!S.wall) closeModal(); return; }
-  if (S.wall && !e.target.closest('#modal')) { const w = e.target.closest('[data-act="walltap"]'); if (w) ACT.walltap(w); return; }
+  if (S.wall && !e.target.closest('#modal')) { wallWake(); const w = e.target.closest('[data-act="walltap"]'); if (w) ACT.walltap(w); return; }
   const g = e.target.closest('[data-go]'); if (g) { e.preventDefault(); go(g.dataset.go); return; }
   const pb = e.target.closest('[data-single] > button, [data-multi] > button');
   if (pb) { const grp = pb.parentElement; if (grp.dataset.single !== undefined) grp.querySelectorAll(':scope > button').forEach(b => b.classList.toggle('on', b === pb)); else pb.classList.toggle('on'); }
@@ -1834,6 +1840,14 @@ function restoreSheet(html, vals) {
   modalClose = null;
 }
 
+/* Wandscherm: eerste tik zet volledig beeld aan en geeft het geluid vrij */
+function wallWake() {
+  if (S.wallAwake) return; S.wallAwake = true;
+  try { const el = document.documentElement; (el.requestFullscreen || el.webkitRequestFullscreen || (() => { })).call(el); } catch (e) { }
+  try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume(); } catch (e) { }
+  try { speechSynthesis.speak(new SpeechSynthesisUtterance(' ')); } catch (e) { }
+  keepAwake(); render();
+}
 /* ===== Klok, verbinding ===== */
 let lastMin = -1;
 setInterval(() => {
