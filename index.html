@@ -299,57 +299,61 @@ body:not(.is-wall) main#view{padding-bottom:6.5em}
 .stepper b{min-width:1.6em;text-align:center;font-size:1.15em}
 @media (max-width:600px){.editrow{grid-template-columns:3em minmax(0,1fr) auto;grid-template-areas:'ic tt tt' 'st st ac'}.editrow input.emoji{grid-area:ic}.editrow input[data-field=title]{grid-area:tt}.editrow .stepper{grid-area:st}.editrow>.row{grid-area:ac;justify-content:flex-end}}
 
-/* ---------- wandscherm ---------- */
-body.is-wall{--fs:clamp(14px,1.45vmin + 4px,34px);overflow:hidden}
+/* ---------- wandscherm: kinderen groot, boerderij als band bovenaan; alles in vh zodat elke tv gelijk schaalt ---------- */
+body.is-wall{--fs:1.9vh;overflow:hidden}
 body.is-wall #app{height:100%}
 body.is-wall main#view{padding:0;max-width:none;height:100%}
-.wall{height:100vh;height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(16em,24%);grid-template-rows:auto minmax(0,1fr);gap:clamp(8px,1.2vmin,22px);padding:max(10px,3vh) max(12px,3vw)}
-.wall-top{grid-column:1/-1;display:flex;align-items:center;gap:1em}
-.wclock{font-family:var(--font-display);font-weight:600;font-size:3.2em;line-height:1;user-select:none;-webkit-user-select:none;touch-action:none}
-.wgreet{display:flex;flex-direction:column;flex:1}
-.wgreet b{font-family:var(--font-display);font-size:1.7em;font-weight:600}
-.wgreet span::first-letter{text-transform:uppercase}
-.wweather svg{width:4.5em;height:4.5em}
-.wall-main{display:flex;flex-direction:column;gap:clamp(8px,1.2vmin,22px);min-height:0}
-.wfarm{border-radius:26px;overflow:hidden;border:4px solid var(--wood);flex:0 0 34%;min-height:0;background:var(--sky)}
-.wfarm svg{width:100%;height:100%;display:block}
-.wfarm svg{object-fit:cover}
-.wkids{flex:1;min-height:0;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:clamp(8px,1.2vmin,22px)}
-.wkid{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:.3em;background:var(--paper);border:5px solid var(--kc);border-radius:30px;padding:.6em .6em .8em;box-shadow:0 5px 0 color-mix(in srgb,var(--kc) 55%,#000 0%);min-height:0;overflow:hidden;cursor:default}
-.wkhead{display:flex;align-items:center;gap:.4em}
-.wkhead .avatar{width:4.2em;height:4.2em}
-.wname{font-family:var(--font-display);font-size:2.4em;font-weight:600}
-.wbasket{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
-.wbasket svg{max-height:100%;width:auto;max-width:100%}
-.wmin{font-weight:800;font-size:1.25em;color:var(--ink-soft)}
-.wmin b{font-family:var(--font-display);font-size:2em;color:var(--ink)}
-.wicons{display:flex;flex-wrap:wrap;justify-content:center;gap:.1em;font-size:1.7em;min-height:1.3em}
-.wtimer{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
-.wtimer svg{height:100%;max-height:16em;width:auto}
+.wall{height:100vh;height:100dvh;display:flex;flex-direction:column;gap:2.2vh;padding:3.2vh 3.2vw}
+.wtop{display:flex;gap:1.4vw;height:17vh;flex:none;align-items:stretch}
+.wclockbox{display:flex;flex-direction:column;justify-content:center;flex:none;user-select:none;-webkit-user-select:none;touch-action:none}
+.wclock{font-family:var(--font-display);font-weight:600;font-size:10vh;line-height:.95;letter-spacing:-.02em}
+.wdate{font-size:2.6vh;font-weight:700;color:var(--ink-soft)}
+.wdate::first-letter{text-transform:uppercase}
+.wfarm{position:relative;flex:1;min-width:0;border-radius:2.4vh;overflow:hidden;border:.5vh solid var(--wood);background:var(--sky)}
+.wfarm svg.farm{width:100%;height:100%;display:block}
+.wweather{position:absolute;right:1.2vh;top:1.2vh;width:7vh;height:7vh;background:rgba(255,250,240,.85);border-radius:50%;padding:.6vh}
+.wweather svg{width:100%;height:100%}
+.wphoto{flex:none;height:100%;aspect-ratio:4/3;background:#fff;border:1.2vh solid var(--wood);border-image:linear-gradient(135deg,#c48d5c,#8a5b36) 1;padding:.5vh}
+.wphoto img{width:100%;height:100%;object-fit:cover}
+.wtoday{flex:none;width:22vw;background:var(--paper);border:.35vh solid var(--line);border-radius:2.4vh;padding:1.2vh 1.4vh;display:flex;flex-direction:column;gap:.6vh;overflow:hidden;font-size:2.3vh}
+.wtoday b{font-family:var(--font-display);font-size:2.6vh}
+.wev{display:flex;gap:.6em;border-left:.7vh solid var(--ec);padding-left:.6em;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wev span{color:var(--ink-soft);min-width:2.8em}
+.wcd{display:flex;align-items:center;gap:.5em;font-weight:800;margin-top:auto;line-height:1.15}
+.wcd span{font-family:var(--font-display);font-size:4vh;color:var(--terra);line-height:1}
+.wkids{flex:1;min-height:0;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:2.2vw}
+.wkid{display:flex;flex-direction:column;align-items:center;gap:1vh;min-height:0;overflow:hidden;background:linear-gradient(180deg,var(--kt) 0,var(--paper) 30%);border:.9vh solid var(--kc);border-radius:4.5vh;padding:2.2vh 1.6vh 2.2vh;box-shadow:0 .8vh 0 color-mix(in srgb,var(--kc) 70%,#3b2f24);cursor:default;font:inherit;color:var(--ink)}
+.wkhead{display:flex;align-items:center;gap:1.2vh;flex:none;max-width:100%}
+.wkhead .avatar{width:11vh;height:11vh;flex:none}
+.wname{font-family:var(--font-display);font-size:7.5vh;font-weight:600;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wbasket,.wtimer{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+.wbasket svg,.wtimer svg{height:100%;width:100%;max-height:100%}
+.wmin{flex:none;font-weight:800;font-size:3.4vh;color:var(--ink-soft);line-height:1}
+.wmin b{font-family:var(--font-display);font-size:11vh;color:var(--ink);font-weight:600;margin-right:.1em}
+.wicons{flex:none;display:flex;flex-wrap:wrap;justify-content:center;gap:.4vh .8vh;font-size:5.4vh;line-height:1.1;min-height:6vh;max-height:13vh;overflow:hidden}
+.wicons .wnone{font-size:2.4vh;font-weight:700;color:var(--ink-soft);align-self:center}
 .wt-arc{transition:stroke-dashoffset 1s linear}
-.wdone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2em;animation:pop .6s ease-out both}
-.wdone span{font-size:5em;animation:sway 1.2s ease-in-out infinite}
-.wdone b{font-family:var(--font-display);font-size:1.8em}
-.wall-side{display:flex;flex-direction:column;gap:clamp(8px,1.2vmin,22px);min-height:0;overflow:hidden}
-.wall-side .card{padding:.8em}
-.wphoto{flex:1;min-height:0;display:flex;flex-direction:column;background:#fff;border:clamp(10px,1.4vmin,22px) solid var(--wood);border-image:linear-gradient(135deg,#c48d5c,#8a5b36) 1;padding:6px}
-.wphoto .ph{flex:1;min-height:0}.wphoto img{width:100%;height:100%;object-fit:cover}
-.wphoto .cap{font-weight:800;font-size:.85em;padding-top:.3em}
-@keyframes bounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-14px) scale(1.02)}60%{transform:translateY(0)}80%{transform:translateY(-5px)}}
+.wdone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5vh;animation:pop .6s ease-out both}
+.wdone span{font-size:16vh;animation:sway 1.2s ease-in-out infinite}
+.wdone b{font-family:var(--font-display);font-size:5vh}
+@keyframes bounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-2vh) scale(1.02)}60%{transform:translateY(0)}80%{transform:translateY(-.6vh)}}
 .wkid.bounce{animation:bounce .7s ease-out}
-@media (orientation:portrait){.wall{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr) auto}.wall-side{flex-direction:row}.wall-side>*{flex:1}.wphoto{max-height:24vh}}
+/* staand scherm */
+@media (orientation:portrait){.wtop{flex-wrap:wrap;height:auto}.wfarm{flex-basis:100%;order:3;height:14vh}.wtoday{width:auto;flex:1}.wphoto{height:14vh}.wkids{grid-template-columns:repeat(min(var(--n),2),minmax(0,1fr))}}
+/* veel kinderen op een smal scherm */
+@media (max-aspect-ratio:4/3){.wname{font-size:5.5vh}.wkhead .avatar{width:8vh;height:8vh}}
 
 /* feest bij een beloning */
 .party{position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--kc) 30%,rgba(251,244,227,.92));animation:pop .35s ease-out both;overflow:hidden}
 .party.out{opacity:0;transition:opacity .5s}
-.pbox{display:flex;flex-direction:column;align-items:center;gap:.2em;background:var(--paper);border:8px solid var(--kc);border-radius:48px;padding:1em 2.4em 1.4em;box-shadow:0 12px 40px rgba(0,0,0,.2);animation:pop .7s cubic-bezier(.2,1.6,.4,1) both}
-.pav{width:9em;height:9em;display:block;animation:bounce 1s ease-out .3s 2}
+.pbox{display:flex;flex-direction:column;align-items:center;gap:.2em;background:var(--paper);border:1vh solid var(--kc);border-radius:6vh;padding:3vh 6vh 4vh;box-shadow:0 12px 40px rgba(0,0,0,.2);animation:pop .7s cubic-bezier(.2,1.6,.4,1) both}
+.pav{width:22vh;height:22vh;display:block;animation:bounce 1s ease-out .3s 2}
 .pav svg{width:100%;height:100%}
-.pic{font-size:6em;line-height:1;margin-top:-.4em;animation:pop .6s ease-out .35s both}
-.pname{font-family:var(--font-display);font-size:3em;font-weight:600}
-.ptitle{font-size:1.7em;font-weight:800;color:var(--ink-soft)}
-.pmin{font-family:var(--font-display);font-size:2.2em;font-weight:600;color:var(--sun-d)}
-.party .fly{position:absolute;top:60%;width:4.5em;height:4.5em;animation:sunfly 1.6s cubic-bezier(.3,.7,.4,1) both}
+.pic{font-size:14vh;line-height:1;margin-top:-.4em;animation:pop .6s ease-out .35s both}
+.pname{font-family:var(--font-display);font-size:8vh;font-weight:600}
+.ptitle{font-size:4.2vh;font-weight:800;color:var(--ink-soft)}
+.pmin{font-family:var(--font-display);font-size:6vh;font-weight:600;color:var(--sun-d)}
+.party .fly{position:absolute;top:60%;width:10vh;height:10vh;animation:sunfly 1.6s cubic-bezier(.3,.7,.4,1) both}
 @keyframes sunfly{0%{transform:translateY(40vh) scale(.3);opacity:0}30%{opacity:1}70%{transform:translateY(-30vh) scale(1.1) rotate(160deg);opacity:1}100%{transform:translateY(-50vh) scale(.6) rotate(300deg);opacity:0}}
 body.calm .party .fly{display:none}
 body:not(.is-wall) #toast{bottom:calc(5.6em + env(safe-area-inset-bottom))}
@@ -363,7 +367,64 @@ body:not(.is-wall) #toast{bottom:calc(5.6em + env(safe-area-inset-bottom))}
 
 /* tv: altijd licht, en eenmalige tik voor volledig beeld en geluid */
 html,body{background:#fbf4e3!important;color:#3b2f24}
-.walltip{position:fixed;left:50%;bottom:4vh;transform:translateX(-50%);z-index:90;background:#3b2f24;color:#fff;font-weight:800;padding:.6em 1.2em;border-radius:999px;font-size:1.1em;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.walltip{position:fixed;left:50%;top:2vh;transform:translateX(-50%);z-index:90;background:#3b2f24;color:#fff;font-weight:800;padding:1.2vh 3vh;border-radius:999px;font-size:2.8vh;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+
+/* ---------- wandscherm 2: diavoorstelling groot, kinderen ernaast ---------- */
+.wall2{height:100vh;height:100dvh;display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:2vh 2vw;padding:3vh 3vw}
+.w2top{grid-column:1/-1;display:flex;align-items:center;gap:1.6vw;height:8vh}
+.w2clock{font-family:var(--font-display);font-weight:600;font-size:8vh;line-height:1;user-select:none;-webkit-user-select:none;touch-action:none}
+.w2date{font-size:3vh;font-weight:700;color:var(--ink-soft)}
+.w2date::first-letter{text-transform:uppercase}
+.w2weather svg{width:7vh;height:7vh}
+.w2dots{margin-left:auto;display:flex;gap:.8vh}
+.w2dots i{width:1.4vh;height:1.4vh;border-radius:50%;background:var(--line)}
+.w2dots i.on{background:var(--terra)}
+.dia{position:relative;min-height:0;border-radius:3vh;overflow:hidden;background:var(--paper);border:.5vh solid var(--line);box-shadow:0 .8vh 2.4vh rgba(110,75,46,.15)}
+.dia-in{position:absolute;inset:0;animation:diafade 1s ease both}
+@keyframes diafade{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}
+.dia-foto{height:100%;display:flex;flex-direction:column;background:#3b2f24}
+.dia-frame{flex:1;min-height:0;margin:3vh 3vh 0;border:2.2vh solid #a7744a;border-image:linear-gradient(135deg,#c99563,#7e522f) 1;background:#fffaf0;display:flex;align-items:center;justify-content:center;padding:1vh}
+.dia-frame img{width:100%;height:100%;object-fit:contain}
+.dia-cap{display:flex;align-items:center;gap:1.6vh;padding:2vh 3vh;color:#fbf4e3}
+.dia-cap .avatar{width:9vh;height:9vh}
+.dia-cap b{display:block;font-family:var(--font-display);font-size:5vh;font-weight:600;line-height:1.05}
+.dia-cap small{font-size:2.6vh;opacity:.85;font-weight:700}
+.dia-pad{height:100%;padding:3.5vh 4vh;display:flex;flex-direction:column;gap:2vh}
+.dia-h{font-size:5vh;margin-bottom:1vh}
+.dia-agenda{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;gap:2vh 4vh}
+.dia-ev{display:flex;align-items:center;gap:1.4vh;padding:1.2vh 1.6vh;margin-bottom:1.2vh;border-radius:1.6vh;background:#fff;border-left:1.2vh solid var(--ec);font-size:3.2vh}
+.dia-ev span.num{color:var(--ink-soft);font-weight:800;min-width:4.2em;font-size:.85em}
+.dia-ev b{flex:1;line-height:1.15}
+.dia-ev .avatar{width:6vh;height:6vh}
+.dia-leeg{font-size:3vh;color:var(--ink-soft);font-weight:700;margin:0}
+.dia-cd{grid-column:1/-1;display:flex;gap:2vh}
+.dia-cd>div{flex:1;display:flex;align-items:center;gap:1.4vh;background:#fff4e6;border:.4vh dashed var(--sun-d);border-radius:2vh;padding:1.4vh 2vh;font-size:3vh;font-weight:800;line-height:1.15}
+.dia-cd span{font-family:var(--font-display);font-size:7vh;color:var(--terra);line-height:1}
+.dia-dieren{flex:1;min-height:0;display:grid;grid-template-columns:repeat(var(--c),minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:2.4vh}
+.dier{display:flex;flex-direction:column;align-items:center;gap:1vh;background:#fff;border:.4vh solid var(--line);border-radius:2.6vh;padding:2vh;min-height:0;overflow:hidden}
+.dier img,.dier .dier-av{flex:1;min-height:0;width:100%;object-fit:cover;border-radius:1.8vh}
+.dier .dier-av{display:flex;justify-content:center}.dier .dier-av svg{height:100%;width:auto}
+.dier b{font-family:var(--font-display);font-size:4vh;line-height:1}
+.dier-st{display:flex;gap:1vh;flex-wrap:wrap;justify-content:center;font-size:2.5vh;font-weight:800}
+.dier-st span{padding:.4vh 1.2vh;border-radius:999px;background:#efe5cf;color:var(--ink-soft)}
+.dier-st span.ok{background:#d7ebcd;color:#2f5a25}
+.w2kids{min-height:0;display:grid;grid-template-rows:repeat(var(--n),minmax(0,1fr));gap:2vh}
+.kk{display:flex;align-items:center;gap:1.8vh;min-height:0;overflow:hidden;background:linear-gradient(90deg,var(--kt),var(--paper) 55%);border:.8vh solid var(--kc);border-radius:3.4vh;padding:1.6vh 2.2vh;box-shadow:0 .7vh 0 color-mix(in srgb,var(--kc) 70%,#3b2f24);font:inherit;color:var(--ink);cursor:default;text-align:left}
+.kk>.avatar{width:min(11vh,20vw);height:min(11vh,20vw);flex:none}
+.kk-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:.6vh}
+.kk-name{font-family:var(--font-display);font-size:5.6vh;font-weight:600;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kk-icons{display:flex;flex-wrap:wrap;gap:.2vh .6vh;font-size:4vh;line-height:1.1;max-height:9vh;overflow:hidden}
+.kk-icons small{font-size:2.3vh;font-weight:700;color:var(--ink-soft)}
+.kk-pot,.kk-timer{display:flex;align-items:center;gap:1vh;flex:none}
+.kk-mand svg{width:7vh;height:7vh}
+.kk-timer svg{width:8vh;height:8vh}
+.kk-num{display:flex;flex-direction:column;align-items:center;line-height:1}
+.kk-num b{font-family:var(--font-display);font-size:9vh;font-weight:600}
+.kk-num small{font-size:2.4vh;font-weight:800;color:var(--ink-soft)}
+.kk-done{display:flex;flex-direction:column;align-items:center;font-size:9vh;line-height:1;animation:sway 1.2s ease-in-out infinite}
+.kk-done small{font-size:3vh;font-weight:800}
+.kk.bounce{animation:bounce .7s ease-out}
+@media (orientation:portrait){.wall2{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1.3fr) minmax(0,1fr)}}
 
 </style>
 </head>
@@ -611,13 +672,14 @@ const sunIcon = (sz = '1em') => `<svg viewBox="0 0 48 48" style="width:${sz};hei
 
 /* Het mandje met zonnetjes */
 function basketSVG(n) {
-  const shown = Math.min(n, 24); let suns = '';
+  /* grote zonnetjes boven de rand: maximaal 18 zichtbaar, het getal staat eronder */
+  const shown = Math.min(n, 18), per = 6; let suns = '';
   for (let i = 0; i < shown; i++) {
-    const row = Math.floor(i / 8), col = i % 8;
-    const x = 62 + col * 25 + (row % 2) * 12, y = 84 - row * 19;
-    suns += `<g transform="translate(${x} ${y})"><circle r="11" fill="#f3c246" stroke="#d99a1c" stroke-width="2.5"/><circle cx="-3" cy="-2" r="1.6" fill="${O}"/><circle cx="3" cy="-2" r="1.6" fill="${O}"/><path d="M-3 3q3 3 6 0" fill="none" stroke="${O}" stroke-width="1.5"/></g>`;
+    const row = Math.floor(i / per), col = i % per, inRow = Math.min(per, shown - row * per);
+    const x = 150 - (inRow - 1) * 19 + col * 38 + (row % 2) * 6, y = 86 - row * 27;
+    suns += `<g transform="translate(${x} ${y})"><circle r="17" fill="#f3c246" stroke="#d99a1c" stroke-width="3"/><circle cx="-5" cy="-3" r="2.4" fill="${O}"/><circle cx="5" cy="-3" r="2.4" fill="${O}"/><path d="M-5 5q5 5 10 0" fill="none" stroke="${O}" stroke-width="2.2" stroke-linecap="round"/></g>`;
   }
-  return `<svg viewBox="0 0 300 190" role="img" aria-label="Mandje met ${n} zonnetjes"><path d="M60 96q90-110 180 0" fill="none" stroke="#8a5b36" stroke-width="9" stroke-linecap="round"/>${suns}<path d="M36 100h228l-22 82H58z" fill="#c9965f" stroke="${O}" stroke-width="4" stroke-linejoin="round"/><path d="M42 124h216M48 150h204M90 100l-8 82M150 100v82M210 100l8 82" stroke="#8a5b36" stroke-width="3"/><path d="M30 100h240" stroke="${O}" stroke-width="7" stroke-linecap="round"/></svg>`;
+  return `<svg viewBox="0 0 300 200" role="img" aria-label="Mandje met ${n} zonnetjes"><path d="M58 104q92-118 184 0" fill="none" stroke="#8a5b36" stroke-width="10" stroke-linecap="round"/>${suns}<path d="M34 106h232l-22 86H56z" fill="#c9965f" stroke="${O}" stroke-width="4" stroke-linejoin="round"/><path d="M40 132h220M46 160h208M90 106l-8 86M150 106v86M210 106l8 86" stroke="#8a5b36" stroke-width="3"/><path d="M28 106h244" stroke="${O}" stroke-width="8" stroke-linecap="round"/></svg>`;
 }
 
 /* ===== De boerderij ===== */
@@ -710,7 +772,7 @@ const CHICK = `<svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy
 /* ===== Kern: status, opslag, navigatie, dialogen ===== */
 const FORMS = {}, ACT = {};
 const COLS = ['members', 'events', 'activities', 'completions', 'ledger', 'rewards', 'adventures', 'gallery', 'animals', 'animallog', 'beds', 'plants', 'notes', 'shopping', 'meals', 'recipes', 'chores', 'timers'];
-const DEF = { dailyLimit: 0, calm: false, sound: true, voice: true, showAgenda: true, showPhotos: true };
+const DEF = { dailyLimit: 0, calm: false, sound: true, voice: true, showAgenda: true, showPhotos: true, showAnimals: true };
 const COLORS = ['#c7623f', '#4f86b0', '#6f9f4f', '#d99a1c', '#9467ad', '#cf6a8a', '#3f9488', '#8a6a4a'];
 const S = { mode: 'loading', db: null, assets: null, tts: null, dict: null, dl: null, user: null, data: {}, settings: null, weather: null, settingsLoaded: false, stale: false,
   parentUntil: 0, view: 'erf', param: null, kidTab: 'start', calTab: 'week', calRef: null, readAloud: false, pinFails: 0, pinLockUntil: 0, queue: [], slides: null, parentTab: 'goedkeuren', galFilter: 'alle', lastDay: null, setupStep: 1, setupMembers: [] };
@@ -1163,27 +1225,39 @@ async function watchStop(kid) {
 }
 
 /* ===== Wandscherm (alleen kijken, kinderen bedienen niets) ===== */
+function wallSlides() {
+  const out = [], photos = cfg('showPhotos') ? S.data.gallery.filter(g => imgSrc(g)).sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 15) : [];
+  const extra = []; if (cfg('showAgenda')) extra.push({ kind: 'agenda' }); if (cfg('showAnimals') && S.data.animals.length) extra.push({ kind: 'dieren' });
+  if (!photos.length) return extra.length ? extra : [{ kind: 'agenda' }];
+  let e = 0; photos.forEach((g, i) => { out.push({ kind: 'foto', g }); if (i % 3 === 2 && extra.length) out.push(extra[e++ % extra.length]); });
+  extra.forEach(x => { if (!out.includes(x)) out.push(x); });
+  return out;
+}
+function slideHTML(sl) {
+  if (sl.kind === 'foto') { const g = sl.g, m = member(g.makerId); return `<div class="dia-foto"><div class="dia-frame"><img src="${esc(imgSrc(g))}" alt=""></div><div class="dia-cap">${m ? `<span class="avatar">${avatar(m.animal, tint(m.color))}</span>` : ''}<span><b>${esc(g.title || 'Gemaakt door ' + mName(g.makerId))}</b><small>${esc(mName(g.makerId))}${g.date ? ' · ' + esc(fmtDay(g.date)) : ''}</small></span></div></div>`; }
+  if (sl.kind === 'dieren') {
+    const lg = logToday();
+    return `<div class="dia-pad"><h2 class="dia-h">Onze dieren</h2><div class="dia-dieren" style="--c:${Math.min(S.data.animals.length, 3)}">${S.data.animals.slice(0, 6).map(a => { const e = lg[a.id] || {}; return `<div class="dier">${imgSrc(a) ? `<img src="${esc(imgSrc(a))}" alt="">` : `<span class="dier-av">${avatar(a.species, '#efe5cf')}</span>`}<b>${esc(a.name)}</b><div class="dier-st"><span class="${e.am ? 'ok' : ''}">${e.am ? '✓' : '○'} ochtend</span><span class="${e.pm ? 'ok' : ''}">${e.pm ? '✓' : '○'} avond</span>${e.eggs ? `<span class="ok">🥚 ${e.eggs}</span>` : ''}</div></div>`; }).join('')}</div></div>`;
+  }
+  const t = today(), tm = addDays(t, 1), evT = eventsOn(t), evM = eventsOn(tm), cd = countdowns(2);
+  const row = e => `<div class="dia-ev" style="--ec:${evColor(e)}"><span class="num">${e.time && !e.allDay ? e.time : 'hele dag'}</span><b>${esc(e.title)}</b>${(e.memberIds || []).length === 1 ? `<span class="avatar">${avatar((member(e.memberIds[0]) || {}).animal || 'kip', tint(mColor(e.memberIds[0])))}</span>` : ''}</div>`;
+  return `<div class="dia-pad dia-agenda"><div><h2 class="dia-h">Vandaag</h2>${evT.length ? evT.slice(0, 5).map(row).join('') : '<p class="dia-leeg">Niets gepland. Lekker spelen!</p>'}</div><div><h2 class="dia-h">Morgen</h2>${evM.length ? evM.slice(0, 4).map(row).join('') : '<p class="dia-leeg">Niets gepland.</p>'}</div>${cd.length ? `<div class="dia-cd">${cd.map(c => `<div><span class="num">${c.days}</span>${c.days === 0 ? (c.bday ? 'Vandaag is ' + esc(c.title) + ' jarig!' : 'Vandaag: ' + esc(c.title) + '!') : (c.days === 1 ? 'nachtje' : 'nachtjes') + ' slapen' + (c.bday ? ', dan is ' + esc(c.title) + ' jarig!' : ': ' + esc(c.title))}</div>`).join('')}</div>` : ''}</div>`;
+}
 function viewWall() {
-  const ks = kids(), n = new Date(), t = today();
-  const w = S.weather && S.weather.date === t ? S.weather.kind : null;
-  const farm = farmSVG({ phase: phaseOf(n.getHours() + n.getMinutes() / 60), season: seasonOf(n.getMonth()), weather: w, hour: n.getHours(), min: n.getMinutes(), birthday: birthdayEvents(t).length > 0, members: members(), plants: S.data.plants.length, art: null, projects: 0, notes: S.data.notes.length, labels: false, still: true });
+  const ks = kids(), t = today(), w = S.weather && S.weather.date === t ? S.weather.kind : null;
+  const slides = wallSlides(); const ix = (S.slideIx || 0) % slides.length; const sl = slides[ix];
   const cards = ks.map(k => {
     const bal = balanceOf(k.id).balance, tm = timerOf(k.id), act = timerActive(tm), done = tm && !act && Date.now() - tm.endsAt < 5 * 60e3;
-    const icons = todayEntries(k.id).filter(e => e.kind === 'verdiend').slice(0, 14).reverse().map(e => `<span>${esc(e.icon || '⭐')}</span>`).join('');
-    let main;
-    if (act) { const tot = Math.max(1, tm.endsAt - tm.startedAt), frac = Math.max(0, (tm.endsAt - Date.now()) / tot);
-      main = `<div class="wtimer"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="84" fill="#fff" stroke="#efe5cf" stroke-width="22"/><circle class="wt-arc" cx="100" cy="100" r="84" fill="none" stroke="${k.color}" stroke-width="22" stroke-linecap="round" stroke-dasharray="527.8" stroke-dashoffset="${(527.8 * (1 - frac)).toFixed(1)}" transform="rotate(-90 100 100)" data-ends="${tm.endsAt}" data-total="${tot}"/><text x="100" y="92" text-anchor="middle" font-size="52">📺</text><text x="100" y="146" text-anchor="middle" font-size="34" font-weight="800" fill="#3b2f24" font-family="Fredoka,sans-serif" data-ends="${tm.endsAt}" data-fmt="mmss">${fmtLeft(tm.endsAt)}</text></svg></div><div class="wmin">Nog <b class="num" data-ends="${tm.endsAt}" data-fmt="min">${Math.ceil((tm.endsAt - Date.now()) / 60e3)}</b> minuten kijken</div>`; }
-    else if (done) main = `<div class="wdone"><span>🔔</span><b>Klaar met kijken!</b></div><div class="wmin"><b class="num">${bal}</b> ${minWord(bal)} over</div>`;
-    else main = `<div class="wbasket">${basketSVG(Math.max(0, bal))}</div><div class="wmin"><b class="num">${bal}</b> ${minWord(bal)}</div>`;
-    return `<button class="wkid" style="--kc:${k.color}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><div class="wkhead"><span class="avatar">${avatar(k.animal, tint(k.color))}</span><span class="wname">${esc(k.name)}</span></div>${main}<div class="wicons" aria-label="Vandaag verdiend">${icons}</div></button>`;
+    const icons = todayEntries(k.id).filter(e => e.kind === 'verdiend').reverse().slice(-8).map(e => `<span>${esc(e.icon || '⭐')}</span>`).join('');
+    let right;
+    if (act) { const tot = Math.max(1, tm.endsAt - tm.startedAt), frac = Math.max(0, (tm.endsAt - Date.now()) / tot); right = `<div class="kk-timer"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80" fill="#fff" stroke="#efe5cf" stroke-width="26"/><circle class="wt-arc" cx="100" cy="100" r="80" fill="none" stroke="${k.color}" stroke-width="26" stroke-linecap="round" stroke-dasharray="502.7" stroke-dashoffset="${(502.7 * (1 - frac)).toFixed(1)}" transform="rotate(-90 100 100)" data-ends="${tm.endsAt}" data-total="${tot}" data-c="502.7"/><text x="100" y="118" text-anchor="middle" font-size="58">📺</text></svg><div class="kk-num"><b class="num" data-ends="${tm.endsAt}" data-fmt="min">${Math.ceil((tm.endsAt - Date.now()) / 60e3)}</b><small>min kijken</small></div></div>`; }
+    else if (done) right = `<div class="kk-done">🔔<small>klaar!</small></div>`;
+    else right = `<div class="kk-pot"><span class="kk-mand">${TILE.mand}</span><div class="kk-num"><b class="num">${bal}</b><small>${minWord(bal)}</small></div></div>`;
+    return `<button class="kk" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><span class="avatar">${avatar(k.animal, tint(k.color))}</span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><div class="kk-icons">${icons || '<small>vandaag nog niets</small>'}</div></div>${right}</button>`;
   }).join('');
-  const evT = eventsOn(t), cd = countdowns(2);
-  const photos = S.data.gallery.filter(g => imgSrc(g)).sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 12);
-  const ph = photos.length ? photos[Math.floor(Date.now() / 20000) % photos.length] : null;
-  return `<div class="wall"><div class="wall-top"><div id="wallclock" class="wclock num">${clockText()}</div><div class="wgreet"><b>${greetWord()}!</b><span>${esc(fmtDay(t))}</span></div>${w ? `<div class="wweather">${wIcon(w)}</div>` : ''}</div>
-  <div class="wall-main"><div class="wfarm">${farm}</div><div class="wkids" style="--n:${Math.max(1, Math.min(ks.length, 4))}">${cards || `<div class="card">Voeg kinderen toe in de app op je telefoon.</div>`}</div></div>
-  <aside class="wall-side">${cfg('showAgenda') ? `<div class="card"><h3>Vandaag</h3>${evT.length ? `<ul class="daylist">${evT.slice(0, 6).map(evLine).join('')}</ul>` : '<p class="muted" style="margin:0">Niets gepland.</p>'}</div>${cd.length ? `<div class="card"><div class="stack">${cd.map(countHTML).join('')}</div></div>` : ''}` : ''}
-  ${cfg('showPhotos') && ph ? `<div class="wphoto"><div class="ph"><img src="${esc(imgSrc(ph))}" alt=""></div><div class="cap">${esc(ph.title || '')} · ${esc(mName(ph.makerId))}</div></div>` : ''}</aside></div>`;
+  return `<div class="wall2"><header class="w2top"><span id="wallclock" class="w2clock num">${clockText()}</span><span class="w2date">${esc(fmtDay(t))}</span>${w ? `<span class="w2weather">${wIcon(w)}</span>` : ''}<span class="w2dots">${slides.length > 1 ? slides.map((_, i) => `<i class="${i === ix ? 'on' : ''}"></i>`).join('') : ''}</span></header>
+  <section class="dia" aria-live="polite"><div class="dia-in" key="${ix}">${slideHTML(sl)}</div></section>
+  <aside class="w2kids" style="--n:${Math.max(1, ks.length)}">${cards || '<div class="card">Voeg kinderen toe in de app op je telefoon.</div>'}</aside></div>`;
 }
 /* Nieuwe beloningen live vieren op het wandscherm */
 S.seen = null; S.party = []; S.partyOn = false;
@@ -1215,7 +1289,7 @@ function tickTimers() {
     const ends = +n.dataset.ends, left = ends - Date.now();
     if (n.dataset.fmt === 'mmss') n.textContent = fmtLeft(ends);
     else if (n.dataset.fmt === 'min') n.textContent = Math.max(0, Math.ceil(left / 60e3));
-    else if (n.dataset.total) n.setAttribute('stroke-dashoffset', (527.8 * (1 - Math.max(0, left / +n.dataset.total))).toFixed(1));
+    else if (n.dataset.total) { const C = +(n.dataset.c || 527.8); n.setAttribute('stroke-dashoffset', (C * (1 - Math.max(0, left / +n.dataset.total))).toFixed(1)); }
   });
   for (const t of S.data.timers) {
     const key = t.id + ':' + t.endsAt;
@@ -1569,6 +1643,7 @@ async function startDemo() {
   put('events', { title: 'Kerstvakantie', date: `${yr}-12-19`, endDate: `${yr + 1}-01-03`, category: 'vakantie', allDay: true, countdown: true, memberIds: [] });
   const kip = put('animals', { name: 'De kippen', species: 'kip', feedTimes: '8:00 en 17:30', care: 'Legmeel in de bak, water elke ochtend verversen.', kidTasks: 'Eieren rapen, graan strooien' });
   put('animals', { name: 'Bolletje', species: 'konijn', feedTimes: '8:00 en 18:00', care: 'Hooi onbeperkt, verse groente.', kidTasks: 'Hooi geven' });
+  put('animals', { name: 'Bo', species: 'hond', feedTimes: '7:30 en 17:00', care: 'Twee keer per dag brokken, vers water.', kidTasks: 'Bak vullen met papa of mama' });
   data.animallog.push({ id: t, date: t, entries: { [kip]: { am: true, amAt: '08:05', eggs: 3 } } });
   put('beds', { name: 'Bed bij de schuur', crops: [{ name: 'Boerenkool', sown: d(-120) }], lastWatered: d(-1) });
   put('notes', { text: 'Vrijdag eten we pannenkoeken!', fromId: mama, color: NOTE_COLORS[0] });
@@ -1642,7 +1717,7 @@ function setWall() {
   const url = SITE() + '#wand';
   const tog = (k, l) => `<label class="check"><input type="checkbox" data-setting="${k}" ${cfg(k) ? 'checked' : ''}> ${l}</label>`;
   return `<div class="grid g2"><div class="card stack"><h3>Wandscherm of tv instellen</h3><ol style="margin:0;padding-left:1.2em"><li>Open op de tv of het scherm de browser en ga naar:<br><code style="word-break:break-all;background:#fff;padding:.2em .4em;border-radius:6px;border:2px solid var(--line)">${esc(url)}</code></li><li>Er verschijnt een code van 6 cijfers.</li><li>Typ die code hier bij <b>Apparaten</b>. Klaar: het scherm onthoudt het en start voortaan meteen.</li></ol><div class="row"><button class="btn ghost" data-act="copywall">Link kopiëren</button></div><p class="small muted" style="margin:0">Inloggen is niet nodig. Een gekoppeld scherm kan alleen kijken, niets veranderen.</p></div>
-  <div class="card stack"><h3>Wat het wandscherm doet</h3>${tog('sound', 'Belletje bij elke beloning en als de kijktijd om is')}${tog('voice', 'Voorlezen ("Goed zo! Tanden gepoetst!")')}${tog('showAgenda', 'Agenda van vandaag tonen')}${tog('showPhotos', 'Foto\'s tonen')}${tog('calm', 'Rustig: geen bewegende dieren')}<p class="small muted" style="margin:0">Geluid werkt op een tv vaak pas na één klik met de afstandsbediening op het scherm.</p></div>
+  <div class="card stack"><h3>Wat het wandscherm doet</h3>${tog('sound', 'Belletje bij elke beloning en als de kijktijd om is')}${tog('voice', 'Voorlezen ("Goed zo! Tanden gepoetst!")')}${tog('showAgenda', 'Agenda van vandaag tonen')}${tog('showPhotos', 'Foto\'s en werkstukjes tonen')}${tog('showAnimals', 'Onze dieren tonen')}${tog('calm', 'Rustig: geen bewegende dieren')}<p class="small muted" style="margin:0">Geluid werkt op een tv vaak pas na één klik met de afstandsbediening op het scherm.</p></div>
   <div class="card stack"><h3>Over schermtijd</h3><p style="margin:0">De app houdt de minuten bij en laat de aftelklok zien. Tablet of tv aan- en uitzetten doen jullie zelf: Apple Schermtijd, Google Family Link en spelcomputers hebben geen koppeling waarmee een website ze kan bedienen.</p></div></div>`;
 }
 function setData() {
@@ -1856,7 +1931,8 @@ setInterval(() => {
   tickTimers();
   const n = new Date(), day = today();
   if (S.lastDay && S.lastDay !== day) { S.calRef = null; render(); } S.lastDay = day;
-  if (S.wall && !S.partyOn && !modalOpen() && (n.getSeconds() % 20 === 0 || n.getMinutes() !== lastMin)) render();
+  if (S.wall && !S.partyOn && !modalOpen() && n.getSeconds() % 12 === 0) { S.slideIx = (S.slideIx || 0) + 1; render(); }
+  else if (S.wall && !S.partyOn && !modalOpen() && n.getMinutes() !== lastMin) render();
   lastMin = n.getMinutes();
 }, 1000);
 addEventListener('online', () => { render(); flushQueue(); });
