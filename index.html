@@ -465,6 +465,86 @@ html,body{background:#fbf4e3!important;color:#3b2f24}
 .kk-row .kk-icons{max-height:4.6vh}
 .kk{justify-content:center}
 
+/* ---------- kleuren per dagdeel, seizoenen en weer ---------- */
+.wall2{position:relative;transition:background 2s}
+.wall2.tm-ochtend{background:linear-gradient(180deg,#ffe3d3 0%,#fff1d6 45%,#fbf4e3 100%)}
+.wall2.tm-dag{background:linear-gradient(180deg,#d6edf8 0%,#e8f5e6 50%,#f2f8e6 100%)}
+.wall2.tm-avond{background:linear-gradient(180deg,#fcd7b8 0%,#f3dbe6 55%,#e6dcf3 100%)}
+.wall2.tm-stil,.wall2.tm-nacht{background:linear-gradient(180deg,#1b2442 0%,#2b3863 100%);color:#f3eedb}
+.wall2.tm-stil .w2date,.wall2.tm-nacht .w2date{color:#c9c3e6}
+.wall2.tm-stil .w2clock,.wall2.tm-nacht .w2clock{color:#f3eedb;opacity:.85}
+.wall2.tm-stil .dia,.wall2.tm-nacht .dia{border-color:#3d4b7a;background:#1b2442}
+.wall2.tm-stil .kk:not(.kk-night){filter:saturate(.8) brightness(.95)}
+.wall2>header,.wall2>section,.wall2>aside{position:relative;z-index:1}
+.garland{position:absolute;left:0;right:0;top:0;width:100%;height:4.4vh;z-index:3;pointer-events:none;overflow:visible}
+.garland .bulb{animation:bulb 2.4s ease-in-out infinite}
+@keyframes bulb{0%,100%{opacity:1}50%{opacity:.45}}
+.w2weather{display:flex;align-items:center;gap:.8vh}
+.w2weather b{font-family:var(--font-display);font-size:4.4vh;font-weight:600}
+.w2fun{flex:1;min-width:0;font-family:var(--font-display);font-size:3.6vh;font-weight:600;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--terra-d)}
+.tm-stil .w2fun,.tm-nacht .w2fun{color:#f6e7a6}
+.w2dots{margin-left:0}
+.wfx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:4}
+.wfx i{position:absolute;top:-6vh;display:block}
+.fx-s i{width:calc(1.4vh * var(--s));height:calc(1.4vh * var(--s));border-radius:50%;background:#fff;box-shadow:0 0 .6vh rgba(255,255,255,.8);opacity:.85;animation:snow linear infinite}
+@keyframes snow{0%{transform:translate(0,0)}50%{transform:translate(3vw,55vh)}100%{transform:translate(-1vw,112vh)}}
+.fx-r i{width:.35vh;height:3.4vh;border-radius:999px;background:linear-gradient(#7fb4d6,rgba(127,180,214,0));opacity:.45;animation:rain linear infinite}
+@keyframes rain{to{transform:translate(-2vw,112vh)}}
+.fx-l i{left:-5vw;width:2.4vh;height:1.6vh;border-radius:0 100% 0 100%;background:var(--c);opacity:.8;animation:leaf linear infinite}
+@keyframes leaf{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(55vw,8vh) rotate(260deg)}100%{transform:translate(112vw,-3vh) rotate(520deg)}}
+body.calm .wfx,body.calm .garland .bulb{animation:none!important}
+.avatar{position:relative}
+.muts{position:absolute;left:14%;top:-40%;width:74%;pointer-events:none;transform:rotate(10deg)}
+.muts svg{width:100%;height:auto;display:block}
+.kk-later .kk-sfi{filter:none;opacity:.8}
+.kk.ph-klaar{background:linear-gradient(90deg,#fff1d6,var(--paper) 60%)}
+.kk.ph-school{background:linear-gradient(90deg,#e3eefa,var(--paper) 60%)}
+/* Speelidee van de dag */
+.dia-idee{justify-content:center;background:radial-gradient(circle at 20% 30%,#fff7df,#fffaf0 60%)}
+.idee-tag{align-self:flex-start;font-family:var(--font-display);font-size:3.6vh;font-weight:600;background:#fff0c2;border:.4vh solid var(--sun-d);border-radius:999px;padding:.6vh 2.4vh;color:var(--ink)}
+.idee-door{align-self:flex-start;display:flex;align-items:center;gap:2vh}
+.door-n{display:flex;align-items:center;justify-content:center;width:11vh;height:11vh;border-radius:2vh;background:#c7363a;color:#fff7df;font-family:var(--font-display);font-size:7vh;font-weight:600;box-shadow:inset 0 0 0 .6vh #f3c246,0 .6vh 0 #8e2522;transform:perspective(40vh) rotateY(-14deg)}
+.door-l{font-family:var(--font-display);font-size:3.8vh;font-weight:600;color:#2f5a32}
+.idee-body{flex:1;min-height:0;display:flex;align-items:center;gap:4vh}
+.idee-av{width:26vh;height:26vh;flex:none;animation:sway 3s ease-in-out infinite}
+.idee-av svg{width:100%;height:100%}
+.idee-bubble{position:relative;flex:1;background:#fff;border:.6vh solid var(--ink);border-radius:4vh;padding:3.4vh 4vh;font-family:var(--font-display);font-weight:600;font-size:5.4vh;line-height:1.15;box-shadow:0 .8vh 0 rgba(59,47,36,.15)}
+.idee-bubble::before{content:"";position:absolute;left:-3.4vh;top:45%;border:1.6vh solid transparent;border-right:2.4vh solid var(--ink)}
+.idee-foot{font-size:2.8vh;font-weight:800;color:var(--ink-soft)}
+/* Ochtend-stil en nacht */
+.dia-stil{position:absolute;inset:0;overflow:hidden}
+.dia-stil>svg{position:absolute;inset:0;width:100%;height:100%}
+.dia-stil .twinkle{animation:bulb 3s ease-in-out infinite}
+.stil-sleep{position:absolute;left:4%;bottom:6%;display:flex;gap:2vh}
+.ss{position:relative;width:11vh;height:11vh;animation:breathe 4s ease-in-out infinite}
+.ss svg{width:100%;height:100%;border-radius:50%}
+.ss i{position:absolute;right:-.4vh;top:-2vh;font-style:normal;font-weight:900;font-size:3vh;color:#f3eedb;animation:zz 3s ease-in-out infinite}
+.ss i+i{right:-2.4vh;top:-4vh;font-size:2.2vh;animation-delay:1.2s}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.stil-msg{position:absolute;left:0;right:0;top:9%;display:flex;flex-direction:column;align-items:center;gap:1.4vh;text-align:center;color:#fff7df;padding:0 4vh}
+.stil-msg b{font-family:var(--font-display);font-weight:600;font-size:7vh;line-height:1.05;text-shadow:0 .4vh 1.4vh rgba(0,0,0,.35)}
+.stil-msg span{font-size:3.4vh;font-weight:800;opacity:.92}
+.pcomp{font-family:var(--font-display);font-size:4vh;font-weight:600;color:var(--terra-d)}
+/* Dagritme instellen op de telefoon */
+.rdays{display:flex;flex-direction:column;gap:.7em}
+.rday{border-top:2px dashed var(--line);padding-top:.5em}
+.rday>b{display:block;text-transform:capitalize;margin-bottom:.3em}
+.rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.4em .6em}
+.rgrid label{display:flex;flex-direction:column;font-size:.78em;font-weight:800;color:var(--ink-soft);gap:.15em}
+.rgrid input{width:100%;min-width:0;min-height:2.3em;padding:.2em .3em;border:2px solid var(--line);border-radius:10px;background:#fff;font-size:1.15em;color:var(--ink)}
+.rh-house input{max-width:9em}
+/* Telefoon: slinger en kleur met de dag mee */
+.topbar{position:relative;padding-top:1.4em}
+.tb-garland{position:absolute;left:0;right:0;top:0;width:100%;height:1.5em;pointer-events:none}
+body.tm-ochtend .topbar{background:linear-gradient(180deg,#ffe8da,#fff6e2)}
+body.tm-dag .topbar{background:linear-gradient(180deg,#dcf0f9,#eef7e6)}
+body.tm-avond .topbar{background:linear-gradient(180deg,#fcdcc0,#efe0f2)}
+body.tm-stil .topbar,body.tm-nacht .topbar{background:linear-gradient(180deg,#26325a,#36457a);color:#f3eedb}
+body.tm-stil .topbar .tb-next,body.tm-nacht .topbar .tb-next,body.tm-stil .topbar .tb-date,body.tm-nacht .topbar .tb-date{color:#d9d2ee}
+body:not(.is-wall).tm-ochtend{background:#fff6ea}
+body:not(.is-wall).tm-dag{background:#f6f9ec}
+body:not(.is-wall).tm-avond{background:#fbf1ee}
+
 </style>
 </head>
 <body>
@@ -1066,30 +1146,45 @@ const DAYS_SHORT = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
 const hm2m = s => { if (!s) return null; const [h, m] = s.split(':').map(Number); return h * 60 + m; };
 const m2hm = m => pad(Math.floor(m / 60) % 24) + ':' + pad(m % 60);
 const nowMin = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60; };
-/* Fase van de dag voor een kind, of null als er geen ritme is ingevuld */
+/* Fase van de dag voor een kind, of null als er geen ritme is ingevuld.
+   Velden per dag (index 0 = zondag): wake (op), school (vertrek), home (thuis), eat, bed, film (kijken vanaf) */
+const rget = (r, f, d) => hm2m((r[f] || [])[d]);
+const houseWake = () => hm2m(cfg('wakeTime')) ?? 420;
 function dayPhase(k, dt = new Date()) {
   const r = k && k.rhythm; if (!r) return null;
-  const d = dt.getDay(), eat = hm2m((r.eat || [])[d]), bed = hm2m((r.bed || [])[d]);
-  if (bed === null) return null;
-  const t = dt.getHours() * 60 + dt.getMinutes() + dt.getSeconds() / 60, wind = bed - 30, e = eat ?? (bed - 90);
-  const start = Math.min(e - 150, 15 * 60);
+  const d = dt.getDay(), bed = rget(r, 'bed', d); if (bed === null) return null;
+  const t = dt.getHours() * 60 + dt.getMinutes() + dt.getSeconds() / 60, wind = bed - 30;
+  const wake = rget(r, 'wake', d) ?? houseWake(), school = rget(r, 'school', d), home = school !== null ? (rget(r, 'home', d) ?? 900) : null;
+  const e = rget(r, 'eat', d) ?? (bed - 90), film = rget(r, 'film', d);
+  const start = home !== null ? Math.max(home, Math.min(e - 150, 15 * 60)) : Math.min(e - 150, 15 * 60);
   let phase, next, nextName;
-  if (t < 6 * 60) { phase = 'nacht'; }
+  if (t < wake) { phase = 'nacht'; next = wake; nextName = 'opstaan'; }
   else if (t >= bed) { phase = 'slapen'; }
+  else if (school !== null && t < school) { phase = 'klaar'; next = school; nextName = 'naar school'; }
+  else if (school !== null && t < home) { phase = 'school'; next = home; nextName = 'thuis'; }
   else if (t >= wind) { phase = 'rustig'; next = bed; nextName = 'slapen'; }
   else if (t >= e + 30) { phase = 'avond'; next = wind; nextName = 'verhaaltje'; }
   else if (t >= e) { phase = 'eten'; next = e + 30; nextName = 'na het eten'; }
   else if (t >= e - 15) { phase = 'bijna'; next = e; nextName = 'eten'; }
   else { phase = 'spelen'; next = e; nextName = 'eten'; }
-  const st = [start, e, wind, bed];
   let pos;
   if (phase === 'nacht' || phase === 'slapen') pos = 1;
-  else if (t <= start) pos = 0;
-  else { let i = 0; while (i < 3 && t > st[i + 1]) i++; pos = (i + Math.min(1, (t - st[i]) / Math.max(1, st[i + 1] - st[i]))) / 3; }
+  else if (phase === 'klaar') pos = Math.min(1, Math.max(0, (t - wake) / Math.max(1, school - wake)));
+  else if (phase === 'school') pos = Math.min(1, (t - school) / Math.max(1, home - school));
+  else { const st = [start, e, wind, bed]; if (t <= start) pos = 0; else { let i = 0; while (i < 3 && t > st[i + 1]) i++; pos = (i + Math.min(1, (t - st[i]) / Math.max(1, st[i + 1] - st[i]))) / 3; } }
   const left = next ? Math.max(0, Math.ceil(next - t)) : 0;
-  const span = next ? (phase === 'spelen' ? Math.min(120, next - start) : phase === 'bijna' ? 15 : phase === 'eten' ? 30 : next - (phase === 'avond' ? e + 30 : wind)) : 1;
-  return { phase, eat: e, bed, wind, left, span: Math.max(1, span), pos, nextName, screenFree: !!cfg('screenFreeAfterDinner') && (t >= e || t < 6 * 60) };
+  const span = phase === 'klaar' ? school - wake : phase === 'school' ? home - school : phase === 'nacht' ? 60 : next ? (phase === 'spelen' ? Math.min(120, next - start) : phase === 'bijna' ? 15 : phase === 'eten' ? 30 : next - (phase === 'avond' ? e + 30 : wind)) : 1;
+  /* Wanneer mag er gekeken worden? Nooit voor school, niet voor de filmtijd, niet na het eten (als dat zo is ingesteld) */
+  let why = null;
+  if (phase === 'nacht' || phase === 'slapen') why = 'slapen';
+  else if (phase === 'klaar' || phase === 'school') why = 'school';
+  else if (cfg('screenFreeAfterDinner') && t >= e) why = 'eten';
+  else if (film !== null && t < film) why = 'later';
+  return { phase, wake, school, home, eat: e, bed, wind, film, left, span: Math.max(1, span), pos, nextName, screenFree: !!why, why, filmUntil: cfg('screenFreeAfterDinner') ? e : wind };
 }
+/* Ochtendpad voor schooldagen */
+const MORNING = [['👕', 'aankleden'], ['🥣', 'ontbijten'], ['🪥', 'tanden poetsen'], ['🧥', 'jas en tas'], ['🏫', 'naar school']];
+const morningStep = ph => Math.min(3, Math.floor(ph.pos * 4));
 const PHRASES = {
   spelen: ['{Dier} vraagt: wat ga jij vandaag bouwen?', 'Tijd om te spelen! Waar ga jij op avontuur?', 'Wat zou jij vandaag willen ontdekken?', 'Misschien een hut, een tekening of een verhaal? Jij kiest!', 'De kippen zijn benieuwd wat jij gaat maken.'],
   bijna: ['Bijna eten! De koe ruikt al iets lekkers.', 'Nog even, dan gaan we aan tafel.', 'Speelgoed even laten rusten? Het eten komt eraan.'],
@@ -1097,10 +1192,15 @@ const PHRASES = {
   avond: ['De schermen gaan slapen. Tijd voor knuffels, puzzels en spelletjes.', 'Wat bouwen we nog met de blokken?', 'Rustig spelen. {Dier} gaat ook al uitrusten.'],
   rustig: ['Pyjama aan en een verhaaltje. Welk boek kies jij?', 'Tanden poetsen, en dan lekker in bed met een verhaal.', '{Dier} gaat ook al slapen. Jij ook bijna!'],
   slapen: ['Slaap lekker, {naam}. Droom maar van de boerderij.', 'Welterusten, {naam}. Morgen weer een nieuw avontuur.', 'De maan past op de boerderij. Slaap lekker!'],
-  nacht: ['Ssst, iedereen slaapt nog.', 'De boerderij slaapt. Welterusten.']
+  nacht: ['Nog even slapen, de zon is nog niet op.', 'Ssst, {naam} droomt nog.'],
+  school: ['{naam} is op school. Wat ontdek jij vandaag?', 'Op school aan het spelen en leren. Straks weer thuis!', 'De boerderij wacht op je, {naam}. Tot straks!'],
+  klaar0: ['Goedemorgen {naam}! Wat trek jij vandaag aan? Zachtjes hoor, de anderen slapen nog.', 'Kleren aan, {naam}! Welke sokken kies je?'],
+  klaar1: ['Tijd voor ontbijt! {Dier} eet ook.', 'Lekker ontbijten, dan heb je veel energie.'],
+  klaar2: ['Tanden poetsen: boven, onder, en rond-je-rond!', 'Glimmende tanden! Poets ze maar schoon.'],
+  klaar3: ['Jas aan, tas mee. Op naar school!', 'Schoenen aan? Dan ben je klaar voor avontuur!']
 };
 const HET = ['schaap', 'konijn', 'varken'];
-function phrase(k, ph) { const list = PHRASES[ph.phase] || ['']; const i = (Math.floor(Date.now() / 600000) + (k.name || '').length) % list.length; const a = k.animal || 'kip', dier = (HET.includes(a) ? 'Het ' : 'De ') + (ANIMAL_NL[a] || 'Kip').toLowerCase(); return list[i].replace('{Dier}', dier).replace('{naam}', k.name || ''); }
+function phrase(k, ph) { const list = PHRASES[ph.phase === 'klaar' ? 'klaar' + morningStep(ph) : ph.phase] || ['']; const i = (Math.floor(Date.now() / 600000) + (k.name || '').length) % list.length; const a = k.animal || 'kip', dier = (HET.includes(a) ? 'Het ' : 'De ') + (ANIMAL_NL[a] || 'Kip').toLowerCase(); return list[i].replace('{Dier}', dier).replace('{naam}', k.name || ''); }
 /* Taartklokje: hoeveel tijd er nog is tot het volgende moment, ook zonder klok te kunnen lezen */
 function pieClock(frac, color) {
   const f = Math.max(0, Math.min(1, frac)), a = f * 2 * Math.PI, x = 50 + 40 * Math.sin(a), y = 50 - 40 * Math.cos(a);
@@ -1108,9 +1208,184 @@ function pieClock(frac, color) {
   return `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#fff" stroke="#3b2f24" stroke-width="4"/>${path}${Array.from({ length: 12 }, (_, i) => { const b = i * Math.PI / 6; return `<line x1="${50 + 42 * Math.sin(b)}" y1="${50 - 42 * Math.cos(b)}" x2="${50 + 46 * Math.sin(b)}" y2="${50 - 46 * Math.cos(b)}" stroke="#3b2f24" stroke-width="2"/>`; }).join('')}<circle cx="50" cy="50" r="4" fill="#3b2f24"/></svg>`;
 }
 function dagpad(k, ph) {
+  if (ph.phase === 'klaar') { const cur = morningStep(ph); return `<div class="dagpad"><div class="dp-track"><i style="width:${(ph.pos * 100).toFixed(1)}%"></i></div>${MORNING.map(([ic], i) => `<span class="dp-st ${i <= cur ? 'done' : ''} ${i === cur ? 'now' : ''}" style="left:${i * 25}%">${ic}</span>`).join('')}<span class="dp-me" style="left:${(ph.pos * 100).toFixed(1)}%">${avatar(k.animal, tint(k.color))}</span></div>`; }
   const st = [['🎈', 'spelen'], ['🍽️', 'eten'], ['📖', 'verhaal'], ['🌙', 'slapen']];
-  const cur = { spelen: 0, bijna: 0, eten: 1, avond: 1, rustig: 2, slapen: 3, nacht: 3 }[ph.phase];
+  const cur = { school: 0, spelen: 0, bijna: 0, eten: 1, avond: 1, rustig: 2, slapen: 3, nacht: 3 }[ph.phase];
   return `<div class="dagpad"><div class="dp-track"><i style="width:${(ph.pos * 100).toFixed(1)}%"></i></div>${st.map(([ic, l], i) => `<span class="dp-st ${i <= cur ? 'done' : ''} ${i === cur ? 'now' : ''}" style="left:${i * 100 / 3}%">${ic}</span>`).join('')}<span class="dp-me" style="left:${(ph.pos * 100).toFixed(1)}%">${avatar(k.animal, tint(k.color))}</span></div>`;
+}
+
+/* ===== Seizoenen, weer, kleuren per dagdeel, speelideeën en ochtend-stil ===== */
+/* Feestseizoen: Sint vanaf 10 november tot en met 5 december, kerst van 6 december tot en met 6 januari */
+function feestSeason(dt = new Date()) {
+  const m = dt.getMonth(), d = dt.getDate();
+  if ((m === 10 && d >= 10) || (m === 11 && d <= 5)) return 'sint';
+  if ((m === 11 && d >= 6) || (m === 0 && d <= 6)) return 'kerst';
+  return seasonOf(m);
+}
+/* Weer: wat de ouder vandaag koos gaat voor, anders het automatische weer */
+S.autoW = LS.get('fb-autow', null);
+function curWeather() {
+  if (S.weather && S.weather.date === today()) return { kind: S.weather.kind, temp: S.autoW && Date.now() - S.autoW.ts < 3 * 3600e3 ? S.autoW.temp : null };
+  if (S.autoW && Date.now() - S.autoW.ts < 3 * 3600e3) return S.autoW;
+  return null;
+}
+function wmap(code, wind) {
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return 'sneeuw';
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82) || code >= 95) return 'regen';
+  if (code === 45 || code === 48) return 'mist';
+  if (wind >= 35) return 'wind';
+  return code <= 1 ? 'zon' : 'wolk';
+}
+function fetchWeather(force) {
+  const lat = cfg('lat'), lon = cfg('lon'); if (!lat || !lon || !navigator.onLine) return;
+  if (!force && S.autoW && S.autoW.lat === lat && Date.now() - S.autoW.ts < 30 * 60e3) return;
+  if (S.wFetching) return; S.wFetching = true;
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,wind_speed_10m,temperature_2m&timezone=auto`)
+    .then(r => r.json()).then(j => { const c = j.current; S.autoW = { kind: wmap(c.weather_code, c.wind_speed_10m), temp: Math.round(c.temperature_2m), ts: Date.now(), lat }; LS.set('fb-autow', S.autoW); scheduleRender(); })
+    .catch(() => { }).finally(() => { S.wFetching = false; });
+}
+/* Elk weer is leuk */
+const WEATHER_FUN = {
+  zon: ['Zonnetjesdag! Kun jij je schaduw vangen?', 'De zon lacht naar de boerderij!', 'Wat een mooie dag om buiten te spelen!'],
+  wolk: ['De wolken spelen verstoppertje met de zon.', 'Welk dier zie jij in de wolken?', 'Een knusse wolkendag!'],
+  regen: ['Plassenweer! Laarzen aan!', 'De eendjes zijn blij met de regen!', 'Hoor je de regen tikken? Tik, tik, tik!'],
+  sneeuw: ['Sneeuw! Wie maakt de grootste sneeuwpop?', 'Alles is wit! Zie je de voetstapjes?', 'Tijd voor een sneeuwengel!'],
+  mist: ['De wolken komen op bezoek op de boerderij.', 'Mist! Een geheimzinnige ontdekkingsdag.', 'Waar zijn de koeien? Ze spelen verstoppertje in de mist!'],
+  wind: ['Vliegerweer! De blaadjes dansen.', 'De wind wil met je spelen!', 'Hou je muts vast, het waait!']
+};
+const WEATHER_EMO = { zon: '☀️', wolk: '⛅', regen: '🌧️', sneeuw: '❄️', mist: '🌫️', wind: '🍃' };
+const dayNo = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60e3) / 864e5);
+const pickOf = (list, salt = 0) => list[(dayNo() + salt) % list.length];
+const weatherLine = w => w ? pickOf(WEATHER_FUN[w.kind] || WEATHER_FUN.zon, Math.floor(new Date().getHours() / 4)) : '';
+
+/* Kleur van de wand per dagdeel */
+function wallTheme(dt = new Date()) {
+  const t = dt.getHours() * 60 + dt.getMinutes(), phs = kids().map(k => dayPhase(k, dt)).filter(Boolean);
+  if (t < houseWake()) return 'stil';
+  if (phs.length ? phs.every(p => p.phase === 'slapen') : t >= 21 * 60) return 'nacht';
+  if (t < 10 * 60) return 'ochtend';
+  if (t < 16.5 * 60) return 'dag';
+  return 'avond';
+}
+
+/* Slingers en sneeuw, regen of blaadjes over het scherm */
+const GARLAND = {
+  kerst: () => { let o = '<path d="M0 6Q50 34 100 8T200 8T300 8T400 8T500 8T600 8T700 8T800 8T900 8T1000 6" fill="none" stroke="#2f5a32" stroke-width="3"/>'; const c = ['#e2463c', '#f3c246', '#3f9488', '#4f86b0', '#cf6a8a']; for (let i = 0; i < 26; i++) { const x = 20 + i * 38.5, y = 8 + 14 * Math.abs(Math.sin((x / 100) * Math.PI)); o += `<g class="bulb" style="animation-delay:${(i % 5) * .45}s"><rect x="${x - 3}" y="${y}" width="6" height="5" fill="#3b2f24"/><ellipse cx="${x}" cy="${y + 13}" rx="6.5" ry="9" fill="${c[i % 5]}"/></g>`; } return o; },
+  sint: () => { let o = '<path d="M0 4Q250 26 500 6T1000 4" fill="none" stroke="#8a6a4a" stroke-width="2.5"/>'; const c = ['#c7363a', '#f3c246', '#fff', '#c7363a', '#f3c246']; for (let i = 0; i < 24; i++) { const x = 10 + i * 41.5, y = 5 + 15 * Math.sin((x / 1000) * Math.PI); o += `<path d="M${x} ${y}L${x + 34} ${y}L${x + 17} ${y + 30}Z" fill="${c[i % 5]}" stroke="#a5302f" stroke-width="1"/>`; } return o; },
+  winter: () => { let o = '<path d="M0 4Q500 22 1000 4" fill="none" stroke="#9fb7c9" stroke-width="2"/>'; for (let i = 0; i < 20; i++) { const x = 25 + i * 50, y = 6 + 10 * Math.sin((x / 1000) * Math.PI); o += `<text x="${x}" y="${y + 22}" font-size="22" text-anchor="middle" fill="#bfe0f2">❄</text>`; } return o; },
+  lente: () => { let o = '<path d="M0 4Q500 24 1000 4" fill="none" stroke="#7d9f62" stroke-width="2.5"/>'; const c = ['#f4a7c0', '#f3e07a', '#b9a3e3', '#9fd6c4']; for (let i = 0; i < 22; i++) { const x = 20 + i * 45, y = 6 + 12 * Math.sin((x / 1000) * Math.PI); o += `<g transform="translate(${x} ${y + 12})">${[0, 72, 144, 216, 288].map(a => `<ellipse rx="5" ry="9" transform="rotate(${a}) translate(0 -8)" fill="${c[i % 4]}"/>`).join('')}<circle r="4.5" fill="#f3c246"/></g>`; } return o; },
+  zomer: () => { let o = '<path d="M0 4Q500 26 1000 4" fill="none" stroke="#8a6a4a" stroke-width="2.5"/>'; const c = ['#e2463c', '#f3c246', '#4f86b0', '#6f9f4f', '#e8893a']; for (let i = 0; i < 24; i++) { const x = 10 + i * 41.5, y = 5 + 16 * Math.sin((x / 1000) * Math.PI); o += `<path d="M${x} ${y}L${x + 34} ${y}L${x + 17} ${y + 28}Z" fill="${c[i % 5]}"/>`; } return o; },
+  herfst: () => { let o = '<path d="M0 4Q500 24 1000 4" fill="none" stroke="#8a6a4a" stroke-width="2.5"/>'; const c = ['#e09a3e', '#cf6a35', '#e8b84a', '#a5552d']; for (let i = 0; i < 22; i++) { const x = 20 + i * 45, y = 6 + 12 * Math.sin((x / 1000) * Math.PI); o += `<path transform="translate(${x} ${y}) rotate(${(i % 3 - 1) * 25})" d="M0 0q14-4 18 12q-12 8-18-12z" fill="${c[i % 4]}"/>`; } return o; }
+};
+function decorHTML(season, w, quiet) {
+  const g = `<svg class="garland" viewBox="0 0 1000 48" preserveAspectRatio="none" aria-hidden="true">${(GARLAND[season] || GARLAND.winter)()}</svg>`;
+  const k = w && w.kind;
+  let fx = '', cls = '';
+  if (quiet) return g;
+  if (k === 'regen') { cls = 'fx-r'; fx = Array.from({ length: 34 }, (_, i) => `<i style="left:${(i * 29.7) % 100}%;animation-delay:${-(i * .13).toFixed(2)}s;animation-duration:${(.8 + (i % 4) * .12).toFixed(2)}s"></i>`).join(''); }
+  else if (k === 'sneeuw' || (season === 'kerst' && k !== 'zon') || (season === 'winter' && k === 'wolk')) { cls = 'fx-s'; fx = Array.from({ length: 30 }, (_, i) => `<i style="left:${(i * 33.3) % 100}%;animation-delay:${-(i * .9).toFixed(1)}s;animation-duration:${9 + (i % 5) * 2}s;--s:${.6 + (i % 3) * .35}"></i>`).join(''); }
+  else if (k === 'wind' || season === 'herfst') { cls = 'fx-l'; fx = Array.from({ length: 12 }, (_, i) => `<i style="top:${(i * 37) % 90}%;animation-delay:${-(i * 1.3).toFixed(1)}s;animation-duration:${7 + (i % 4) * 1.5}s;--c:${['#e09a3e', '#cf6a35', '#e8b84a', '#7d9f62'][i % 4]}"></i>`).join(''); }
+  return g + (fx ? `<div class="wfx ${cls}" aria-hidden="true">${fx}</div>` : '');
+}
+/* Kerstmutsje op de dieren van de kinderen */
+const HAT = `<svg viewBox="0 0 60 50" aria-hidden="true"><path d="M8 38Q20 4 46 6Q54 8 52 22Q46 12 34 16Q22 22 16 40Z" fill="#d93b34"/><rect x="2" y="34" width="34" height="12" rx="6" fill="#fff" transform="rotate(-12 18 40)"/><circle cx="52" cy="24" r="7" fill="#fff"/></svg>`;
+
+/* Namen van eigen dieren gebruiken als ze er zijn: "Vinny wil op reis" */
+function petName(sp, fallback) { const a = (S.data.animals || []).find(x => x.species === sp && x.name); return a ? a.name : fallback; }
+function fillPets(s) { return s.replace(/\{Hond\}/g, () => petName('hond', 'De hond')).replace(/\{Kip\}/g, () => { const a = (S.data.animals || []).find(x => x.species === 'kip'); return a ? 'De kipjes' : 'De kippen'; }); }
+
+/* Speelideeën: open vragen zonder goed of fout */
+const IDEAS = [
+  ['hond', '{Hond} wil op reis. Wat stop jij in de koffer?'],
+  ['vos', 'De vos zoekt een nieuw hol. Kun jij er een bouwen van dekens en kussens?'],
+  ['kip', '{Kip} hebben een ei verstopt. Verstop jij ook iets? Papa of mama mag zoeken!'],
+  ['koe', 'De koe wil een liedje horen. Welk liedje zing jij voor haar?'],
+  ['uil', 'De uil vraagt: teken jij je allermooiste droom?'],
+  ['konijn', 'Het konijn springt zo hoog! Hoe hoog kun jij springen? En hoe ver?'],
+  ['schaap', 'Het schaap wil een kasteel. Bouw jij er een van blokken of dozen?'],
+  ['varken', 'Het varken heeft honger. Kook jij iets lekkers in je keukentje?'],
+  ['pony', 'De pony wil een parcours! Leg kussens neer om overheen te springen.'],
+  ['eend', 'Het eendje zoekt vriendjes. Hoeveel knuffels zet jij op een rij?'],
+  ['kat', 'De kat speelt verstoppertje. Waar zou jij je verstoppen?'],
+  ['geit', 'De geit wil een verhaal horen. Vertel jij er een met je knuffels?'],
+  ['kip', 'Maak een treintje van stoelen. Waar rijden we naartoe?'],
+  ['vos', 'Doe eens net als een dier. Raden de anderen welk dier je bent?'],
+  ['hond', '{Hond} vraagt: bouw jij een hut waar we samen in passen?'],
+  ['eend', 'Regenweer? Plassen springen met je laarzen! Wie maakt de grootste plons?', { w: ['regen'] }],
+  ['kip', '{Kip} schuilen voor de regen. Maak jij een tent in de kamer?', { w: ['regen'] }],
+  ['koe', 'Hoor je de regen tikken? Maak muziek mee met pannen en lepels!', { w: ['regen'] }],
+  ['hond', 'Kun jij je schaduw vangen? Teken hem met stoepkrijt!', { w: ['zon'] }],
+  ['kip', 'Zoek buiten drie mooie steentjes en maak er een gezichtje van.', { w: ['zon', 'wolk'] }],
+  ['vos', 'Vliegerweer! Ren met een lint en kijk hoe het danst.', { w: ['wind'] }],
+  ['konijn', 'De blaadjes dansen. Dans jij als een blaadje in de wind?', { w: ['wind'] }],
+  ['schaap', 'Sneeuw! Maak een sneeuwpop of een sneeuwengel!', { w: ['sneeuw'] }],
+  ['uil', 'De wolken komen op bezoek. Ga op ontdekkingstocht: wat zie je nog wel?', { w: ['mist'] }],
+  ['schaap', 'Kijk naar de wolken. Welk dier zie jij erin?', { w: ['wolk'] }],
+  ['vos', 'Zoek blaadjes in alle kleuren en maak er een egel van.', { s: ['herfst'] }],
+  ['eend', 'Verzamel kastanjes en eikels. Wat kun jij ervan maken?', { s: ['herfst'] }],
+  ['uil', 'Strooi wat zaadjes voor de vogels. Wie komt er eten?', { s: ['winter'] }],
+  ['schaap', 'Bouw een iglo van kussens!', { s: ['winter'] }],
+  ['konijn', 'Plant een zaadje in een bekertje. Wat zou er groeien?', { s: ['lente'] }],
+  ['schaap', 'De lammetjes huppelen. Huppel jij mee?', { s: ['lente'] }],
+  ['eend', 'Water spelen! Een bak water, bekertjes en een gieter.', { s: ['zomer'] }],
+  ['kip', 'Maak een picknick in de tuin voor je knuffels.', { s: ['zomer'] }],
+  ['pony', 'Wat vindt het paard van Sinterklaas lekker? Leg een wortel klaar!', { s: ['sint'] }],
+  ['hond', 'Bouw een stoomboot van een grote doos. Wie mag er mee?', { s: ['sint'] }],
+  ['koe', 'Zing een Sinterklaasliedje voor de dieren.', { s: ['sint'] }],
+  ['kip', 'Maak een mooie tekening voor Sinterklaas.', { s: ['sint'] }]
+];
+const ADVENT = ['Maak een ster voor in het raam.', 'Zoek een dennenappel en versier hem.', 'Bouw een kerststal met je knuffels.', 'Maak sneeuw van wit papier: knippen of scheuren!', 'Pakjesavond! Zing een liedje voor Sinterklaas.', 'Teken een kerstboom en versier hem.', 'Help mee kerstkoekjes te bakken.', 'Maak een lichtjeswandeling met een zaklamp.', 'Pak een knuffel in als cadeautje. Voor wie is hij?', 'Maak een slinger van papier.', 'Speel rendier: kruipen, draven en springen!', 'Zet de knuffels op een rij voor het kerstkoor.', 'Maak een kerstkaart voor opa en oma.', 'Bouw een slee van een doos.', 'Kijk naar de lichtjes. Hoeveel kleuren tel jij?', 'Vertel een kerstverhaal met je knuffels.', 'Maak een sneeuwpop van wc-rolletjes.', 'Versier een tak met strikjes.', 'Dans rond de kerstboom!', 'Maak een kroon. Jij bent de koning of koningin van de kerst!', 'Strooi vogelvoer: de vogels vieren ook kerst.', 'Bouw een iglo van kussens.', 'Help mee de tafel mooi te maken.', 'Morgen is het kerst! Leg je mooiste knuffel klaar.'];
+const ADVENT_AN = ['uil', 'vos', 'schaap', 'konijn', 'pony', 'kip', 'varken', 'hond', 'kat', 'eend', 'geit', 'koe'];
+function ideaOfDay(dt = new Date()) {
+  if (dt.getMonth() === 11 && dt.getDate() <= 24) { const n = dt.getDate(); return { advent: n, animal: ADVENT_AN[n % 12], text: ADVENT[n - 1] }; }
+  const se = feestSeason(dt), w = curWeather(), wk = w && w.kind;
+  const fit = IDEAS.filter(([, , f]) => !f || (f.w && f.w.includes(wk)) || (f.s && (f.s.includes(se) || f.s.includes(seasonOf(dt.getMonth())))));
+  const special = fit.filter(x => x[2]); const list = special.length && dayNo() % 2 === 0 ? special : fit;
+  const [animal, text] = pickOf(list, 3); return { animal, text: fillPets(text) };
+}
+function ideaSlide() {
+  const id = ideaOfDay(), w = curWeather();
+  return `<div class="dia-pad dia-idee">${id.advent ? `<div class="idee-door"><span class="door-n">${id.advent}</span><span class="door-l">🎄 Deurtje van vandaag</span></div>` : `<div class="idee-tag">💡 Speelidee van vandaag</div>`}
+  <div class="idee-body"><span class="idee-av">${avatar(id.animal, '#fff4d6')}</span><div class="idee-bubble">${esc(id.text)}</div></div>
+  <div class="idee-foot">${w ? WEATHER_EMO[w.kind] + ' ' : ''}Geen goed of fout. Jij bedenkt het!</div></div>`;
+}
+/* Ochtend-stil en nacht: de boerderij slaapt */
+function quietScene(theme) {
+  const t = nowMin(), hw = houseWake(), frac = theme === 'stil' ? Math.max(0, Math.min(1, 1 - (hw - t) / 90)) : 0;
+  const top = `rgb(${Math.round(29 + frac * 150)},${Math.round(39 + frac * 110)},${Math.round(71 + frac * 90)})`, bot = `rgb(${Math.round(51 + frac * 195)},${Math.round(65 + frac * 120)},${Math.round(110 + frac * 60)})`;
+  const sunY = 330 - frac * 190, moonY = 110 + frac * 220;
+  const sleepers = [...new Set([...kids().map(k => k.animal || 'kip'), ...(S.data.animals || []).map(a => a.species)])].filter(a => ANIMAL_NL[a]).slice(0, 5);
+  const stars = Array.from({ length: 22 }, (_, i) => `<circle class="twinkle" style="animation-delay:${(i % 6) * .5}s" cx="${(i * 97) % 800}" cy="${20 + (i * 53) % 190}" r="${1.5 + (i % 3)}" fill="#fff7d0" opacity="${(1 - frac).toFixed(2)}"/>`).join('');
+  const msg = theme === 'stil' ? `<b>Sssst… iedereen slaapt nog</b><span>Speel maar heel zachtjes. Om ${m2hm(hw)} komt de zon op ☀️</span>` : `<b>De boerderij slaapt</b><span>Welterusten. Morgen weer een nieuw avontuur 🌙</span>`;
+  return `<div class="dia-stil"><svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="qs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${bot}"/></linearGradient></defs><rect width="800" height="450" fill="url(#qs)"/>${stars}
+  <g transform="translate(210 ${moonY})"><circle r="34" fill="#f6efc9"/><circle cx="14" cy="-8" r="30" fill="${top}"/></g>
+  ${theme === 'stil' ? `<g transform="translate(650 ${sunY})"><circle r="56" fill="#f6d260" opacity=".3"/><circle r="38" fill="#f3c246"/></g>` : ''}
+  <path d="M0 330Q200 290 400 320T800 310V450H0Z" fill="#2c3d36"/><path d="M0 370Q300 340 600 365T800 360V450H0Z" fill="#22312b"/>
+  <g transform="translate(520 236)"><path d="M0 60L0 20L45 -8L90 20L90 60Z" fill="#6b2f2a"/><path d="M-6 22L45 -14L96 22" fill="none" stroke="#3e1d1a" stroke-width="8"/><rect x="35" y="30" width="20" height="30" fill="#f3c246" opacity="${theme === 'stil' ? .5 + frac * .5 : .25}"/></g></svg>
+  <div class="stil-sleep">${sleepers.map((a, i) => `<span class="ss" style="animation-delay:${i * .7}s">${avatar(a, '#3a4a78')}<i>z</i><i>z</i></span>`).join('')}</div>
+  <div class="stil-msg">${msg}</div></div>`;
+}
+/* Complimenten bij elk zonnetje, steeds anders */
+function compliment(k) {
+  const pets = (S.data.animals || []).filter(a => a.name), p = pets.length ? pets[Math.floor(Math.random() * pets.length)].name : null;
+  const list = ['Wat knap van jou!', 'Jij bent een kanjer!', 'Daar word ik blij van!', 'Super gedaan!', p ? `${p} is trots op je!` : 'De kippen zijn trots op je!', 'De dieren klappen voor je! 👏'];
+  return list[Math.floor(Math.random() * list.length)];
+}
+const CHEER = ['Goed zo', 'Wauw', 'Super', 'Knap hoor', 'Hoera'];
+/* Feestdagen om naartoe te tellen in nachtjes slapen */
+function feestCountdowns() {
+  const t = today(), y = +t.slice(0, 4), out = [];
+  for (const [md, title] of [['12-05', 'Pakjesavond'], ['12-25', 'Kerstfeest']]) {
+    let s = `${y}-${md}`; if (s < t) s = `${y + 1}-${md}`; const d = diffDays(t, s); if (d <= 40) out.push({ title, days: d, cat: 'feest' });
+  }
+  return out;
+}
+/* Telefoon: kleur en slinger met het dagdeel en seizoen mee */
+function applyTheme() {
+  if (S.mode !== 'live' && S.mode !== 'demo') return;
+  const b = document.body, th = wallTheme(), se = feestSeason();
+  ['stil', 'nacht', 'ochtend', 'dag', 'avond'].forEach(x => b.classList.toggle('tm-' + x, x === th));
+  ['sint', 'kerst', 'winter', 'lente', 'zomer', 'herfst'].forEach(x => b.classList.toggle('se-' + x, x === se));
 }
 
 /* ===== Agenda-hulpjes ===== */
@@ -1144,6 +1419,7 @@ function countdowns(n) {
     if (!m.birth) continue; const s = nextStart({ date: m.birth, repeat: 'yearly' }, t); if (!s) continue; const d = diffDays(t, s); if (d > 60) continue;
     out.push({ title: m.name, days: d, cat: 'verjaardag', bday: true });
   }
+  out.push(...feestCountdowns());
   return out.sort((a, b) => a.days - b.days).slice(0, n);
 }
 function countHTML(c) {
@@ -1166,10 +1442,10 @@ function topbar() {
   const fam = S.settings && S.settings.family ? ', familie ' + esc(S.settings.family) : '';
   const nx = nextEvent();
   const nxt = nx ? `Hierna: ${nx.k === today() ? '' : nx.k === addDays(today(), 1) ? 'morgen ' : fmtShort(nx.k) + ' '}${nx.ev.time ? nx.ev.time + ' ' : ''}${esc(nx.ev.title)}` : 'Geen afspraken deze week';
-  const w = S.weather && S.weather.date === today() ? S.weather.kind : null;
-  return `<div class="tb-time"><span class="tb-clock num" id="clock">${clockText()}</span><span class="tb-date">${esc(fmtDay(today()))}</span></div>
-  <div class="tb-greet"><b>${greetWord()}${fam}!</b><span class="tb-next">${nxt}</span></div>
-  <button class="iconbtn weatherbtn" data-act="weather" aria-label="Weer van vandaag kiezen">${w ? wIcon(w) + `<span class="lb">${WEATHER[w].label}</span>` : wIcon('wolk') + '<span class="lb">Welk weer?</span>'}</button>`;
+  const cw = curWeather(), w = cw && cw.kind;
+  return `<svg class="tb-garland" viewBox="0 0 1000 48" preserveAspectRatio="none" aria-hidden="true">${(GARLAND[feestSeason()] || GARLAND.winter)()}</svg><div class="tb-time"><span class="tb-clock num" id="clock">${clockText()}</span><span class="tb-date">${esc(fmtDay(today()))}</span></div>
+  <div class="tb-greet"><b>${greetWord()}${fam}!</b><span class="tb-next">${w ? WEATHER_EMO[w] + ' ' + esc(weatherLine(cw)) + ' · ' : ''}${nxt}</span></div>
+  <button class="iconbtn weatherbtn" data-act="weather" aria-label="Weer van vandaag kiezen">${w ? wIcon(w) + `<span class="lb">${cw.temp != null ? cw.temp + '° ' : ''}${WEATHER[w].label}</span>` : wIcon('wolk') + '<span class="lb">Welk weer?</span>'}</button>`;
 }
 function banners() {
   let b = '';
@@ -1261,7 +1537,7 @@ function viewBelonen() {
   const chips = `<div class="kidchips">${ks.map(k => `<button class="kidchip ${S.sel.includes(k.id) && !all ? 'on' : ''}" style="--kc:${k.color}" data-act="selkid" data-id="${k.id}">${mAvatar(k.id)}<span>${esc(k.name)}</span></button>`).join('')}${ks.length > 1 ? `<button class="kidchip ${all ? 'on' : ''}" style="--kc:#8a6a4a" data-act="selall"><span class="avatar" style="display:flex;align-items:center;justify-content:center;font-size:1.5em">👨‍👩‍👧</span><span>Iedereen</span></button>` : ''}</div>`;
   const status = S.sel.map(id => {
     const k = member(id), bal = balanceOf(id).balance, t = timerOf(id), act = timerActive(t);
-    return `<div class="kidstat" style="--kc:${k.color}">${mAvatar(id)}<div style="flex:1"><b>${esc(k.name)}</b><div class="num"><span class="big">${bal}</span> ${minWord(bal)}</div>${act ? `<div class="chip ok">📺 kijkt nog <span class="num" data-ends="${t.endsAt}" data-fmt="min">${Math.ceil((t.endsAt - Date.now()) / 60e3)}</span> min</div>` : ''}${(() => { const ph = dayPhase(k); if (!ph) return ''; return `<div class="small muted">${ph.screenFree ? '📺💤 schermvrij' : '🍽️ eten ' + m2hm(ph.eat)} · 🌙 bed ${m2hm(ph.bed)}</div>`; })()}</div><button class="btn ${act ? 'sun' : ''}" data-act="watch" data-id="${id}">📺 ${act ? 'Klok' : 'Kijken'}</button></div>`;
+    return `<div class="kidstat" style="--kc:${k.color}">${mAvatar(id)}<div style="flex:1"><b>${esc(k.name)}</b><div class="num"><span class="big">${bal}</span> ${minWord(bal)}</div>${act ? `<div class="chip ok">📺 kijkt nog <span class="num" data-ends="${t.endsAt}" data-fmt="min">${Math.ceil((t.endsAt - Date.now()) / 60e3)}</span> min</div>` : ''}${(() => { const ph = dayPhase(k); if (!ph) return ''; return `<div class="small muted">${ph.why === 'later' ? '📺 vanaf ' + m2hm(ph.film) : ph.why === 'school' ? (ph.phase === 'klaar' ? '🏫 vertrek ' + m2hm(ph.school) : '🏫 op school') : ph.screenFree ? '📺💤 schermvrij' : '🍽️ eten ' + m2hm(ph.eat)} · 🌙 bed ${m2hm(ph.bed)}</div>`; })()}</div><button class="btn ${act ? 'sun' : ''}" data-act="watch" data-id="${id}">📺 ${act ? 'Klok' : 'Kijken'}</button></div>`;
   }).join('');
   const grid = actsSorted().map(a => `<button class="reward" data-act="award" data-id="${a.id}"><span class="ic">${esc(a.icon || '⭐')}</span><span class="tt">${esc(a.title)}</span><span class="mn">+${minOf(a)} ${minWord(minOf(a)).slice(0, 3)}</span></button>`).join('');
   const log = S.sel.length === 1 ? todayEntries(S.sel[0]) : [];
@@ -1289,11 +1565,14 @@ function watchModal(kid) {
     return;
   }
   const ph = dayPhase(k);
-  if (ph && ph.screenFree && !S.overrideSF) { openModal(`<h2>De schermen slapen 📺💤</h2><p>${esc(k.name)} heeft al gegeten. Jullie afspraak: na het eten geen schermen meer, zodat hij rustig kan worden voor bed.</p><p class="muted">Bewaard voor morgen: <b>${bal} ${minWord(bal)}</b>.</p><div class="foot"><button class="btn ghost" data-act="sfoverride" data-id="${kid}">Toch kijken</button><button class="btn green" data-act="close">Goed zo</button></div>`); return; }
+  if (ph && ph.screenFree && !S.overrideSF) {
+    const why = { eten: [`De schermen slapen 📺💤`, `${esc(k.name)} heeft al gegeten. Jullie afspraak: na het eten geen schermen meer, zodat hij rustig kan worden voor bed.`], school: ph.phase === 'school' ? [`${esc(k.name)} is op school 🏫`, `Na school, vanaf ${m2hm(ph.film ?? ph.home)}, kan het filmpje weer.`] : [`Eerst naar school 🏫`, `'s Ochtends voor school blijft het scherm uit. Na school kan het filmpje weer.`], later: [`Filmtijd is om ${m2hm(ph.film)} 📺`, `Nu is het speeltijd. Om ${m2hm(ph.film)} mag ${esc(k.name)} weer kijken.`], slapen: [`Iedereen slaapt 🌙`, `Het is nu slaaptijd.`] }[ph.why];
+    openModal(`<h2>${why[0]}</h2><p>${why[1]}</p><p class="muted">In de pot: <b>${bal} ${minWord(bal)}</b>, die blijven bewaard.</p><div class="foot"><button class="btn ghost" data-act="sfoverride" data-id="${kid}">Toch kijken</button><button class="btn green" data-act="close">Goed zo</button></div>`); return;
+  }
   S.overrideSF = false;
-  const untilEat = ph && !ph.screenFree && (ph.phase === 'spelen' || ph.phase === 'bijna') ? Math.floor(ph.eat - nowMin()) : Infinity;
+  const untilEat = ph && !ph.screenFree && (ph.phase === 'spelen' || ph.phase === 'bijna') ? Math.floor(ph.filmUntil - nowMin()) : Infinity;
   const opts = [5, 10, 15, 20, 30, 45, 60];
-  openModal(`<h2>Hoe lang mag ${esc(k.name)} kijken?</h2>${isFinite(untilEat) ? `<p class="small" style="margin:.2em 0">Om ${m2hm(ph.eat)} is het eten, dus nog ${Math.max(0, untilEat)} minuten.</p>` : ''}<p class="muted">In de pot: <b>${bal} ${minWord(bal)}</b>${isFinite(room) ? ` · vandaag nog ${room} min toegestaan` : ''}</p>
+  openModal(`<h2>Hoe lang mag ${esc(k.name)} kijken?</h2>${isFinite(untilEat) ? `<p class="small" style="margin:.2em 0">Om ${m2hm(ph.filmUntil)} gaan de schermen slapen, dus nog ${Math.max(0, untilEat)} minuten.</p>` : ''}<p class="muted">In de pot: <b>${bal} ${minWord(bal)}</b>${isFinite(room) ? ` · vandaag nog ${room} min toegestaan` : ''}</p>
   <div class="pick" style="justify-content:center">${opts.map(m => `<button type="button" data-act="watchgo" data-id="${kid}" data-m="${m}" ${m > bal || m > room || m > untilEat ? 'disabled style="opacity:.35"' : ''}><span style="font-family:var(--font-display);font-size:1.5em">${m}</span>&nbsp;min</button>`).join('')}${bal > 0 && bal <= room && !opts.includes(bal) ? `<button type="button" data-act="watchgo" data-id="${kid}" data-m="${bal}"><span style="font-family:var(--font-display);font-size:1.5em">${bal}</span>&nbsp;min (alles)</button>` : ''}</div>
   <p class="small muted" style="margin-top:1em">Het wandscherm laat een zandloper zien die leegloopt en speelt een belletje als de tijd om is. Het apparaat zelf zet je aan en uit zoals je gewend bent.</p><div class="foot"><button class="btn ghost" data-act="close">Annuleren</button></div>`);
 }
@@ -1322,13 +1601,14 @@ async function watchStop(kid) {
 /* ===== Wandscherm (alleen kijken, kinderen bedienen niets) ===== */
 function wallSlides() {
   const out = [], photos = cfg('showPhotos') ? S.data.gallery.filter(g => imgSrc(g)).sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 15) : [];
-  const extra = []; if (cfg('showAgenda')) extra.push({ kind: 'agenda' }); if (cfg('showAnimals') && S.data.animals.length) extra.push({ kind: 'dieren' });
-  if (!photos.length) return extra.length ? extra : [{ kind: 'agenda' }];
+  const extra = [{ kind: 'idee' }]; if (cfg('showAgenda')) extra.push({ kind: 'agenda' }); if (cfg('showAnimals') && S.data.animals.length) extra.push({ kind: 'dieren' });
+  if (!photos.length) return extra;
   let e = 0; photos.forEach((g, i) => { out.push({ kind: 'foto', g }); if (i % 3 === 2 && extra.length) out.push(extra[e++ % extra.length]); });
   extra.forEach(x => { if (!out.includes(x)) out.push(x); });
   return out;
 }
 function slideHTML(sl) {
+  if (sl.kind === 'idee') return ideaSlide();
   if (sl.kind === 'foto') { const g = sl.g, m = member(g.makerId); return `<div class="dia-foto"><div class="dia-frame"><img src="${esc(imgSrc(g))}" alt=""></div><div class="dia-cap">${m ? `<span class="avatar">${avatar(m.animal, tint(m.color))}</span>` : ''}<span><b>${esc(g.title || 'Gemaakt door ' + mName(g.makerId))}</b><small>${esc(mName(g.makerId))}${g.date ? ' · ' + esc(fmtDay(g.date)) : ''}</small></span></div></div>`; }
   if (sl.kind === 'dieren') {
     const lg = logToday();
@@ -1339,22 +1619,27 @@ function slideHTML(sl) {
   return `<div class="dia-pad dia-agenda"><div><h2 class="dia-h">Vandaag</h2>${evT.length ? evT.slice(0, 5).map(row).join('') : '<p class="dia-leeg">Niets gepland. Lekker spelen!</p>'}</div><div><h2 class="dia-h">Morgen</h2>${evM.length ? evM.slice(0, 4).map(row).join('') : '<p class="dia-leeg">Niets gepland.</p>'}</div>${cd.length ? `<div class="dia-cd">${cd.map(c => `<div><span class="num">${c.days}</span>${c.days === 0 ? (c.bday ? 'Vandaag is ' + esc(c.title) + ' jarig!' : 'Vandaag: ' + esc(c.title) + '!') : (c.days === 1 ? 'nachtje' : 'nachtjes') + ' slapen' + (c.bday ? ', dan is ' + esc(c.title) + ' jarig!' : ': ' + esc(c.title))}</div>`).join('')}</div>` : ''}</div>`;
 }
 function viewWall() {
-  const ks = kids(), t = today(), w = S.weather && S.weather.date === t ? S.weather.kind : null;
+  const ks = kids(), t = today(), w = curWeather(), theme = wallTheme(), season = feestSeason();
+  const quiet = theme === 'stil' || theme === 'nacht';
   const slides = wallSlides(); const ix = (S.slideIx || 0) % slides.length; const sl = slides[ix];
+  const hat = season === 'kerst' ? `<i class="muts">${HAT}</i>` : '';
   const cards = ks.map(k => {
     const bal = balanceOf(k.id).balance, tm = timerOf(k.id), act = timerActive(tm), done = tm && !act && Date.now() - tm.endsAt < 5 * 60e3, ph = dayPhase(k);
     const icons = todayEntries(k.id).filter(e => e.kind === 'verdiend').reverse().slice(-8).map(e => `<span>${esc(e.icon || '⭐')}</span>`).join('');
-    if (ph && (ph.phase === 'slapen' || ph.phase === 'nacht')) return `<button class="kk kk-night" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><span class="kk-stars">✦ ✧ ✦</span><span class="avatar kk-sleep">${avatar(k.animal, '#2c3a5e')}<i>z</i><i>z</i></span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><span class="kk-phrase">${esc(phrase(k, ph))}</span></div><span class="kk-moon">🌙</span></button>`;
+    if (ph && (ph.phase === 'slapen' || ph.phase === 'nacht')) return `<button class="kk kk-night" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><span class="kk-stars">✦ ✧ ✦</span><span class="avatar kk-sleep">${avatar(k.animal, '#2c3a5e')}${hat}<i>z</i><i>z</i></span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><span class="kk-phrase">${esc(phrase(k, ph))}</span></div><span class="kk-moon">🌙</span></button>`;
     let right;
     if (act) { const tot = Math.max(1, tm.endsAt - tm.startedAt), frac = Math.max(0, (tm.endsAt - Date.now()) / tot); right = `<div class="kk-timer"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80" fill="#fff" stroke="#efe5cf" stroke-width="26"/><circle class="wt-arc" cx="100" cy="100" r="80" fill="none" stroke="${k.color}" stroke-width="26" stroke-linecap="round" stroke-dasharray="502.7" stroke-dashoffset="${(502.7 * (1 - frac)).toFixed(1)}" transform="rotate(-90 100 100)" data-ends="${tm.endsAt}" data-total="${tot}" data-c="502.7"/><text x="100" y="118" text-anchor="middle" font-size="58">📺</text></svg><div class="kk-num"><b class="num" data-ends="${tm.endsAt}" data-fmt="min">${Math.ceil((tm.endsAt - Date.now()) / 60e3)}</b><small>min kijken</small></div></div>`; }
     else if (done) right = `<div class="kk-done">🔔<small>klaar!</small></div>`;
+    else if (ph && ph.why === 'school') right = `<div class="kk-sf"><span class="kk-sfi">${ph.phase === 'klaar' ? '🎒' : '🏫'}</span><div class="kk-num"><b class="num">${bal}</b><small>${ph.phase === 'klaar' ? 'om ' + m2hm(ph.school) + ' naar school' : 'zonnetjes wachten op je'}</small></div></div>`;
+    else if (ph && ph.why === 'later') right = `<div class="kk-sf kk-later"><span class="kk-sfi">📺</span><div class="kk-num"><b class="num">${bal}</b><small>filmpje vanaf ${m2hm(ph.film)}</small></div></div>`;
     else if (ph && ph.screenFree) right = `<div class="kk-sf"><span class="kk-sfi">📺<i>💤</i></span><div class="kk-num"><b class="num">${bal}</b><small>bewaard voor morgen</small></div></div>`;
     else right = `<div class="kk-pot"><span class="kk-mand">${TILE.mand}</span><div class="kk-num"><b class="num">${bal}</b><small>${minWord(bal)}</small></div></div>`;
     const day = ph ? `<div class="kk-day"><span class="kk-pie">${pieClock(ph.left / ph.span, k.color)}</span><div class="kk-dayr">${dagpad(k, ph)}<span class="kk-phrase">${esc(phrase(k, ph))}</span></div></div>` : '';
-    return `<button class="kk ${ph ? 'ph-' + ph.phase : ''}" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><div class="kk-row"><span class="avatar">${avatar(k.animal, tint(k.color))}</span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><div class="kk-icons">${icons || '<small>vandaag nog niets</small>'}</div></div>${right}</div>${day}</button>`;
+    return `<button class="kk ${ph ? 'ph-' + ph.phase : ''}" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><div class="kk-row"><span class="avatar">${avatar(k.animal, tint(k.color))}${hat}</span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><div class="kk-icons">${icons || '<small>vandaag nog niets</small>'}</div></div>${right}</div>${day}</button>`;
   }).join('');
-  return `<div class="wall2"><header class="w2top"><span id="wallclock" class="w2clock num">${clockText()}</span><span class="w2date">${esc(fmtDay(t))}</span>${w ? `<span class="w2weather">${wIcon(w)}</span>` : ''}<span class="w2dots">${slides.length > 1 ? slides.map((_, i) => `<i class="${i === ix ? 'on' : ''}"></i>`).join('') : ''}</span></header>
-  <section class="dia" aria-live="polite"><div class="dia-in" key="${ix}">${slideHTML(sl)}</div></section>
+  const fun = quiet ? (theme === 'stil' ? '🤫 Zachtjes, iedereen slaapt nog' : '🌙 Welterusten') : w ? `${WEATHER_EMO[w.kind]} ${esc(weatherLine(w))}` : '';
+  return `<div class="wall2 tm-${theme} se-${season}">${cfg('calm') ? '' : decorHTML(season, w, quiet)}<header class="w2top"><span id="wallclock" class="w2clock num">${clockText()}</span><span class="w2date">${esc(fmtDay(t))}</span>${w && !quiet ? `<span class="w2weather">${wIcon(w.kind)}${w.temp != null ? `<b class="num">${w.temp}°</b>` : ''}</span>` : ''}<span class="w2fun">${fun}</span><span class="w2dots">${!quiet && slides.length > 1 ? slides.map((_, i) => `<i class="${i === ix ? 'on' : ''}"></i>`).join('') : ''}</span></header>
+  <section class="dia" aria-live="polite"><div class="dia-in" key="${quiet ? theme : ix}">${quiet ? quietScene(theme) : slideHTML(sl)}</div></section>
   <aside class="w2kids" style="--n:${Math.max(1, ks.length)}">${cards || '<div class="card">Voeg kinderen toe in de app op je telefoon.</div>'}</aside></div>`;
 }
 /* Nieuwe beloningen live vieren op het wandscherm */
@@ -1373,12 +1658,12 @@ function checkNewLedger() {
 function runParty() {
   if (S.partyOn || !S.party.length) return;
   const e = S.party.shift(), k = member(e.memberId); if (!k) { runParty(); return; }
-  S.partyOn = true;
+  S.partyOn = true; const comp = compliment(k);
   const m = e.sun, suns = Array.from({ length: Math.min(m, 10) }, (_, i) => `<span class="fly" style="animation-delay:${.5 + i * .15}s;left:${50 + (i - Math.min(m, 10) / 2) * 7}%">${sunIcon('100%')}</span>`).join('');
   const el = document.createElement('div'); el.className = 'party'; el.style.setProperty('--kc', k.color);
-  el.innerHTML = `<div class="pbox"><span class="pav">${avatar(k.animal, tint(k.color))}</span><span class="pic">${esc(e.icon || '⭐')}</span><b class="pname">Goed zo, ${esc(k.name)}!</b><span class="ptitle">${esc(e.title || '')}</span><span class="pmin">+${m} ${m === 1 ? 'zonnetje' : 'zonnetjes'}</span></div>${suns}`;
+  el.innerHTML = `<div class="pbox"><span class="pav">${avatar(k.animal, tint(k.color))}</span><span class="pic">${esc(e.icon || '⭐')}</span><b class="pname">${CHEER[Math.floor(Math.random() * CHEER.length)]}, ${esc(k.name)}!</b><span class="ptitle">${esc(e.title || '')}</span><span class="pcomp">${esc(comp)}</span><span class="pmin">+${m} ${m === 1 ? 'zonnetje' : 'zonnetjes'}</span></div>${suns}`;
   document.body.appendChild(el); chime('yay');
-  if (cfg('voice')) speak(`Goed zo ${k.name}! ${e.title}. ${m === 1 ? 'Eén zonnetje' : m + ' zonnetjes'} erbij!`);
+  if (cfg('voice')) speak(`Goed zo ${k.name}! ${e.title}. ${m === 1 ? 'Eén zonnetje' : m + ' zonnetjes'} erbij! ${comp.replace(/👏/g, '')}`);
   setTimeout(() => { el.classList.add('out'); setTimeout(() => { el.remove(); S.partyOn = false; render(); runParty(); }, 600); }, 5200);
 }
 /* Klokken die per seconde meelopen, zonder de hele pagina te herbouwen */
@@ -1725,7 +2010,7 @@ async function startDemo() {
   const bd = (age, inDays) => { const p = parseKey(d(inDays)); p.setFullYear(p.getFullYear() - age); return dkey(p); };
   const mama = put('members', { name: 'Mama', role: 'ouder', animal: 'koe', color: COLORS[1] });
   put('members', { name: 'Papa', role: 'ouder', animal: 'pony', color: COLORS[7] });
-  const sam = put('members', { name: 'Sam', role: 'kind', animal: 'kip', color: COLORS[0], birth: bd(4, 6), rhythm: { eat: Array(7).fill('17:30'), bed: ['18:30', '18:30', '18:30', '18:30', '18:30', '19:15', '19:15'] } });
+  const sam = put('members', { name: 'Sam', role: 'kind', animal: 'kip', color: COLORS[0], birth: bd(4, 6), rhythm: { wake: ['07:30', '06:30', '06:30', '06:30', '06:30', '06:30', '07:30'], school: ['', '07:15', '07:15', '07:15', '07:15', '07:15', ''], home: ['', '15:00', '15:00', '15:00', '15:00', '15:00', ''], film: ['', '15:30', '15:30', '15:30', '15:30', '15:30', ''], eat: Array(7).fill('17:30'), bed: ['18:30', '18:30', '18:30', '18:30', '18:30', '19:15', '19:15'] } });
   const lot = put('members', { name: 'Lot', role: 'kind', animal: 'konijn', color: COLORS[2], birth: bd(2, 90), rhythm: { eat: Array(7).fill('17:30'), bed: Array(7).fill('18:30') } });
   actObjs().forEach(a => put('activities', a));
   const A = title => data.activities.find(a => a.title === title);
@@ -1793,27 +2078,38 @@ async function actMove(id, n) {
   [list[i], list[j]] = [list[j], list[i]];
   for (let k = 0; k < list.length; k++) if (list[k].order !== k) await Store.update('activities', list[k].id, { order: k });
 }
+const RH_F = [['wake', '☀️ Op'], ['school', '🏫 Naar school'], ['home', '🏡 Thuis'], ['film', '📺 Film vanaf'], ['eat', '🍽️ Eten'], ['bed', '🌙 Naar bed']];
+const DAYS_LONG = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
 function setRhythm() {
   const order = [1, 2, 3, 4, 5, 6, 0];
   const ks = kids(); if (!ks.length) return '<p class="muted">Voeg eerst kinderen toe bij Gezin.</p>';
-  return `<p class="muted" style="margin-top:0">Per kind en per dag: hoe laat is het eten en hoe laat gaat hij of zij naar bed? Op het wandscherm wandelt het dier van het kind dan mee langs spelen, eten, verhaaltje en slapen. Leeg laten = geen dagritme op die dag.</p>
-  <label class="check" style="margin-bottom:1em"><input type="checkbox" data-setting="screenFreeAfterDinner" ${cfg('screenFreeAfterDinner') ? 'checked' : ''}> Na het eten slapen de schermen (kijken starten kan dan niet meer)</label>
-  <div class="stack">${ks.map(k => { const r = k.rhythm || {}; return `<div class="card"><div class="row" style="margin-bottom:.6em">${mAvatar(k.id)}<h3 style="margin:0;flex:1">${esc(k.name)}</h3><button class="btn ghost" data-act="rcopy" data-id="${k.id}">Ma ook voor di, wo, do</button></div>
-  <table class="t rtable"><thead><tr><th></th><th>🍽️ Eten</th><th>🌙 Naar bed</th></tr></thead><tbody>${order.map(d => `<tr><th>${['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'][d]}</th><td><input type="time" data-rh="${k.id}" data-f="eat" data-d="${d}" value="${esc((r.eat || [])[d] || '')}" aria-label="Eten ${DAYS_SHORT[d]}"></td><td><input type="time" data-rh="${k.id}" data-f="bed" data-d="${d}" value="${esc((r.bed || [])[d] || '')}" aria-label="Bed ${DAYS_SHORT[d]}"></td></tr>`).join('')}</tbody></table>
-  <p class="small muted" style="margin:.4em 0 0">Een half uur voor bedtijd komt "pyjama aan en een verhaaltje" in beeld.</p></div>`; }).join('')}</div>`;
+  return `<p class="muted" style="margin-top:0">Per kind en per dag. Op het wandscherm wandelt het dier van het kind mee door de dag. Leeg laten mag: zonder schooltijd is het een thuisdag, zonder filmtijd mag kijken de hele dag tot het eten.</p>
+  <div class="card stack" style="margin-bottom:1em"><label class="f rh-house">🤫 Iedereen wakker om<input type="time" data-setting="wakeTime" value="${esc(cfg('wakeTime') || '07:00')}"></label><span class="small muted">Tot die tijd laat het wandscherm een slapende boerderij zien: "Sssst… iedereen slaapt nog".</span>
+  <label class="check"><input type="checkbox" data-setting="screenFreeAfterDinner" ${cfg('screenFreeAfterDinner') ? 'checked' : ''}> Na het eten slapen de schermen (kijken starten kan dan niet meer)</label></div>
+  <div class="stack">${ks.map(k => { const r = k.rhythm || {}; return `<div class="card"><div class="row" style="margin-bottom:.6em;flex-wrap:wrap">${mAvatar(k.id)}<h3 style="margin:0;flex:1">${esc(k.name)}</h3><button class="btn ghost" data-act="rcopy" data-id="${k.id}">Maandag ook voor di t/m vr</button></div>
+  <div class="rdays">${order.map(d => `<div class="rday"><b>${DAYS_LONG[d]}</b><div class="rgrid">${RH_F.map(([f, l]) => `<label><span>${l}</span><input type="time" data-rh="${k.id}" data-f="${f}" data-d="${d}" value="${esc((r[f] || [])[d] || '')}" aria-label="${l} ${DAYS_LONG[d]}"></label>`).join('')}</div></div>`).join('')}</div>
+  <p class="small muted" style="margin:.4em 0 0">Op schooldagen ziet ${esc(k.name)} 's ochtends een ochtendpad: aankleden, ontbijt, tanden, jas en tas. Een half uur voor bedtijd komt "pyjama aan en een verhaaltje" in beeld.</p></div>`; }).join('')}</div>`;
 }
+const rhCopy = k => { const r = {}; RH_F.forEach(([f]) => r[f] = [...((k.rhythm && k.rhythm[f]) || Array(7).fill(''))]); return r; };
 document.addEventListener('change', e => {
   const el = e.target; if (!el.dataset || !el.dataset.rh) return;
   const k = member(el.dataset.rh); if (!k) return;
-  const r = { eat: [...((k.rhythm && k.rhythm.eat) || Array(7).fill(''))], bed: [...((k.rhythm && k.rhythm.bed) || Array(7).fill(''))] };
-  r[el.dataset.f][+el.dataset.d] = el.value || '';
-  if ((k.rhythm && k.rhythm[el.dataset.f] && k.rhythm[el.dataset.f][+el.dataset.d]) === r[el.dataset.f][+el.dataset.d]) return;
+  const r = rhCopy(k), f = el.dataset.f, d = +el.dataset.d;
+  if ((r[f][d] || '') === (el.value || '')) return;
+  r[f][d] = el.value || '';
   Store.update('members', k.id, { rhythm: r });
+});
+/* Losse instellingen: vinkjes en tijden met data-setting */
+document.addEventListener('change', e => {
+  const el = e.target, key = el.dataset && el.dataset.setting; if (!key) return;
+  const v = el.type === 'checkbox' ? el.checked : el.value;
+  if (cfg(key) === v) return;
+  Store.settings({ [key]: v });
 });
 function rhythmCopy(id) {
   const k = member(id); if (!k || !k.rhythm) { toast('Vul eerst maandag in.'); return; }
-  const r = { eat: [...k.rhythm.eat], bed: [...k.rhythm.bed] }; [2, 3, 4].forEach(d => { r.eat[d] = r.eat[1]; r.bed[d] = r.bed[1]; });
-  Store.update('members', k.id, { rhythm: r }); toast('Gekopieerd naar dinsdag, woensdag en donderdag.');
+  const r = rhCopy(k); RH_F.forEach(([f]) => [2, 3, 4, 5].forEach(d => r[f][d] = r[f][1]));
+  Store.update('members', k.id, { rhythm: r }); toast('Gekopieerd naar dinsdag tot en met vrijdag.');
 }
 function setFamily() {
   return `<div class="grid g3">${members().map(m => `<div class="card"><div class="row">${mAvatar(m.id)}<div style="flex:1"><h3 style="margin:0">${esc(m.name)}</h3><span class="small muted">${m.role === 'ouder' ? 'Ouder' : 'Kind'}${m.birth ? ' · ' + ageOn(m.birth, today()) + ' jaar' : ''}</span></div><i class="colordot" style="background:${m.color};width:1.4em;height:1.4em"></i></div><div class="row" style="margin-top:.6em"><button class="btn ghost" data-act="memberedit" data-id="${m.id}">${ic('edit', 'style="width:1.2em"')} Wijzigen</button><button class="iconbtn" data-act="memberdel" data-id="${m.id}" aria-label="Verwijderen">${ic('trash')}</button></div></div>`).join('')}</div><button class="btn" style="margin-top:1em" data-act="memberedit">${ic('plus', 'style="width:1.2em"')} Gezinslid toevoegen</button>`;
@@ -1838,6 +2134,7 @@ function setWall() {
   const tog = (k, l) => `<label class="check"><input type="checkbox" data-setting="${k}" ${cfg(k) ? 'checked' : ''}> ${l}</label>`;
   return `<div class="grid g2"><div class="card stack"><h3>Wandscherm of tv instellen</h3><ol style="margin:0;padding-left:1.2em"><li>Open op de tv of het scherm de browser en ga naar:<br><code style="word-break:break-all;background:#fff;padding:.2em .4em;border-radius:6px;border:2px solid var(--line)">${esc(url)}</code></li><li>Er verschijnt een code van 6 cijfers.</li><li>Typ die code hier bij <b>Apparaten</b>. Klaar: het scherm onthoudt het en start voortaan meteen.</li></ol><div class="row"><button class="btn ghost" data-act="copywall">Link kopiëren</button></div><p class="small muted" style="margin:0">Inloggen is niet nodig. Een gekoppeld scherm kan alleen kijken, niets veranderen.</p></div>
   <div class="card stack"><h3>Wat het wandscherm doet</h3>${tog('sound', 'Belletje bij elke beloning en als de kijktijd om is')}${tog('voice', 'Voorlezen ("Goed zo! Tanden gepoetst!")')}${tog('showAgenda', 'Agenda van vandaag tonen')}${tog('showPhotos', 'Foto\'s en werkstukjes tonen')}${tog('showAnimals', 'Onze dieren tonen')}${tog('calm', 'Rustig: geen bewegende dieren')}<p class="small muted" style="margin:0">Geluid werkt op een tv vaak pas na één klik met de afstandsbediening op het scherm.</p></div>
+  <div class="card stack"><h3>Het weer van jullie boerderij</h3><p style="margin:0">${cfg('lat') ? `Het weer komt automatisch binnen${S.autoW ? `: nu ${WEATHER[S.autoW.kind].label.toLowerCase()}, ${S.autoW.temp}°` : ''}.` : 'Laat het wandscherm zelf het weer ophalen. Regen, sneeuw of wind komt dan vanzelf in beeld, met een leuk idee erbij.'}</p><div class="row"><button class="btn ${cfg('lat') ? 'ghost' : 'green'}" data-act="weatherloc">📍 ${cfg('lat') ? 'Locatie opnieuw bepalen' : 'Weer automatisch ophalen'}</button></div><p class="small muted" style="margin:0">Alleen de ongeveer-plek (op 1 km) wordt bewaard. Het weer komt van Open-Meteo, zonder account.</p></div>
   <div class="card stack"><h3>Over schermtijd</h3><p style="margin:0">De app houdt de minuten bij en laat de aftelklok zien. Tablet of tv aan- en uitzetten doen jullie zelf: Apple Schermtijd, Google Family Link en spelcomputers hebben geen koppeling waarmee een website ze kan bedienen.</p></div></div>`;
 }
 function setData() {
@@ -1917,6 +2214,7 @@ function render() {
   if (S.mode === 'loading') { top.innerHTML = ''; nav.innerHTML = ''; ban.innerHTML = S.stale ? banners() : ''; view.innerHTML = `<div class="empty" style="padding-top:12vh">${CHICK}<h2>De boerderij wordt wakker...</h2></div>`; return; }
   if (S.mode === 'start') { top.innerHTML = ''; ban.innerHTML = ''; nav.innerHTML = ''; view.innerHTML = S.setupStep && S.startStep === 'new' ? viewSetup() : viewStart(); return; }
   if (S.mode === 'setup') { top.innerHTML = ''; ban.innerHTML = ''; nav.innerHTML = ''; view.innerHTML = S.wall ? `<div class="empty" style="padding-top:12vh">${CHICK}<h2>Wacht op de boerderij...</h2><p>Stel de boerderij eerst in op de telefoon van een ouder.</p></div>` : viewSetup(); return; }
+  applyTheme();
   if (S.wall) { top.innerHTML = ''; nav.innerHTML = ''; ban.innerHTML = navigator.onLine ? '' : `<div class="banner off">Geen internet. Nieuwe beloningen komen binnen zodra de verbinding terug is.</div>`; if (!S.partyOn) view.innerHTML = viewWall() + (S.wallAwake ? '' : '<div class="walltip">Tik één keer op het scherm voor volledig beeld en geluid</div>'); checkNewLedger(); return; }
   const a = document.activeElement;
   /* Niet hertekenen terwijl iemand een tijd, datum of beloning aan het invullen is: het keuzewiel zou dan terugspringen */
@@ -1934,7 +2232,7 @@ function onHash() {
   let v = location.hash.slice(1) || 'belonen';
   if (v === 'wand' && (S.paired || S.mode === 'demo')) { S.wall = true; LS.set('fb-wall', true); }
   if (S.wall && v !== 'wand') { history.replaceState(null, '', '#wand'); v = 'wand'; }
-  S.view = v; if (modalOpen() && !S.wall) closeModal(); render(); window.scrollTo(0, 0);
+  S.view = v; if (modalOpen() && !S.wall) closeModal(); if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); S.renderPending = false; render(); window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', onHash);
 function leaveWall() { if (S.role === 'scherm') { toast('Dit is het wandscherm. Ontkoppelen kan op de telefoon bij Instellingen, Apparaten.'); return; } ask('Wandscherm sluiten op dit apparaat?', 'Sluiten', () => { S.wall = false; LS.del('fb-wall'); S.seen = null; history.replaceState(null, '', '#belonen'); S.view = 'belonen'; render(); }); }
@@ -1973,6 +2271,7 @@ Object.assign(ACT, {
   watch: el => watchModal(D(el).id),
   sfoverride: el => { S.overrideSF = true; closeModal(); watchModal(D(el).id); },
   rcopy: el => rhythmCopy(D(el).id),
+  weatherloc: () => { if (!navigator.geolocation) { toast('Deze telefoon kan geen locatie geven.'); return; } toast('Locatie bepalen...'); navigator.geolocation.getCurrentPosition(p => { const lat = Math.round(p.coords.latitude * 100) / 100, lon = Math.round(p.coords.longitude * 100) / 100; Store.settings({ lat, lon }); setTimeout(() => fetchWeather(true), 300); toast('Gelukt! Het weer komt nu vanzelf binnen.'); }, () => toast('Geen locatie gekregen. Sta locatie toe voor deze app en probeer opnieuw.'), { timeout: 15000, maximumAge: 600000 }); },
   watchgo: el => watchGo(D(el).id, +D(el).m),
   watchmore: el => watchMore(D(el).id),
   watchstop: el => watchStop(D(el).id),
@@ -2060,6 +2359,7 @@ setInterval(() => {
   if (S.lastDay && S.lastDay !== day) { S.calRef = null; render(); } S.lastDay = day;
   if (S.wall && !S.partyOn && !modalOpen() && n.getSeconds() % 12 === 0) { S.slideIx = (S.slideIx || 0) + 1; render(); }
   else if (S.wall && !S.partyOn && !modalOpen() && n.getMinutes() !== lastMin) render();
+  if (n.getMinutes() !== lastMin) { fetchWeather(); applyTheme(); }
   lastMin = n.getMinutes();
 }, 1000);
 addEventListener('online', () => { render(); flushQueue(); });
