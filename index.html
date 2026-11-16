@@ -1353,12 +1353,12 @@ function ideaSlide() {
 function quietScene(theme) {
   const t = nowMin(), hw = houseWake(), frac = theme === 'stil' ? Math.max(0, Math.min(1, 1 - (hw - t) / 90)) : 0;
   const top = `rgb(${Math.round(29 + frac * 150)},${Math.round(39 + frac * 110)},${Math.round(71 + frac * 90)})`, bot = `rgb(${Math.round(51 + frac * 195)},${Math.round(65 + frac * 120)},${Math.round(110 + frac * 60)})`;
-  const sunY = 330 - frac * 190, moonY = 110 + frac * 220;
+  const sunY = 330 - frac * 190, moonY = theme === 'stil' ? 215 + frac * 110 : 225, moonX = theme === 'stil' ? 240 : 250;
   const sleepers = [...new Set([...kids().map(k => k.animal || 'kip'), ...(S.data.animals || []).map(a => a.species)])].filter(a => ANIMAL_NL[a]).slice(0, 5);
   const stars = Array.from({ length: 22 }, (_, i) => `<circle class="twinkle" style="animation-delay:${(i % 6) * .5}s" cx="${(i * 97) % 800}" cy="${20 + (i * 53) % 190}" r="${1.5 + (i % 3)}" fill="#fff7d0" opacity="${(1 - frac).toFixed(2)}"/>`).join('');
   const msg = theme === 'stil' ? `<b>Sssst… iedereen slaapt nog</b><span>Speel maar heel zachtjes. Om ${m2hm(hw)} komt de zon op ☀️</span>` : `<b>De boerderij slaapt</b><span>Welterusten. Morgen weer een nieuw avontuur 🌙</span>`;
   return `<div class="dia-stil"><svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="qs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${bot}"/></linearGradient></defs><rect width="800" height="450" fill="url(#qs)"/>${stars}
-  <g transform="translate(210 ${moonY})"><circle r="34" fill="#f6efc9"/><circle cx="14" cy="-8" r="30" fill="${top}"/></g>
+  <g transform="translate(${moonX} ${moonY})"><circle r="34" fill="#f6efc9"/><circle cx="14" cy="-8" r="30" fill="${top}"/></g>
   ${theme === 'stil' ? `<g transform="translate(650 ${sunY})"><circle r="56" fill="#f6d260" opacity=".3"/><circle r="38" fill="#f3c246"/></g>` : ''}
   <path d="M0 330Q200 290 400 320T800 310V450H0Z" fill="#2c3d36"/><path d="M0 370Q300 340 600 365T800 360V450H0Z" fill="#22312b"/>
   <g transform="translate(520 236)"><path d="M0 60L0 20L45 -8L90 20L90 60Z" fill="#6b2f2a"/><path d="M-6 22L45 -14L96 22" fill="none" stroke="#3e1d1a" stroke-width="8"/><rect x="35" y="30" width="20" height="30" fill="#f3c246" opacity="${theme === 'stil' ? .5 + frac * .5 : .25}"/></g></svg>
