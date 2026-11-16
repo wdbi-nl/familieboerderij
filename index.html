@@ -1807,6 +1807,7 @@ document.addEventListener('change', e => {
   const k = member(el.dataset.rh); if (!k) return;
   const r = { eat: [...((k.rhythm && k.rhythm.eat) || Array(7).fill(''))], bed: [...((k.rhythm && k.rhythm.bed) || Array(7).fill(''))] };
   r[el.dataset.f][+el.dataset.d] = el.value || '';
+  if ((k.rhythm && k.rhythm[el.dataset.f] && k.rhythm[el.dataset.f][+el.dataset.d]) === r[el.dataset.f][+el.dataset.d]) return;
   Store.update('members', k.id, { rhythm: r });
 });
 function rhythmCopy(id) {
@@ -1917,7 +1918,11 @@ function render() {
   if (S.mode === 'start') { top.innerHTML = ''; ban.innerHTML = ''; nav.innerHTML = ''; view.innerHTML = S.setupStep && S.startStep === 'new' ? viewSetup() : viewStart(); return; }
   if (S.mode === 'setup') { top.innerHTML = ''; ban.innerHTML = ''; nav.innerHTML = ''; view.innerHTML = S.wall ? `<div class="empty" style="padding-top:12vh">${CHICK}<h2>Wacht op de boerderij...</h2><p>Stel de boerderij eerst in op de telefoon van een ouder.</p></div>` : viewSetup(); return; }
   if (S.wall) { top.innerHTML = ''; nav.innerHTML = ''; ban.innerHTML = navigator.onLine ? '' : `<div class="banner off">Geen internet. Nieuwe beloningen komen binnen zodra de verbinding terug is.</div>`; if (!S.partyOn) view.innerHTML = viewWall() + (S.wallAwake ? '' : '<div class="walltip">Tik één keer op het scherm voor volledig beeld en geluid</div>'); checkNewLedger(); return; }
-  const a = document.activeElement; const fid = a && a.id && view.contains(a) ? a.id : null; const val = fid && 'value' in a ? a.value : null;
+  const a = document.activeElement;
+  /* Niet hertekenen terwijl iemand een tijd, datum of beloning aan het invullen is: het keuzewiel zou dan terugspringen */
+  if (a && view.contains(a) && a.tagName === 'INPUT' && (/^(time|date|datetime-local|number)$/.test(a.type) || a.dataset.rh || a.dataset.field)) { S.renderPending = true; top.innerHTML = topbar(); ban.innerHTML = banners(); return; }
+  S.renderPending = false;
+  const fid = a && a.id && view.contains(a) ? a.id : null; const val = fid && 'value' in a ? a.value : null;
   top.innerHTML = topbar(); ban.innerHTML = banners();
   nav.innerHTML = NAV.map(([k, l, i]) => `<button class="${S.view === k || (k === 'meer' && ['galerij', 'dieren', 'moestuin', 'prikbord', 'instellingen'].includes(S.view)) ? 'on' : ''}" data-go="#${k}">${i === 'sun' ? sunNav : ic(i)}<span>${l}</span></button>`).join('');
   try { view.innerHTML = route(); } catch (e) { console.error(e); view.innerHTML = `${pageHead('Er ging iets mis')}<p>Deze pagina kon niet worden getoond.</p>`; }
@@ -1935,6 +1940,7 @@ window.addEventListener('hashchange', onHash);
 function leaveWall() { if (S.role === 'scherm') { toast('Dit is het wandscherm. Ontkoppelen kan op de telefoon bij Instellingen, Apparaten.'); return; } ask('Wandscherm sluiten op dit apparaat?', 'Sluiten', () => { S.wall = false; LS.del('fb-wall'); S.seen = null; history.replaceState(null, '', '#belonen'); S.view = 'belonen'; render(); }); }
 
 /* ===== Klikken, formulieren, toetsenbord ===== */
+document.addEventListener('focusout', () => { if (S.renderPending) setTimeout(() => { if (S.renderPending) render(); }, 120); });
 document.addEventListener('click', e => {
   if (e.target.id === 'modal') { if (!S.wall) closeModal(); return; }
   if (S.wall && !e.target.closest('#modal')) { wallWake(); const w = e.target.closest('[data-act="walltap"]'); if (w) ACT.walltap(w); return; }
