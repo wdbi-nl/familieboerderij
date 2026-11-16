@@ -426,6 +426,44 @@ html,body{background:#fbf4e3!important;color:#3b2f24}
 .kk.bounce{animation:bounce .7s ease-out}
 @media (orientation:portrait){.wall2{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1.3fr) minmax(0,1fr)}}
 
+/* ---------- dagritme op het wandscherm ---------- */
+.kk{flex-direction:column;align-items:stretch;gap:1vh}
+.kk-row{display:flex;align-items:center;gap:1.6vh;min-height:0}
+.kk-row>.avatar{width:min(10vh,18vw);height:min(10vh,18vw);flex:none}
+.kk-day{display:flex;align-items:center;gap:1.4vh;min-height:0}
+.kk-pie{width:7vh;height:7vh;flex:none}.kk-pie svg{width:100%;height:100%}
+.kk-dayr{flex:1;min-width:0;display:flex;flex-direction:column;gap:.5vh}
+.kk-phrase{font-size:2.4vh;font-weight:800;line-height:1.2;color:var(--ink)}
+.dagpad{position:relative;height:4.6vh;margin:0 2.2vh}
+.dp-track{position:absolute;left:0;right:0;top:50%;height:.9vh;margin-top:-.45vh;border-radius:999px;background:repeating-linear-gradient(90deg,#e6d9bd 0 1.2vh,transparent 1.2vh 2vh)}
+.dp-track i{display:block;height:100%;border-radius:999px;background:var(--kc)}
+.dp-st{position:absolute;top:50%;transform:translate(-50%,-50%);width:4.2vh;height:4.2vh;border-radius:50%;background:#fff;border:.35vh solid #e6d9bd;display:flex;align-items:center;justify-content:center;font-size:2.4vh;opacity:.55}
+.dp-st.done{opacity:1;border-color:var(--kc)}
+.dp-st.now{width:4.8vh;height:4.8vh;box-shadow:0 0 0 .5vh color-mix(in srgb,var(--kc) 35%,transparent)}
+.dp-me{position:absolute;top:-1.6vh;transform:translateX(-50%);width:4.4vh;height:4.4vh;transition:left 1s;animation:hop 2.4s ease-in-out infinite}
+.dp-me svg{width:100%;height:100%}
+@keyframes hop{0%,80%,100%{transform:translate(-50%,0)}90%{transform:translate(-50%,-.8vh)}}
+.kk-sf{display:flex;align-items:center;gap:1vh;flex:none}
+.kk-sfi{position:relative;font-size:6vh;line-height:1;filter:grayscale(.4)}
+.kk-sfi i{position:absolute;right:-1.4vh;top:-1.6vh;font-size:3.2vh;font-style:normal;animation:sway 2s ease-in-out infinite}
+.kk-sf .kk-num b{font-size:6vh}.kk-sf .kk-num small{font-size:1.9vh;text-align:center}
+.kk.ph-avond,.kk.ph-rustig{background:linear-gradient(90deg,#e7def5,var(--paper) 60%)}
+.kk-night{flex-direction:row;align-items:center;background:linear-gradient(135deg,#1f2b4d,#3a4a78)!important;color:#f3eedb!important;border-color:#2a3760!important;box-shadow:0 .7vh 0 #151d36!important;position:relative}
+.kk-night .kk-name{color:#f3eedb}.kk-night .kk-phrase{color:#d9d2ee;font-size:2.6vh}
+.kk-sleep{position:relative;width:min(10vh,18vw);height:min(10vh,18vw);flex:none;opacity:.9}
+.kk-sleep i{position:absolute;left:-.6vh;top:-1.8vh;font-style:normal;font-weight:900;font-size:2.6vh;color:#f3eedb;animation:zz 3s ease-in-out infinite}
+.kk-sleep i+i{left:1.4vh;top:-3.4vh;font-size:2vh;animation-delay:1.2s}
+@keyframes zz{0%{opacity:0;transform:translateY(.6vh)}40%{opacity:1}100%{opacity:0;transform:translateY(-1.6vh)}}
+.kk-moon{font-size:8vh;flex:none}
+.kk-stars{position:absolute;left:30%;top:1vh;font-size:2vh;color:#f6e7a6;letter-spacing:4vh;opacity:.8}
+.rtable input{min-height:2.2em;padding:.2em .3em;min-width:5.6em}
+.rtable th{white-space:nowrap}
+
+.kk-mid{min-width:7.5em}
+.kk-sfi{font-size:5vh}
+.kk-sf .kk-num small{max-width:6.5em;text-align:center;line-height:1.1}
+.kk-row .kk-icons{max-height:4.6vh}
+
 </style>
 </head>
 <body>
@@ -772,7 +810,7 @@ const CHICK = `<svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy
 /* ===== Kern: status, opslag, navigatie, dialogen ===== */
 const FORMS = {}, ACT = {};
 const COLS = ['members', 'events', 'activities', 'completions', 'ledger', 'rewards', 'adventures', 'gallery', 'animals', 'animallog', 'beds', 'plants', 'notes', 'shopping', 'meals', 'recipes', 'chores', 'timers'];
-const DEF = { dailyLimit: 0, calm: false, sound: true, voice: true, showAgenda: true, showPhotos: true, showAnimals: true };
+const DEF = { dailyLimit: 0, calm: false, sound: true, voice: true, showAgenda: true, showPhotos: true, showAnimals: true, screenFreeAfterDinner: true };
 const COLORS = ['#c7623f', '#4f86b0', '#6f9f4f', '#d99a1c', '#9467ad', '#cf6a8a', '#3f9488', '#8a6a4a'];
 const S = { mode: 'loading', db: null, assets: null, tts: null, dict: null, dl: null, user: null, data: {}, settings: null, weather: null, settingsLoaded: false, stale: false,
   parentUntil: 0, view: 'erf', param: null, kidTab: 'start', calTab: 'week', calRef: null, readAloud: false, pinFails: 0, pinLockUntil: 0, queue: [], slides: null, parentTab: 'goedkeuren', galFilter: 'alle', lastDay: null, setupStep: 1, setupMembers: [] };
@@ -1022,6 +1060,58 @@ const clockText = () => { const d = new Date(); return pad(d.getHours()) + ':' +
 
 function applyBodyFlags() { document.body.classList.toggle('calm', !!(S.localCalm ?? cfg('calm'))); }
 
+/* ===== Dagritme: eten, verhaaltje en slapen, speels voor kleine kinderen ===== */
+const DAYS_SHORT = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+const hm2m = s => { if (!s) return null; const [h, m] = s.split(':').map(Number); return h * 60 + m; };
+const m2hm = m => pad(Math.floor(m / 60) % 24) + ':' + pad(m % 60);
+const nowMin = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60; };
+/* Fase van de dag voor een kind, of null als er geen ritme is ingevuld */
+function dayPhase(k, dt = new Date()) {
+  const r = k && k.rhythm; if (!r) return null;
+  const d = dt.getDay(), eat = hm2m((r.eat || [])[d]), bed = hm2m((r.bed || [])[d]);
+  if (bed === null) return null;
+  const t = dt.getHours() * 60 + dt.getMinutes() + dt.getSeconds() / 60, wind = bed - 30, e = eat ?? (bed - 90);
+  const start = Math.min(e - 150, 15 * 60);
+  let phase, next, nextName;
+  if (t < 6 * 60) { phase = 'nacht'; }
+  else if (t >= bed) { phase = 'slapen'; }
+  else if (t >= wind) { phase = 'rustig'; next = bed; nextName = 'slapen'; }
+  else if (t >= e + 30) { phase = 'avond'; next = wind; nextName = 'verhaaltje'; }
+  else if (t >= e) { phase = 'eten'; next = e + 30; nextName = 'na het eten'; }
+  else if (t >= e - 15) { phase = 'bijna'; next = e; nextName = 'eten'; }
+  else { phase = 'spelen'; next = e; nextName = 'eten'; }
+  const st = [start, e, wind, bed];
+  let pos;
+  if (phase === 'nacht' || phase === 'slapen') pos = 1;
+  else if (t <= start) pos = 0;
+  else { let i = 0; while (i < 3 && t > st[i + 1]) i++; pos = (i + Math.min(1, (t - st[i]) / Math.max(1, st[i + 1] - st[i]))) / 3; }
+  const left = next ? Math.max(0, Math.ceil(next - t)) : 0;
+  const span = next ? (phase === 'spelen' ? Math.min(120, next - start) : phase === 'bijna' ? 15 : phase === 'eten' ? 30 : next - (phase === 'avond' ? e + 30 : wind)) : 1;
+  return { phase, eat: e, bed, wind, left, span: Math.max(1, span), pos, nextName, screenFree: !!cfg('screenFreeAfterDinner') && (t >= e || t < 6 * 60) };
+}
+const PHRASES = {
+  spelen: ['{Dier} vraagt: wat ga jij vandaag bouwen?', 'Tijd om te spelen! Waar ga jij op avontuur?', 'Wat zou jij vandaag willen ontdekken?', 'Misschien een hut, een tekening of een verhaal? Jij kiest!', 'De kippen zijn benieuwd wat jij gaat maken.'],
+  bijna: ['Bijna eten! De koe ruikt al iets lekkers.', 'Nog even, dan gaan we aan tafel.', 'Speelgoed even laten rusten? Het eten komt eraan.'],
+  eten: ['Smakelijk eten!', 'Iedereen aan tafel. Eet smakelijk!'],
+  avond: ['De schermen gaan slapen. Tijd voor knuffels, puzzels en spelletjes.', 'Wat bouwen we nog met de blokken?', 'Rustig spelen. {Dier} gaat ook al uitrusten.'],
+  rustig: ['Pyjama aan en een verhaaltje. Welk boek kies jij?', 'Tanden poetsen, en dan lekker in bed met een verhaal.', '{Dier} gaat ook al slapen. Jij ook bijna!'],
+  slapen: ['Slaap lekker, {naam}. Droom maar van de boerderij.', 'Welterusten, {naam}. Morgen weer een nieuw avontuur.', 'De maan past op de boerderij. Slaap lekker!'],
+  nacht: ['Ssst, iedereen slaapt nog.', 'De boerderij slaapt. Welterusten.']
+};
+const HET = ['schaap', 'konijn', 'varken'];
+function phrase(k, ph) { const list = PHRASES[ph.phase] || ['']; const i = (Math.floor(Date.now() / 600000) + (k.name || '').length) % list.length; const a = k.animal || 'kip', dier = (HET.includes(a) ? 'Het ' : 'De ') + (ANIMAL_NL[a] || 'Kip').toLowerCase(); return list[i].replace('{Dier}', dier).replace('{naam}', k.name || ''); }
+/* Taartklokje: hoeveel tijd er nog is tot het volgende moment, ook zonder klok te kunnen lezen */
+function pieClock(frac, color) {
+  const f = Math.max(0, Math.min(1, frac)), a = f * 2 * Math.PI, x = 50 + 40 * Math.sin(a), y = 50 - 40 * Math.cos(a);
+  const path = f >= .999 ? `<circle cx="50" cy="50" r="40" fill="${color}"/>` : f <= 0 ? '' : `<path d="M50 50L50 10A40 40 0 ${f > .5 ? 1 : 0} 1 ${x.toFixed(1)} ${y.toFixed(1)}Z" fill="${color}"/>`;
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#fff" stroke="#3b2f24" stroke-width="4"/>${path}${Array.from({ length: 12 }, (_, i) => { const b = i * Math.PI / 6; return `<line x1="${50 + 42 * Math.sin(b)}" y1="${50 - 42 * Math.cos(b)}" x2="${50 + 46 * Math.sin(b)}" y2="${50 - 46 * Math.cos(b)}" stroke="#3b2f24" stroke-width="2"/>`; }).join('')}<circle cx="50" cy="50" r="4" fill="#3b2f24"/></svg>`;
+}
+function dagpad(k, ph) {
+  const st = [['🎈', 'spelen'], ['🍽️', 'eten'], ['📖', 'verhaal'], ['🌙', 'slapen']];
+  const cur = { spelen: 0, bijna: 0, eten: 1, avond: 1, rustig: 2, slapen: 3, nacht: 3 }[ph.phase];
+  return `<div class="dagpad"><div class="dp-track"><i style="width:${(ph.pos * 100).toFixed(1)}%"></i></div>${st.map(([ic, l], i) => `<span class="dp-st ${i <= cur ? 'done' : ''} ${i === cur ? 'now' : ''}" style="left:${i * 100 / 3}%">${ic}</span>`).join('')}<span class="dp-me" style="left:${(ph.pos * 100).toFixed(1)}%">${avatar(k.animal, tint(k.color))}</span></div>`;
+}
+
 /* ===== Agenda-hulpjes ===== */
 const CATS = { gezin: 'Gezin', school: 'School', studiedag: 'Studiedag', sport: 'Sport', werk: 'Werk', bezoek: 'Familiebezoek', verjaardag: 'Verjaardag', feest: 'Feestje', vakantie: 'Vakantie', dokter: 'Dokter', dier: 'Dierenarts', uitje: 'Uitstapje', anders: 'Anders' };
 const REPEAT = { none: 'Niet herhalen', daily: 'Elke dag', weekly: 'Elke week', biweekly: 'Om de week', monthly: 'Elke maand', yearly: 'Elk jaar' };
@@ -1170,7 +1260,7 @@ function viewBelonen() {
   const chips = `<div class="kidchips">${ks.map(k => `<button class="kidchip ${S.sel.includes(k.id) && !all ? 'on' : ''}" style="--kc:${k.color}" data-act="selkid" data-id="${k.id}">${mAvatar(k.id)}<span>${esc(k.name)}</span></button>`).join('')}${ks.length > 1 ? `<button class="kidchip ${all ? 'on' : ''}" style="--kc:#8a6a4a" data-act="selall"><span class="avatar" style="display:flex;align-items:center;justify-content:center;font-size:1.5em">👨‍👩‍👧</span><span>Iedereen</span></button>` : ''}</div>`;
   const status = S.sel.map(id => {
     const k = member(id), bal = balanceOf(id).balance, t = timerOf(id), act = timerActive(t);
-    return `<div class="kidstat" style="--kc:${k.color}">${mAvatar(id)}<div style="flex:1"><b>${esc(k.name)}</b><div class="num"><span class="big">${bal}</span> ${minWord(bal)}</div>${act ? `<div class="chip ok">📺 kijkt nog <span class="num" data-ends="${t.endsAt}" data-fmt="min">${Math.ceil((t.endsAt - Date.now()) / 60e3)}</span> min</div>` : ''}</div><button class="btn ${act ? 'sun' : ''}" data-act="watch" data-id="${id}">📺 ${act ? 'Klok' : 'Kijken'}</button></div>`;
+    return `<div class="kidstat" style="--kc:${k.color}">${mAvatar(id)}<div style="flex:1"><b>${esc(k.name)}</b><div class="num"><span class="big">${bal}</span> ${minWord(bal)}</div>${act ? `<div class="chip ok">📺 kijkt nog <span class="num" data-ends="${t.endsAt}" data-fmt="min">${Math.ceil((t.endsAt - Date.now()) / 60e3)}</span> min</div>` : ''}${(() => { const ph = dayPhase(k); if (!ph) return ''; return `<div class="small muted">${ph.screenFree ? '📺💤 schermvrij' : '🍽️ eten ' + m2hm(ph.eat)} · 🌙 bed ${m2hm(ph.bed)}</div>`; })()}</div><button class="btn ${act ? 'sun' : ''}" data-act="watch" data-id="${id}">📺 ${act ? 'Klok' : 'Kijken'}</button></div>`;
   }).join('');
   const grid = actsSorted().map(a => `<button class="reward" data-act="award" data-id="${a.id}"><span class="ic">${esc(a.icon || '⭐')}</span><span class="tt">${esc(a.title)}</span><span class="mn">+${minOf(a)} ${minWord(minOf(a)).slice(0, 3)}</span></button>`).join('');
   const log = S.sel.length === 1 ? todayEntries(S.sel[0]) : [];
@@ -1197,9 +1287,13 @@ function watchModal(kid) {
     <div class="foot"><button class="btn ghost" data-act="close">Sluiten</button><button class="btn ghost" data-act="watchstop" data-id="${kid}">Nu stoppen</button><button class="btn sun" data-act="watchmore" data-id="${kid}" ${bal < 5 || room < 5 ? 'disabled' : ''}>+5 minuten</button></div>`);
     return;
   }
+  const ph = dayPhase(k);
+  if (ph && ph.screenFree && !S.overrideSF) { openModal(`<h2>De schermen slapen 📺💤</h2><p>${esc(k.name)} heeft al gegeten. Jullie afspraak: na het eten geen schermen meer, zodat hij rustig kan worden voor bed.</p><p class="muted">Bewaard voor morgen: <b>${bal} ${minWord(bal)}</b>.</p><div class="foot"><button class="btn ghost" data-act="sfoverride" data-id="${kid}">Toch kijken</button><button class="btn green" data-act="close">Goed zo</button></div>`); return; }
+  S.overrideSF = false;
+  const untilEat = ph && !ph.screenFree && (ph.phase === 'spelen' || ph.phase === 'bijna') ? Math.floor(ph.eat - nowMin()) : Infinity;
   const opts = [5, 10, 15, 20, 30, 45, 60];
-  openModal(`<h2>Hoe lang mag ${esc(k.name)} kijken?</h2><p class="muted">In de pot: <b>${bal} ${minWord(bal)}</b>${isFinite(room) ? ` · vandaag nog ${room} min toegestaan` : ''}</p>
-  <div class="pick" style="justify-content:center">${opts.map(m => `<button type="button" data-act="watchgo" data-id="${kid}" data-m="${m}" ${m > bal || m > room ? 'disabled style="opacity:.35"' : ''}><span style="font-family:var(--font-display);font-size:1.5em">${m}</span>&nbsp;min</button>`).join('')}${bal > 0 && bal <= room && !opts.includes(bal) ? `<button type="button" data-act="watchgo" data-id="${kid}" data-m="${bal}"><span style="font-family:var(--font-display);font-size:1.5em">${bal}</span>&nbsp;min (alles)</button>` : ''}</div>
+  openModal(`<h2>Hoe lang mag ${esc(k.name)} kijken?</h2>${isFinite(untilEat) ? `<p class="small" style="margin:.2em 0">Om ${m2hm(ph.eat)} is het eten, dus nog ${Math.max(0, untilEat)} minuten.</p>` : ''}<p class="muted">In de pot: <b>${bal} ${minWord(bal)}</b>${isFinite(room) ? ` · vandaag nog ${room} min toegestaan` : ''}</p>
+  <div class="pick" style="justify-content:center">${opts.map(m => `<button type="button" data-act="watchgo" data-id="${kid}" data-m="${m}" ${m > bal || m > room || m > untilEat ? 'disabled style="opacity:.35"' : ''}><span style="font-family:var(--font-display);font-size:1.5em">${m}</span>&nbsp;min</button>`).join('')}${bal > 0 && bal <= room && !opts.includes(bal) ? `<button type="button" data-act="watchgo" data-id="${kid}" data-m="${bal}"><span style="font-family:var(--font-display);font-size:1.5em">${bal}</span>&nbsp;min (alles)</button>` : ''}</div>
   <p class="small muted" style="margin-top:1em">Het wandscherm laat een zandloper zien die leegloopt en speelt een belletje als de tijd om is. Het apparaat zelf zet je aan en uit zoals je gewend bent.</p><div class="foot"><button class="btn ghost" data-act="close">Annuleren</button></div>`);
 }
 const fmtLeft = ends => { const s = Math.max(0, Math.round((ends - Date.now()) / 1000)); return Math.floor(s / 60) + ':' + pad(s % 60); };
@@ -1247,13 +1341,16 @@ function viewWall() {
   const ks = kids(), t = today(), w = S.weather && S.weather.date === t ? S.weather.kind : null;
   const slides = wallSlides(); const ix = (S.slideIx || 0) % slides.length; const sl = slides[ix];
   const cards = ks.map(k => {
-    const bal = balanceOf(k.id).balance, tm = timerOf(k.id), act = timerActive(tm), done = tm && !act && Date.now() - tm.endsAt < 5 * 60e3;
+    const bal = balanceOf(k.id).balance, tm = timerOf(k.id), act = timerActive(tm), done = tm && !act && Date.now() - tm.endsAt < 5 * 60e3, ph = dayPhase(k);
     const icons = todayEntries(k.id).filter(e => e.kind === 'verdiend').reverse().slice(-8).map(e => `<span>${esc(e.icon || '⭐')}</span>`).join('');
+    if (ph && (ph.phase === 'slapen' || ph.phase === 'nacht')) return `<button class="kk kk-night" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><span class="kk-stars">✦ ✧ ✦</span><span class="avatar kk-sleep">${avatar(k.animal, '#2c3a5e')}<i>z</i><i>z</i></span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><span class="kk-phrase">${esc(phrase(k, ph))}</span></div><span class="kk-moon">🌙</span></button>`;
     let right;
     if (act) { const tot = Math.max(1, tm.endsAt - tm.startedAt), frac = Math.max(0, (tm.endsAt - Date.now()) / tot); right = `<div class="kk-timer"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80" fill="#fff" stroke="#efe5cf" stroke-width="26"/><circle class="wt-arc" cx="100" cy="100" r="80" fill="none" stroke="${k.color}" stroke-width="26" stroke-linecap="round" stroke-dasharray="502.7" stroke-dashoffset="${(502.7 * (1 - frac)).toFixed(1)}" transform="rotate(-90 100 100)" data-ends="${tm.endsAt}" data-total="${tot}" data-c="502.7"/><text x="100" y="118" text-anchor="middle" font-size="58">📺</text></svg><div class="kk-num"><b class="num" data-ends="${tm.endsAt}" data-fmt="min">${Math.ceil((tm.endsAt - Date.now()) / 60e3)}</b><small>min kijken</small></div></div>`; }
     else if (done) right = `<div class="kk-done">🔔<small>klaar!</small></div>`;
+    else if (ph && ph.screenFree) right = `<div class="kk-sf"><span class="kk-sfi">📺<i>💤</i></span><div class="kk-num"><b class="num">${bal}</b><small>bewaard voor morgen</small></div></div>`;
     else right = `<div class="kk-pot"><span class="kk-mand">${TILE.mand}</span><div class="kk-num"><b class="num">${bal}</b><small>${minWord(bal)}</small></div></div>`;
-    return `<button class="kk" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><span class="avatar">${avatar(k.animal, tint(k.color))}</span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><div class="kk-icons">${icons || '<small>vandaag nog niets</small>'}</div></div>${right}</button>`;
+    const day = ph ? `<div class="kk-day"><span class="kk-pie">${pieClock(ph.left / ph.span, k.color)}</span><div class="kk-dayr">${dagpad(k, ph)}<span class="kk-phrase">${esc(phrase(k, ph))}</span></div></div>` : '';
+    return `<button class="kk ${ph ? 'ph-' + ph.phase : ''}" style="--kc:${k.color};--kt:${tint(k.color)}" data-act="walltap" data-id="${k.id}" id="wk-${k.id}"><div class="kk-row"><span class="avatar">${avatar(k.animal, tint(k.color))}</span><div class="kk-mid"><span class="kk-name">${esc(k.name)}</span><div class="kk-icons">${icons || '<small>vandaag nog niets</small>'}</div></div>${right}</div>${day}</button>`;
   }).join('');
   return `<div class="wall2"><header class="w2top"><span id="wallclock" class="w2clock num">${clockText()}</span><span class="w2date">${esc(fmtDay(t))}</span>${w ? `<span class="w2weather">${wIcon(w)}</span>` : ''}<span class="w2dots">${slides.length > 1 ? slides.map((_, i) => `<i class="${i === ix ? 'on' : ''}"></i>`).join('') : ''}</span></header>
   <section class="dia" aria-live="polite"><div class="dia-in" key="${ix}">${slideHTML(sl)}</div></section>
@@ -1627,8 +1724,8 @@ async function startDemo() {
   const bd = (age, inDays) => { const p = parseKey(d(inDays)); p.setFullYear(p.getFullYear() - age); return dkey(p); };
   const mama = put('members', { name: 'Mama', role: 'ouder', animal: 'koe', color: COLORS[1] });
   put('members', { name: 'Papa', role: 'ouder', animal: 'pony', color: COLORS[7] });
-  const sam = put('members', { name: 'Sam', role: 'kind', animal: 'kip', color: COLORS[0], birth: bd(4, 6) });
-  const lot = put('members', { name: 'Lot', role: 'kind', animal: 'konijn', color: COLORS[2], birth: bd(2, 90) });
+  const sam = put('members', { name: 'Sam', role: 'kind', animal: 'kip', color: COLORS[0], birth: bd(4, 6), rhythm: { eat: Array(7).fill('17:30'), bed: ['18:30', '18:30', '18:30', '18:30', '18:30', '19:15', '19:15'] } });
+  const lot = put('members', { name: 'Lot', role: 'kind', animal: 'konijn', color: COLORS[2], birth: bd(2, 90), rhythm: { eat: Array(7).fill('17:30'), bed: Array(7).fill('18:30') } });
   actObjs().forEach(a => put('activities', a));
   const A = title => data.activities.find(a => a.title === title);
   const earn = (kid, title, hm) => { const a = A(title); data.ledger.push({ id: uid(), memberId: kid, sun: a.minutes, kind: 'verdiend', activityId: a.id, title: a.title, icon: a.icon, date: t + 'T' + hm, ts: 0, status: 'ok' }); };
@@ -1670,8 +1767,8 @@ function viewMeer() {
 /* ===== Instellingen ===== */
 function viewInstellingen() {
   const t = S.setTab || 'beloningen';
-  const tabs = [['beloningen', 'Beloningen'], ['gezin', 'Gezin'], ['apparaten', 'Apparaten'], ['wandscherm', 'Wandscherm'], ['gegevens', 'Gegevens']];
-  const body = t === 'beloningen' ? setRewards() : t === 'gezin' ? setFamily() : t === 'apparaten' ? setDevices() : t === 'wandscherm' ? setWall() : setData();
+  const tabs = [['beloningen', 'Beloningen'], ['ritme', 'Dagritme'], ['gezin', 'Gezin'], ['apparaten', 'Apparaten'], ['wandscherm', 'Wandscherm'], ['gegevens', 'Gegevens']];
+  const body = t === 'beloningen' ? setRewards() : t === 'ritme' ? setRhythm() : t === 'gezin' ? setFamily() : t === 'apparaten' ? setDevices() : t === 'wandscherm' ? setWall() : setData();
   return `${pageHead('Instellingen')}<div class="tabs">${tabs.map(([k, l]) => `<button class="${t === k ? 'on' : ''}" data-act="settab" data-t="${k}">${l}</button>`).join('')}</div>${body}`;
 }
 function setRewards() {
@@ -1694,6 +1791,27 @@ async function actMove(id, n) {
   if (i < 0 || j < 0 || j >= list.length) return;
   [list[i], list[j]] = [list[j], list[i]];
   for (let k = 0; k < list.length; k++) if (list[k].order !== k) await Store.update('activities', list[k].id, { order: k });
+}
+function setRhythm() {
+  const order = [1, 2, 3, 4, 5, 6, 0];
+  const ks = kids(); if (!ks.length) return '<p class="muted">Voeg eerst kinderen toe bij Gezin.</p>';
+  return `<p class="muted" style="margin-top:0">Per kind en per dag: hoe laat is het eten en hoe laat gaat hij of zij naar bed? Op het wandscherm wandelt het dier van het kind dan mee langs spelen, eten, verhaaltje en slapen. Leeg laten = geen dagritme op die dag.</p>
+  <label class="check" style="margin-bottom:1em"><input type="checkbox" data-setting="screenFreeAfterDinner" ${cfg('screenFreeAfterDinner') ? 'checked' : ''}> Na het eten slapen de schermen (kijken starten kan dan niet meer)</label>
+  <div class="stack">${ks.map(k => { const r = k.rhythm || {}; return `<div class="card"><div class="row" style="margin-bottom:.6em">${mAvatar(k.id)}<h3 style="margin:0;flex:1">${esc(k.name)}</h3><button class="btn ghost" data-act="rcopy" data-id="${k.id}">Ma ook voor di, wo, do</button></div>
+  <table class="t rtable"><thead><tr><th></th><th>🍽️ Eten</th><th>🌙 Naar bed</th></tr></thead><tbody>${order.map(d => `<tr><th>${['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'][d]}</th><td><input type="time" data-rh="${k.id}" data-f="eat" data-d="${d}" value="${esc((r.eat || [])[d] || '')}" aria-label="Eten ${DAYS_SHORT[d]}"></td><td><input type="time" data-rh="${k.id}" data-f="bed" data-d="${d}" value="${esc((r.bed || [])[d] || '')}" aria-label="Bed ${DAYS_SHORT[d]}"></td></tr>`).join('')}</tbody></table>
+  <p class="small muted" style="margin:.4em 0 0">Een half uur voor bedtijd komt "pyjama aan en een verhaaltje" in beeld.</p></div>`; }).join('')}</div>`;
+}
+document.addEventListener('change', e => {
+  const el = e.target; if (!el.dataset || !el.dataset.rh) return;
+  const k = member(el.dataset.rh); if (!k) return;
+  const r = { eat: [...((k.rhythm && k.rhythm.eat) || Array(7).fill(''))], bed: [...((k.rhythm && k.rhythm.bed) || Array(7).fill(''))] };
+  r[el.dataset.f][+el.dataset.d] = el.value || '';
+  Store.update('members', k.id, { rhythm: r });
+});
+function rhythmCopy(id) {
+  const k = member(id); if (!k || !k.rhythm) { toast('Vul eerst maandag in.'); return; }
+  const r = { eat: [...k.rhythm.eat], bed: [...k.rhythm.bed] }; [2, 3, 4].forEach(d => { r.eat[d] = r.eat[1]; r.bed[d] = r.bed[1]; });
+  Store.update('members', k.id, { rhythm: r }); toast('Gekopieerd naar dinsdag, woensdag en donderdag.');
 }
 function setFamily() {
   return `<div class="grid g3">${members().map(m => `<div class="card"><div class="row">${mAvatar(m.id)}<div style="flex:1"><h3 style="margin:0">${esc(m.name)}</h3><span class="small muted">${m.role === 'ouder' ? 'Ouder' : 'Kind'}${m.birth ? ' · ' + ageOn(m.birth, today()) + ' jaar' : ''}</span></div><i class="colordot" style="background:${m.color};width:1.4em;height:1.4em"></i></div><div class="row" style="margin-top:.6em"><button class="btn ghost" data-act="memberedit" data-id="${m.id}">${ic('edit', 'style="width:1.2em"')} Wijzigen</button><button class="iconbtn" data-act="memberdel" data-id="${m.id}" aria-label="Verwijderen">${ic('trash')}</button></div></div>`).join('')}</div><button class="btn" style="margin-top:1em" data-act="memberedit">${ic('plus', 'style="width:1.2em"')} Gezinslid toevoegen</button>`;
@@ -1846,6 +1964,8 @@ Object.assign(ACT, {
   award: el => { el.classList.add('pressed'); setTimeout(() => el.classList.remove('pressed'), 400); award(D(el).id); },
   unaward: el => { const e = S.data.ledger.find(x => x.id === D(el).id); if (!e) return; Store.del('ledger', e.id); toastAction(`${e.title} weggehaald`, 'Terugzetten', () => { const c = { ...e }; delete c.id; Store.set('ledger', e.id, c); }); },
   watch: el => watchModal(D(el).id),
+  sfoverride: el => { S.overrideSF = true; closeModal(); watchModal(D(el).id); },
+  rcopy: el => rhythmCopy(D(el).id),
   watchgo: el => watchGo(D(el).id, +D(el).m),
   watchmore: el => watchMore(D(el).id),
   watchstop: el => watchStop(D(el).id),
