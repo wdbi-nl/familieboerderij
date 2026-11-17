@@ -547,6 +547,30 @@ body:not(.is-wall).tm-avond{background:#fbf1ee}
 
 #dim{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:2147483000;transition:opacity 3s}
 
+/* Groot ochtendpad */
+.dia-morning{background:linear-gradient(180deg,#fff7e4,#fffaf0);gap:2vh;justify-content:space-between;color:var(--ink)}
+.ms-head{display:flex;align-items:center;gap:1.6vh;font-size:3.4vh;font-weight:800;color:var(--ink-soft)}
+.ms-head b{font-family:var(--font-display);font-size:4.6vh;color:var(--ink)}
+.ms-av{width:7vh;height:7vh;flex:none}.ms-av svg{width:100%;height:100%}
+.ms-now{display:flex;align-items:center;gap:3vh;background:#fff;border:.7vh solid var(--kc);border-radius:4vh;padding:2vh 3vh;box-shadow:0 1vh 0 rgba(59,47,36,.12)}
+.ms-big{font-size:22vh;line-height:1;animation:sway 3s ease-in-out infinite;flex:none}
+.ms-txt{flex:1;display:flex;flex-direction:column;min-width:0}
+.ms-txt small{font-size:3vh;font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:var(--kc)}
+.ms-txt b{font-family:var(--font-display);font-size:8vh;line-height:1;font-weight:600}
+.ms-txt span{font-size:3vh;font-weight:700;color:var(--ink-soft);margin-top:1vh;line-height:1.2}
+.ms-pie{display:flex;flex-direction:column;align-items:center;gap:.6vh;flex:none}
+.ms-pie svg{width:14vh;height:14vh}.ms-pie small{font-size:2.8vh;font-weight:900}
+.ms-path{display:flex;align-items:flex-start;justify-content:space-between}
+.ms-st{position:relative;display:flex;flex-direction:column;align-items:center;gap:.6vh;width:11vh;flex:none}
+.ms-ic{display:flex;align-items:center;justify-content:center;width:10vh;height:10vh;border-radius:50%;background:#fff;border:.5vh solid var(--line);font-size:5.6vh;transition:all .6s}
+.ms-st small{font-size:2.2vh;font-weight:800;text-align:center;line-height:1.1;color:var(--ink-soft)}
+.ms-st.done .ms-ic{opacity:.45;background:var(--kt)}
+.ms-ok{position:absolute;top:-.6vh;right:-.2vh;width:3.2vh;height:3.2vh;border-radius:50%;background:#6f9f4f;color:#fff;font-size:2.2vh;display:flex;align-items:center;justify-content:center}
+.ms-st.now .ms-ic{width:14vh;height:14vh;margin-top:-2vh;font-size:8.4vh;border-color:var(--kc);background:var(--kt);box-shadow:0 0 0 1vh color-mix(in srgb,var(--kc) 25%,transparent)}
+.ms-st.now small{color:var(--ink);font-size:2.6vh;font-weight:900}
+.ms-line{flex:1;height:.6vh;;margin-top:4.7vh;background:repeating-linear-gradient(90deg,var(--line) 0 1.2vh,transparent 1.2vh 2vh)}
+.ms-next{font-size:3.2vh;font-weight:800;color:var(--ink-soft);text-align:center}
+
 </style>
 </head>
 <body>
@@ -1185,8 +1209,12 @@ function dayPhase(k, dt = new Date()) {
   return { phase, wake, school, home, eat: e, bed, wind, film, left, span: Math.max(1, span), pos, nextName, screenFree: !!why, why, filmUntil: cfg('screenFreeAfterDinner') ? e : wind };
 }
 /* Ochtendpad voor schooldagen */
-const MORNING = [['👕', 'aankleden'], ['🥣', 'ontbijten'], ['🪥', 'tanden poetsen'], ['🧥', 'jas en tas'], ['🏫', 'naar school']];
-const morningStep = ph => Math.min(3, Math.floor(ph.pos * 4));
+/* Ochtend voor school: wakker worden, spelen, ontbijt, kleren aan, nog even spelen, jas aan. Gewicht = deel van de tijd */
+const MORNING = [['☀️', 'Wakker worden', 1], ['🧸', 'Lekker spelen', 3], ['🥣', 'Ontbijten', 3], ['👕', 'Kleren aan', 2], ['🚂', 'Nog even spelen', 2], ['🧥', 'Jas aan', 1]];
+const M_TOT = MORNING.reduce((a, m) => a + m[2], 0);
+const M_CUM = MORNING.reduce((a, m) => (a.push(a[a.length - 1] + m[2] / M_TOT), a), [0]);
+const morningStep = ph => { let i = 0; while (i < MORNING.length - 1 && ph.pos >= M_CUM[i + 1]) i++; return i; };
+const morningWindow = (ph, i) => [ph.wake + (ph.school - ph.wake) * M_CUM[i], ph.wake + (ph.school - ph.wake) * M_CUM[i + 1]];
 const PHRASES = {
   spelen: ['{Dier} vraagt: wat ga jij vandaag bouwen?', 'Tijd om te spelen! Waar ga jij op avontuur?', 'Wat zou jij vandaag willen ontdekken?', 'Misschien een hut, een tekening of een verhaal? Jij kiest!', 'De kippen zijn benieuwd wat jij gaat maken.'],
   bijna: ['Bijna eten! De koe ruikt al iets lekkers.', 'Nog even, dan gaan we aan tafel.', 'Speelgoed even laten rusten? Het eten komt eraan.'],
@@ -1196,10 +1224,12 @@ const PHRASES = {
   slapen: ['Slaap lekker, {naam}. Droom maar van de boerderij.', 'Welterusten, {naam}. Morgen weer een nieuw avontuur.', 'De maan past op de boerderij. Slaap lekker!'],
   nacht: ['Nog even slapen, de zon is nog niet op.', 'Ssst, {naam} droomt nog.'],
   school: ['{naam} is op school. Wat ontdek jij vandaag?', 'Op school aan het spelen en leren. Straks weer thuis!', 'De boerderij wacht op je, {naam}. Tot straks!'],
-  klaar0: ['Goedemorgen {naam}! Wat trek jij vandaag aan? Zachtjes hoor, de anderen slapen nog.', 'Kleren aan, {naam}! Welke sokken kies je?'],
-  klaar1: ['Tijd voor ontbijt! {Dier} eet ook.', 'Lekker ontbijten, dan heb je veel energie.'],
-  klaar2: ['Tanden poetsen: boven, onder, en rond-je-rond!', 'Glimmende tanden! Poets ze maar schoon.'],
-  klaar3: ['Jas aan, tas mee. Op naar school!', 'Schoenen aan? Dan ben je klaar voor avontuur!']
+  klaar0: ['Goedemorgen {naam}! De zon is wakker, jij ook! Zachtjes hoor, de anderen slapen nog.', 'Rekken en strekken, {naam}! Goedemorgen!'],
+  klaar1: ['Lekker spelen! {Dier} speelt mee.', 'Wat ga jij bouwen vanochtend?'],
+  klaar2: ['Tijd voor ontbijt! {Dier} eet ook.', 'Lekker ontbijten, dan heb je veel energie.'],
+  klaar3: ['Kleren aan! Welke sokken kies jij vandaag?', 'Eerst je broek of eerst je trui?'],
+  klaar4: ['Nog even spelen, je bent al aangekleed!', 'Knap hoor! Nu nog even spelen.'],
+  klaar5: ['Jas aan, tas mee. Op naar school!', 'Schoenen aan? Dan ben je klaar voor avontuur!']
 };
 const HET = ['schaap', 'konijn', 'varken'];
 function phrase(k, ph) { const list = PHRASES[ph.phase === 'klaar' ? 'klaar' + morningStep(ph) : ph.phase] || ['']; const i = (Math.floor(Date.now() / 600000) + (k.name || '').length) % list.length; const a = k.animal || 'kip', dier = (HET.includes(a) ? 'Het ' : 'De ') + (ANIMAL_NL[a] || 'Kip').toLowerCase(); return list[i].replace('{Dier}', dier).replace('{naam}', k.name || ''); }
@@ -1210,10 +1240,22 @@ function pieClock(frac, color) {
   return `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#fff" stroke="#3b2f24" stroke-width="4"/>${path}${Array.from({ length: 12 }, (_, i) => { const b = i * Math.PI / 6; return `<line x1="${50 + 42 * Math.sin(b)}" y1="${50 - 42 * Math.cos(b)}" x2="${50 + 46 * Math.sin(b)}" y2="${50 - 46 * Math.cos(b)}" stroke="#3b2f24" stroke-width="2"/>`; }).join('')}<circle cx="50" cy="50" r="4" fill="#3b2f24"/></svg>`;
 }
 function dagpad(k, ph) {
-  if (ph.phase === 'klaar') { const cur = morningStep(ph); return `<div class="dagpad"><div class="dp-track"><i style="width:${(ph.pos * 100).toFixed(1)}%"></i></div>${MORNING.map(([ic], i) => `<span class="dp-st ${i <= cur ? 'done' : ''} ${i === cur ? 'now' : ''}" style="left:${i * 25}%">${ic}</span>`).join('')}<span class="dp-me" style="left:${(ph.pos * 100).toFixed(1)}%">${avatar(k.animal, tint(k.color))}</span></div>`; }
+  if (ph.phase === 'klaar') { const cur = morningStep(ph); return `<div class="dagpad"><div class="dp-track"><i style="width:${(ph.pos * 100).toFixed(1)}%"></i></div>${[...MORNING, ['🏫']].map(([ic], i) => `<span class="dp-st ${i <= cur ? 'done' : ''} ${i === cur ? 'now' : ''}" style="left:${(M_CUM[i] * 100).toFixed(1)}%">${ic}</span>`).join('')}<span class="dp-me" style="left:${(ph.pos * 100).toFixed(1)}%">${avatar(k.animal, tint(k.color))}</span></div>`; }
   const st = [['🎈', 'spelen'], ['🍽️', 'eten'], ['📖', 'verhaal'], ['🌙', 'slapen']];
   const cur = { school: 0, spelen: 0, bijna: 0, eten: 1, avond: 1, rustig: 2, slapen: 3, nacht: 3 }[ph.phase];
   return `<div class="dagpad"><div class="dp-track"><i style="width:${(ph.pos * 100).toFixed(1)}%"></i></div>${st.map(([ic, l], i) => `<span class="dp-st ${i <= cur ? 'done' : ''} ${i === cur ? 'now' : ''}" style="left:${i * 100 / 3}%">${ic}</span>`).join('')}<span class="dp-me" style="left:${(ph.pos * 100).toFixed(1)}%">${avatar(k.animal, tint(k.color))}</span></div>`;
+}
+
+/* Groot ochtendpad in het midden van het wandscherm: wat is nu aan de beurt? */
+function morningSlide(k, ph) {
+  const cur = morningStep(ph), [ic, label] = MORNING[cur], [a, b] = morningWindow(ph, cur), left = Math.max(0, Math.ceil(b - nowMin()));
+  const nxt = cur + 1 < MORNING.length ? MORNING[cur + 1] : ['🏫', 'Naar school'];
+  const steps = [...MORNING, ['🏫', 'School']].map(([i2, l2], i) => `<div class="ms-st ${i < cur ? 'done' : ''} ${i === cur ? 'now' : ''}"><span class="ms-ic">${i2}</span>${i < cur ? '<b class="ms-ok">✓</b>' : ''}<small>${esc(l2)}</small></div>`).join('<i class="ms-line"></i>');
+  return `<div class="dia-pad dia-morning" style="--kc:${k.color};--kt:${tint(k.color)}">
+  <div class="ms-head"><span class="ms-av">${avatar(k.animal, tint(k.color))}</span><b>${esc(k.name)}</b><span>op weg naar school 🏫 om ${m2hm(ph.school)}</span></div>
+  <div class="ms-now"><span class="ms-big">${ic}</span><div class="ms-txt"><small>Nu</small><b>${esc(label)}</b><span>${esc(phrase(k, ph))}</span></div><div class="ms-pie">${pieClock(left / Math.max(1, b - a), k.color)}<small>nog ${left} min</small></div></div>
+  <div class="ms-path">${steps}</div>
+  <div class="ms-next">Daarna: ${nxt[0]} ${esc(nxt[1].toLowerCase())}</div></div>`;
 }
 
 /* ===== Seizoenen, weer, kleuren per dagdeel, speelideeën en ochtend-stil ===== */
@@ -1637,6 +1679,7 @@ function slideHTML(sl) {
 function viewWall() {
   const ks = kids(), t = today(), w = curWeather(), theme = wallTheme(), season = feestSeason();
   const quiet = theme === 'stil' || theme === 'nacht';
+  const mk = ks.find(k => { const p = dayPhase(k); return p && p.phase === 'klaar'; });
   const slides = wallSlides(); const ix = (S.slideIx || 0) % slides.length; const sl = slides[ix];
   const hat = season === 'kerst' ? `<i class="muts">${HAT}</i>` : '';
   const cards = ks.map(k => {
@@ -1655,7 +1698,7 @@ function viewWall() {
   }).join('');
   const fun = quiet ? (theme === 'stil' ? '🤫 Zachtjes, iedereen slaapt nog' : '🌙 Welterusten') : w ? `${WEATHER_EMO[w.kind]} ${esc(weatherLine(w))}` : '';
   return `<div class="wall2 tm-${theme} se-${season}">${cfg('calm') ? '' : decorHTML(season, w, quiet)}<header class="w2top"><span id="wallclock" class="w2clock num">${clockText()}</span><span class="w2date">${esc(fmtDay(t))}</span>${w && !quiet ? `<span class="w2weather">${wIcon(w.kind)}${w.temp != null ? `<b class="num">${w.temp}°</b>` : ''}</span>` : ''}<span class="w2fun">${fun}</span><span class="w2dots">${!quiet && slides.length > 1 ? slides.map((_, i) => `<i class="${i === ix ? 'on' : ''}"></i>`).join('') : ''}</span></header>
-  <section class="dia" aria-live="polite"><div class="dia-in" key="${quiet ? theme : ix}">${quiet ? quietScene(theme) : slideHTML(sl)}</div></section>
+  <section class="dia" aria-live="polite"><div class="dia-in" key="${mk ? 'morning' : quiet ? theme : ix}">${mk ? morningSlide(mk, dayPhase(mk)) : quiet ? quietScene(theme) : slideHTML(sl)}</div></section>
   <aside class="w2kids" style="--n:${Math.max(1, ks.length)}">${cards || '<div class="card">Voeg kinderen toe in de app op je telefoon.</div>'}</aside></div>`;
 }
 /* Nieuwe beloningen live vieren op het wandscherm */
