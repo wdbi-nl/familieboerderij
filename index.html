@@ -545,6 +545,8 @@ body:not(.is-wall).tm-ochtend{background:#fff6ea}
 body:not(.is-wall).tm-dag{background:#f6f9ec}
 body:not(.is-wall).tm-avond{background:#fbf1ee}
 
+#dim{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:2147483000;transition:opacity 3s}
+
 </style>
 </head>
 <body>
@@ -891,7 +893,7 @@ const CHICK = `<svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy
 /* ===== Kern: status, opslag, navigatie, dialogen ===== */
 const FORMS = {}, ACT = {};
 const COLS = ['members', 'events', 'activities', 'completions', 'ledger', 'rewards', 'adventures', 'gallery', 'animals', 'animallog', 'beds', 'plants', 'notes', 'shopping', 'meals', 'recipes', 'chores', 'timers'];
-const DEF = { dailyLimit: 0, calm: false, sound: true, voice: true, showAgenda: true, showPhotos: true, showAnimals: true, screenFreeAfterDinner: true };
+const DEF = { dailyLimit: 0, calm: false, sound: true, voice: true, showAgenda: true, showPhotos: true, showAnimals: true, screenFreeAfterDinner: true, autoDim: true, wallBright: 80 };
 const COLORS = ['#c7623f', '#4f86b0', '#6f9f4f', '#d99a1c', '#9467ad', '#cf6a8a', '#3f9488', '#8a6a4a'];
 const S = { mode: 'loading', db: null, assets: null, tts: null, dict: null, dl: null, user: null, data: {}, settings: null, weather: null, settingsLoaded: false, stale: false,
   parentUntil: 0, view: 'erf', param: null, kidTab: 'start', calTab: 'week', calRef: null, readAloud: false, pinFails: 0, pinLockUntil: 0, queue: [], slides: null, parentTab: 'goedkeuren', galFilter: 'alle', lastDay: null, setupStep: 1, setupMembers: [] };
@@ -1382,10 +1384,24 @@ function feestCountdowns() {
 }
 /* Telefoon: kleur en slinger met het dagdeel en seizoen mee */
 function applyTheme() {
+  applyDim();
   if (S.mode !== 'live' && S.mode !== 'demo') return;
   const b = document.body, th = wallTheme(), se = feestSeason();
   ['stil', 'nacht', 'ochtend', 'dag', 'avond'].forEach(x => b.classList.toggle('tm-' + x, x === th));
   ['sint', 'kerst', 'winter', 'lente', 'zomer', 'herfst'].forEach(x => b.classList.toggle('se-' + x, x === se));
+}
+
+/* Wandscherm minder fel: handmatige helderheid, plus automatisch dimmen in de vroege ochtend, avond en nacht */
+const AUTO_DIM = { stil: .6, nacht: .5, ochtend: .75, avond: .8, dag: 1 };
+function applyDim() {
+  let el = document.getElementById('dim');
+  if (!S.wall) { if (el) el.style.opacity = 0; return; }
+  if (!el) { el = document.createElement('div'); el.id = 'dim'; el.setAttribute('aria-hidden', 'true'); document.body.appendChild(el); }
+  const th = wallTheme(), h = new Date().getHours();
+  let auto = cfg('autoDim') ? AUTO_DIM[th] : 1;
+  if (th === 'ochtend' && h >= 9) auto = .9;
+  const b = Math.max(.25, Math.min(1, (+cfg('wallBright') || 100) / 100 * auto));
+  el.style.opacity = (1 - b).toFixed(2);
 }
 
 /* ===== Agenda-hulpjes ===== */
@@ -2102,7 +2118,7 @@ document.addEventListener('change', e => {
 /* Losse instellingen: vinkjes en tijden met data-setting */
 document.addEventListener('change', e => {
   const el = e.target, key = el.dataset && el.dataset.setting; if (!key) return;
-  const v = el.type === 'checkbox' ? el.checked : el.value;
+  const v = el.type === 'checkbox' ? el.checked : el.type === 'range' ? +el.value : el.value;
   if (cfg(key) === v) return;
   Store.settings({ [key]: v });
 });
@@ -2134,6 +2150,7 @@ function setWall() {
   const tog = (k, l) => `<label class="check"><input type="checkbox" data-setting="${k}" ${cfg(k) ? 'checked' : ''}> ${l}</label>`;
   return `<div class="grid g2"><div class="card stack"><h3>Wandscherm of tv instellen</h3><ol style="margin:0;padding-left:1.2em"><li>Open op de tv of het scherm de browser en ga naar:<br><code style="word-break:break-all;background:#fff;padding:.2em .4em;border-radius:6px;border:2px solid var(--line)">${esc(url)}</code></li><li>Er verschijnt een code van 6 cijfers.</li><li>Typ die code hier bij <b>Apparaten</b>. Klaar: het scherm onthoudt het en start voortaan meteen.</li></ol><div class="row"><button class="btn ghost" data-act="copywall">Link kopiëren</button></div><p class="small muted" style="margin:0">Inloggen is niet nodig. Een gekoppeld scherm kan alleen kijken, niets veranderen.</p></div>
   <div class="card stack"><h3>Wat het wandscherm doet</h3>${tog('sound', 'Belletje bij elke beloning en als de kijktijd om is')}${tog('voice', 'Voorlezen ("Goed zo! Tanden gepoetst!")')}${tog('showAgenda', 'Agenda van vandaag tonen')}${tog('showPhotos', 'Foto\'s en werkstukjes tonen')}${tog('showAnimals', 'Onze dieren tonen')}${tog('calm', 'Rustig: geen bewegende dieren')}<p class="small muted" style="margin:0">Geluid werkt op een tv vaak pas na één klik met de afstandsbediening op het scherm.</p></div>
+  <div class="card stack"><h3>Helderheid van het scherm</h3><label class="f">Helderheid: <b id="wb-val">${+cfg('wallBright')}%</b><input type="range" min="30" max="100" step="5" data-setting="wallBright" value="${+cfg('wallBright')}" oninput="document.getElementById('wb-val').textContent=this.value+'%'"></label>${tog('autoDim', 'Automatisch dimmen: \'s ochtends vroeg, \'s avonds en \'s nachts zachter')}<p class="small muted" style="margin:0">Is het nog te fel? Zet dan ook de helderheid of het beeldmodus van de tv zelf lager (bijvoorbeeld "Film" of "Eco").</p></div>
   <div class="card stack"><h3>Het weer van jullie boerderij</h3><p style="margin:0">${cfg('lat') ? `Het weer komt automatisch binnen${S.autoW ? `: nu ${WEATHER[S.autoW.kind].label.toLowerCase()}, ${S.autoW.temp}°` : ''}.` : 'Laat het wandscherm zelf het weer ophalen. Regen, sneeuw of wind komt dan vanzelf in beeld, met een leuk idee erbij.'}</p><div class="row"><button class="btn ${cfg('lat') ? 'ghost' : 'green'}" data-act="weatherloc">📍 ${cfg('lat') ? 'Locatie opnieuw bepalen' : 'Weer automatisch ophalen'}</button></div><p class="small muted" style="margin:0">Alleen de ongeveer-plek (op 1 km) wordt bewaard. Het weer komt van Open-Meteo, zonder account.</p></div>
   <div class="card stack"><h3>Over schermtijd</h3><p style="margin:0">De app houdt de minuten bij en laat de aftelklok zien. Tablet of tv aan- en uitzetten doen jullie zelf: Apple Schermtijd, Google Family Link en spelcomputers hebben geen koppeling waarmee een website ze kan bedienen.</p></div></div>`;
 }
