@@ -1679,8 +1679,10 @@ function slideHTML(sl) {
 function viewWall() {
   const ks = kids(), t = today(), w = curWeather(), theme = wallTheme(), season = feestSeason();
   const quiet = theme === 'stil' || theme === 'nacht';
-  const mk = ks.find(k => { const p = dayPhase(k); return p && p.phase === 'klaar'; });
   const slides = wallSlides(); const ix = (S.slideIx || 0) % slides.length; const sl = slides[ix];
+  const mk = ks.find(k => { const p = dayPhase(k); return p && p.phase === 'klaar'; });
+  /* Ochtendpad wisselt af met de dia: om de beurt het pad en een foto, agenda of dieren */
+  const showM = mk && (S.slideIx || 0) % 2 === 0, sx = mk ? Math.floor((S.slideIx || 0) / 2) % slides.length : ix;
   const hat = season === 'kerst' ? `<i class="muts">${HAT}</i>` : '';
   const cards = ks.map(k => {
     const bal = balanceOf(k.id).balance, tm = timerOf(k.id), act = timerActive(tm), done = tm && !act && Date.now() - tm.endsAt < 5 * 60e3, ph = dayPhase(k);
@@ -1698,7 +1700,7 @@ function viewWall() {
   }).join('');
   const fun = quiet ? (theme === 'stil' ? '🤫 Zachtjes, iedereen slaapt nog' : '🌙 Welterusten') : w ? `${WEATHER_EMO[w.kind]} ${esc(weatherLine(w))}` : '';
   return `<div class="wall2 tm-${theme} se-${season}">${cfg('calm') ? '' : decorHTML(season, w, quiet)}<header class="w2top"><span id="wallclock" class="w2clock num">${clockText()}</span><span class="w2date">${esc(fmtDay(t))}</span>${w && !quiet ? `<span class="w2weather">${wIcon(w.kind)}${w.temp != null ? `<b class="num">${w.temp}°</b>` : ''}</span>` : ''}<span class="w2fun">${fun}</span><span class="w2dots">${!quiet && slides.length > 1 ? slides.map((_, i) => `<i class="${i === ix ? 'on' : ''}"></i>`).join('') : ''}</span></header>
-  <section class="dia" aria-live="polite"><div class="dia-in" key="${mk ? 'morning' : quiet ? theme : ix}">${mk ? morningSlide(mk, dayPhase(mk)) : quiet ? quietScene(theme) : slideHTML(sl)}</div></section>
+  <section class="dia" aria-live="polite"><div class="dia-in" key="${showM ? 'morning' : quiet ? theme : sx}">${showM ? morningSlide(mk, dayPhase(mk)) : quiet ? quietScene(theme) : slideHTML(slides[sx])}</div></section>
   <aside class="w2kids" style="--n:${Math.max(1, ks.length)}">${cards || '<div class="card">Voeg kinderen toe in de app op je telefoon.</div>'}</aside></div>`;
 }
 /* Nieuwe beloningen live vieren op het wandscherm */
