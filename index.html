@@ -571,6 +571,22 @@ body:not(.is-wall).tm-avond{background:#fbf1ee}
 .ms-line{flex:1;height:.6vh;;margin-top:4.7vh;background:repeating-linear-gradient(90deg,var(--line) 0 1.2vh,transparent 1.2vh 2vh)}
 .ms-next{font-size:3.2vh;font-weight:800;color:var(--ink-soft);text-align:center}
 
+/* Snel een foto */
+.photobar{margin-top:1em;background:var(--paper);border:3px solid var(--line);border-radius:20px;padding:.8em}
+.pb-l{display:block;font-weight:800;margin-bottom:.5em}
+.pb-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(5.6em,1fr));gap:.5em}
+.pbtn{display:flex;flex-direction:column;align-items:center;gap:.25em;padding:.6em .3em;border-radius:16px;background:var(--kt,#fff4d6);border:3px solid var(--kc,var(--line));font-weight:800;cursor:pointer;font-size:.95em;text-align:center;position:relative}
+.pbtn .avatar,.pbtn .mav{width:2.6em;height:2.6em}
+.pbtn::after{content:"📷";position:absolute;top:.2em;right:.35em;font-size:1em}
+.pbtn.alt{font-size:.95em;background:#fff}.pbtn.alt::after{content:none}
+.pbtn.alt{justify-content:center}.pbtn.alt{font-size:1.6em}.pbtn.alt span{font-size:.55em}
+.pbtn:active{transform:scale(.96)}
+.dia-foto{position:relative}
+.dia-new{position:absolute;top:2vh;left:2vh;z-index:2;background:#f3c246;color:var(--ink);font-family:var(--font-display);font-weight:600;font-size:4vh;padding:.6vh 2.4vh;border-radius:999px;box-shadow:0 .6vh 0 rgba(59,47,36,.2);animation:sway 2.4s ease-in-out infinite}
+
+.navfoto svg{color:var(--terra-d)}
+#modal .photobar{margin-top:0;border:none;padding:0;background:none}#modal .pb-l{display:none}
+
 </style>
 </head>
 <body>
@@ -1601,6 +1617,7 @@ function viewBelonen() {
   const log = S.sel.length === 1 ? todayEntries(S.sel[0]) : [];
   return `${chips}<div class="stack" style="margin:.8em 0">${status}</div>
   <div class="rewards">${grid || '<p class="muted">Nog geen beloningen ingesteld.</p>'}</div>
+  ${photoBar()}
   <div class="row between" style="margin-top:.8em"><span class="muted small">Tik een knop: ${S.sel.length > 1 ? 'alle gekozen kinderen' : esc(mName(S.sel[0]))} ${S.sel.length > 1 ? 'krijgen' : 'krijgt'} meteen de minuten.</span><button class="iconbtn" data-act="settab" data-t="beloningen">${ic('edit')}<span class="lb">Aanpassen</span></button></div>
   ${S.sel.length === 1 ? `<div class="card" style="margin-top:1em"><h3>Vandaag</h3>${log.length ? `<div class="stack" style="gap:.35em">${log.map(e => `<div class="row" style="flex-wrap:nowrap"><span class="num muted small" style="min-width:3em">${(e.date || '').slice(11, 16)}</span><span style="font-size:1.3em">${esc(e.icon || (e.kind === 'kijken' ? '📺' : e.kind === 'terug' ? '↩️' : '⭐'))}</span><span style="flex:1">${esc(e.title || '')}</span><b class="num" style="color:${e.sun > 0 ? 'var(--good)' : 'var(--ink-soft)'}">${e.sun > 0 ? '+' : ''}${e.sun}</b>${e.kind === 'verdiend' || e.kind === 'correctie' ? `<button class="iconbtn" data-act="unaward" data-id="${e.id}" aria-label="Weghalen">×</button>` : ''}</div>`).join('')}</div>` : '<p class="muted" style="margin:0">Nog niets vandaag.</p>'}</div>` : ''}`;
 }
@@ -1658,7 +1675,7 @@ async function watchStop(kid) {
 
 /* ===== Wandscherm (alleen kijken, kinderen bedienen niets) ===== */
 function wallSlides() {
-  const out = [], photos = cfg('showPhotos') ? S.data.gallery.filter(g => imgSrc(g)).sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 15) : [];
+  const out = [], photos = cfg('showPhotos') ? S.data.gallery.filter(g => imgSrc(g)).sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.createdAt || '').localeCompare(a.createdAt || '')).slice(0, 15) : [];
   const extra = [{ kind: 'idee' }]; if (cfg('showAgenda')) extra.push({ kind: 'agenda' }); if (cfg('showAnimals') && S.data.animals.length) extra.push({ kind: 'dieren' });
   if (!photos.length) return extra;
   let e = 0; photos.forEach((g, i) => { out.push({ kind: 'foto', g }); if (i % 3 === 2 && extra.length) out.push(extra[e++ % extra.length]); });
@@ -1667,7 +1684,7 @@ function wallSlides() {
 }
 function slideHTML(sl) {
   if (sl.kind === 'idee') return ideaSlide();
-  if (sl.kind === 'foto') { const g = sl.g, m = member(g.makerId); return `<div class="dia-foto"><div class="dia-frame"><img src="${esc(imgSrc(g))}" alt=""></div><div class="dia-cap">${m ? `<span class="avatar">${avatar(m.animal, tint(m.color))}</span>` : ''}<span><b>${esc(g.title || 'Gemaakt door ' + mName(g.makerId))}</b><small>${esc(mName(g.makerId))}${g.date ? ' · ' + esc(fmtDay(g.date)) : ''}</small></span></div></div>`; }
+  if (sl.kind === 'foto') { const g = sl.g, m = member(g.makerId), isNew = g.createdAt && Date.now() - new Date(g.createdAt).getTime() < 15 * 60e3; return `<div class="dia-foto">${isNew ? '<span class="dia-new">✨ Nieuw!</span>' : ''}<div class="dia-frame"><img src="${esc(imgSrc(g))}" alt=""></div><div class="dia-cap">${m ? `<span class="avatar">${avatar(m.animal, tint(m.color))}</span>` : ''}<span><b>${esc(g.title || 'Gemaakt door ' + mName(g.makerId))}</b><small>${esc(mName(g.makerId))}${g.date ? ' · ' + esc(fmtDay(g.date)) : ''}</small></span></div></div>`; }
   if (sl.kind === 'dieren') {
     const lg = logToday();
     return `<div class="dia-pad"><h2 class="dia-h">Onze dieren</h2><div class="dia-dieren" style="--c:${Math.min(S.data.animals.length, 3)}">${S.data.animals.slice(0, 6).map(a => { const e = lg[a.id] || {}; return `<div class="dier">${imgSrc(a) ? `<img src="${esc(imgSrc(a))}" alt="">` : `<span class="dier-av">${avatar(a.species, '#efe5cf')}</span>`}<b>${esc(a.name)}</b><div class="dier-st"><span class="${e.am ? 'ok' : ''}">${e.am ? '✓' : '○'} ochtend</span><span class="${e.pm ? 'ok' : ''}">${e.pm ? '✓' : '○'} avond</span>${e.eggs ? `<span class="ok">🥚 ${e.eggs}</span>` : ''}</div></div>`; }).join('')}</div></div>`;
@@ -1705,8 +1722,18 @@ function viewWall() {
 }
 /* Nieuwe beloningen live vieren op het wandscherm */
 S.seen = null; S.party = []; S.partyOn = false;
+function checkNewPhotos() {
+  if (!S.wall) return;
+  if (!S.seenPh) { S.seenPh = new Set(S.data.gallery.map(g => g.id)); return; }
+  const fresh = S.data.gallery.filter(g => !S.seenPh.has(g.id)); fresh.forEach(g => S.seenPh.add(g.id));
+  const g = fresh.find(x => x.createdAt && Date.now() - new Date(x.createdAt).getTime() < 10 * 60e3 && imgSrc(x)); if (!g) return;
+  const sl = wallSlides(), i = sl.findIndex(x => x.kind === 'foto' && x.g.id === g.id); if (i < 0) return;
+  const mk = kids().some(k => { const p = dayPhase(k); return p && p.phase === 'klaar'; });
+  S.slideIx = mk ? i * 2 + 1 : i; S.slideHold = Date.now(); chime(); setTimeout(scheduleRender, 50);
+}
 function checkNewLedger() {
   if (!S.wall) return;
+  checkNewPhotos();
   if (!S.seen) { S.seen = new Set(S.data.ledger.map(e => e.id)); return; }
   for (const e of S.data.ledger) {
     if (S.seen.has(e.id)) continue; S.seen.add(e.id);
@@ -1755,7 +1782,8 @@ function viewGalerij() {
   else if (f.startsWith('a:')) list = list.filter(g => (g.album || '') === f.slice(2));
   const albums = [...new Set(S.data.gallery.map(g => g.album).filter(Boolean))];
   const chips = [['alle', 'Alles'], ['fav', 'Favorieten'], ...members().filter(m => S.data.gallery.some(g => g.makerId === m.id)).map(m => ['m:' + m.id, m.name]), ...albums.map(a => ['a:' + a, 'Album: ' + a])];
-  return `${pageHead('Foto\'s en kunstwerken', `<button class="btn ghost" data-act="slides">${ic('play', 'style="width:1.2em"')} Diavoorstelling</button><button class="btn" data-act="galnew">${ic('camera', 'style="width:1.2em"')} Toevoegen</button>`)}
+  return `${pageHead('Foto\'s en kunstwerken', `<button class="btn ghost" data-act="slides">${ic('play', 'style="width:1.2em"')} Diavoorstelling</button><button class="btn ghost" data-act="galnew">${ic('pencil', 'style="width:1.2em"')} Met titel</button>`)}
+  ${photoBar()}
   <div class="seg" style="margin-bottom:1em">${chips.map(([k, l]) => `<button class="${f === k ? 'on' : ''}" data-act="galfilter" data-f="${esc(k)}">${esc(l)}</button>`).join('')}</div>
   ${list.length ? `<div class="frames">${list.map(g => `<button class="frame" data-act="galopen" data-id="${g.id}"><div class="ph">${imgSrc(g) ? `<img src="${esc(imgSrc(g))}" alt="${esc(g.title || '')}" loading="lazy">` : ''}</div><div class="cap">${g.fav ? '★ ' : ''}${esc(g.title || 'Zonder titel')}<small>${esc(mName(g.makerId))} · ${g.date ? fmtShort(g.date) : ''}</small></div></button>`).join('')}</div>` : `<div class="empty">${CHICK}<p>Nog geen foto's. Maak een foto van een tekening of een mooi moment; ze verschijnen ook op het wandscherm.</p></div>`}`;
 }
@@ -1785,6 +1813,22 @@ function galOpen(id) {
   openModal(`<div class="frame" style="cursor:default"><div style="background:#f3ead6">${imgSrc(g) ? `<img src="${esc(imgSrc(g))}" alt="${esc(g.title || '')}" style="max-height:60vh;margin:0 auto;object-fit:contain">` : ''}</div></div><h2 style="margin-top:.6em">${esc(g.title || 'Zonder titel')}</h2><p class="muted" style="margin:0">${esc(mName(g.makerId))} · ${g.date ? esc(fmtDay(g.date)) : ''}${g.album ? ' · ' + esc(g.album) : ''}</p>${g.story ? `<p>${esc(g.story)}</p>` : ''}
   <div class="foot"><button class="btn ghost" data-act="galdel" data-id="${g.id}">${ic('trash', 'style="width:1.2em"')} Weghalen</button><button class="btn ghost" data-act="galedit" data-id="${g.id}">${ic('edit', 'style="width:1.2em"')} Wijzigen</button><button class="btn sun" data-act="galfav" data-id="${g.id}">${g.fav ? 'Geen favoriet meer' : '★ Favoriet'}</button><button class="btn ghost" data-act="close">Sluiten</button></div>`);
 }
+
+/* ---------- snel een foto: één tik op het kind, foto maken, klaar ---------- */
+function photoBar() {
+  const ks = kids(); if (!ks.length) return '';
+  return `<div class="photobar"><span class="pb-l">📷 Snel een foto van een werkstukje</span><div class="pb-row">${ks.map(k => `<label class="pbtn" style="--kc:${k.color};--kt:${tint(k.color)}">${mAvatar(k.id)}<span>${esc(k.name)}</span><input type="file" accept="image/*" capture="environment" hidden data-quickphoto="${k.id}"></label>`).join('')}<label class="pbtn alt">🖼️<span>Uit album</span><input type="file" accept="image/*" multiple hidden data-quickphoto="${S.sel.length === 1 ? S.sel[0] : 'gezin'}"></label></div></div>`;
+}
+document.addEventListener('change', async e => {
+  const el = e.target; if (!el.dataset || el.dataset.quickphoto === undefined) return;
+  const files = [...(el.files || [])]; if (!files.length) return;
+  const makerId = el.dataset.quickphoto || 'gezin'; el.value = ''; if (modalOpen()) closeModal();
+  toast(files.length > 1 ? `${files.length} foto's opslaan...` : 'Foto opslaan...');
+  let last;
+  try { for (const f of files) { const pic = await storeImage(f); last = await Store.add('gallery', { makerId, title: '', date: today(), album: '', story: '', fav: false, ...pic }); } }
+  catch (err) { toast('Die foto lukte niet. Probeer het nog eens.'); return; }
+  toastAction(`📺 Staat op de tv! ${files.length > 1 ? files.length + " foto's" : 'Foto'} van ${mName(makerId)}.`, 'Titel erbij', () => last && galForm(last));
+});
 
 /* ===== Dieren ===== */
 const SPECIES = { kip: 'Kippen', koe: 'Koeien', schaap: 'Schapen', konijn: 'Konijnen', pony: 'Pony\'s en paarden', varken: 'Varkens', eend: 'Eenden', geit: 'Geiten', kat: 'Katten', hond: 'Honden' };
@@ -2284,7 +2328,7 @@ function render() {
   S.renderPending = false;
   const fid = a && a.id && view.contains(a) ? a.id : null; const val = fid && 'value' in a ? a.value : null;
   top.innerHTML = topbar(); ban.innerHTML = banners();
-  nav.innerHTML = NAV.map(([k, l, i]) => `<button class="${S.view === k || (k === 'meer' && ['galerij', 'dieren', 'moestuin', 'prikbord', 'instellingen'].includes(S.view)) ? 'on' : ''}" data-go="#${k}">${i === 'sun' ? sunNav : ic(i)}<span>${l}</span></button>`).join('');
+  nav.innerHTML = NAV.map(([k, l, i]) => `<button class="${S.view === k || (k === 'meer' && ['galerij', 'dieren', 'moestuin', 'prikbord', 'instellingen'].includes(S.view)) ? 'on' : ''}" data-go="#${k}">${i === 'sun' ? sunNav : ic(i)}<span>${l}</span></button>`).join('').replace('</button>', `</button><button class="navfoto" data-act="photosheet">${ic('camera')}<span>Foto</span></button>`);
   try { view.innerHTML = route(); } catch (e) { console.error(e); view.innerHTML = `${pageHead('Er ging iets mis')}<p>Deze pagina kon niet worden getoond.</p>`; }
   if (fid) { const n = document.getElementById(fid); if (n) { if (val !== null) n.value = val; n.focus(); } }
   migrate();
@@ -2372,6 +2416,7 @@ Object.assign(ACT, {
   caltoday: () => { S.calRef = today(); render(); },
   calday: el => { S.calRef = D(el).k; S.calTab = 'dag'; render(); },
   /* foto's */
+  photosheet: () => openModal(`<h2>📷 Foto van wie?</h2><p class="muted" style="margin-top:0">Tik op een kind, maak de foto en hij staat meteen op de tv.</p>${photoBar()}<div class="foot"><button class="btn ghost" data-act="close">Sluiten</button></div>`),
   galnew: () => galForm(), galfilter: el => { S.galFilter = D(el).f; render(); }, galopen: el => galOpen(D(el).id), galedit: el => galForm(D(el).id),
   galfav: el => { const g = S.data.gallery.find(x => x.id === D(el).id); closeModal(); if (g) Store.update('gallery', g.id, { fav: !g.fav }); },
   galdel: el => ask('Deze foto weghalen?', 'Weghalen', async () => { const g = S.data.gallery.find(x => x.id === D(el).id); await Store.del('gallery', D(el).id); if (g && g.assetId && S.assets) S.assets.delete(g.assetId).catch(() => { }); }, true),
@@ -2419,7 +2464,7 @@ setInterval(() => {
   tickTimers();
   const n = new Date(), day = today();
   if (S.lastDay && S.lastDay !== day) { S.calRef = null; render(); } S.lastDay = day;
-  if (S.wall && !S.partyOn && !modalOpen() && n.getSeconds() % 12 === 0) { S.slideIx = (S.slideIx || 0) + 1; render(); }
+  if (S.wall && !S.partyOn && !modalOpen() && n.getSeconds() % 12 === 0 && !(S.slideHold && Date.now() - S.slideHold < 36000)) { S.slideIx = (S.slideIx || 0) + 1; render(); }
   else if (S.wall && !S.partyOn && !modalOpen() && n.getMinutes() !== lastMin) render();
   if (n.getMinutes() !== lastMin) { fetchWeather(); applyTheme(); }
   lastMin = n.getMinutes();
